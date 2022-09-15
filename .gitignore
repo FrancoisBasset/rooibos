@@ -2,3 +2,8 @@
 index.html
 /pages
 /Resources
+
+#C
+*.swp
+*.o
+appshortcuts
