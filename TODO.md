@@ -2,7 +2,6 @@
 All my tasks will be written in this file.
 
 ### Todo
-- [ ] Proof of concept : Apps shortcuts
 - [ ] Proof of concept : Window decoration
 - [ ] Create Makefile
 - [ ] Find great design
@@ -10,7 +9,7 @@ All my tasks will be written in this file.
 - [ ] Create man pages
 
 ### In Progress
-
+- [ ] Proof of concept : Apps shortcuts
 
 ### Done
 - [X] Prepare Kanban
