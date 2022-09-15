@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2022-09-15
+### [Added]
+* I added functions to get app shortcuts
+
 ## 2022-08-20
 ### [Added]
 * I added mockups
