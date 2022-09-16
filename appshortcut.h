@@ -7,6 +7,7 @@ struct appshortcut {
 	char *exec;
 	char *categorie;
 	char *icon;
+	char *file;
 };
 
 struct appshortcut* appshortcut_get_app_shortcuts(int *length);

@@ -160,6 +160,8 @@ static struct appshortcut appshortcut_get_app_shortcut(char *filename) {
 	free(categories);
 
 	struct appshortcut app_shortcut = { name, exec, categorie, icon };
+	app_shortcut.file = malloc(sizeof(char) * 100);
+	strcpy(app_shortcut.file, filename);
 
 	return app_shortcut;
 }
