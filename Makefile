@@ -1,7 +1,7 @@
 CFLAGS = -Werror -O3 -g
 
-appshortcuts: utils.o appshortcut.o main.o
-	gcc $(CFLAGS) *.o -o appshortcuts
+appshortcuts: utils.o appshortcut.o cache.o main.o
+	gcc $(CFLAGS) *.o -o appshortcuts -lsqlite3
 
 %.o: %.c
 	gcc $(CFLAGS) -c $< -o $@

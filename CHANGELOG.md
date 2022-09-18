@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2022-09-18
+### [Added]
+* I added a cache system to get app shortcuts faster
+
 ## 2022-09-16
 ### [Added]
 * I added the file entry in appshortcut struct
