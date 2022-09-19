@@ -13,6 +13,8 @@ There are 6 types of changes :
 # Changes
 
 ## 2022-09-19
+### [Added]
+* I added the appshortcut_get_all_desktop_files method
 ### [Changed]
 * I optimized the update cache system to get app shortcuts
 

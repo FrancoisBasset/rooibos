@@ -10,19 +10,16 @@
 static char *icon_to_search;
 static char *result;
 
-struct appshortcut* appshortcut_get_app_shortcuts(int *_length) {
+char** appshortcut_get_all_desktop_files(int *length) {
 	int length1 = 0;
 	int length2 = 0;
 	int length3 = 0;
-
 	char **desktop_files1 = appshortcut_get_desktop_files("/usr/share/applications/", &length1);
 	char **desktop_files2 = appshortcut_get_desktop_files("/usr/local/share/applications/", &length2);
+	char **desktop_files3 = appshortcut_get_desktop_files(utils_get_user_home(), &length3);
 
-	char *user_home = utils_get_user_home();
-	char **desktop_files3 = appshortcut_get_desktop_files(user_home, &length3);
-
-	int length = length1 + length2 + length3;
-	char **desktop_files = malloc(sizeof(char*) * length);
+	*length = length1 + length2 + length3;
+	char **desktop_files = malloc(sizeof(char*) * (length1 + length2 + length3));
 
 	int i;
 	for (i = 0; i < length1; i++) {
@@ -40,25 +37,7 @@ struct appshortcut* appshortcut_get_app_shortcuts(int *_length) {
 	}
 	free(desktop_files3);
 
-	struct appshortcut* app_shortcuts = malloc(sizeof(struct appshortcut) * length);
-
-	int real_length = 0;
-	for (i = 0; i < length; i++) {
-		struct appshortcut app_shortcut = appshortcut_get_app_shortcut(desktop_files[i]);
-
-		if (app_shortcut.name != NULL) {
-			app_shortcuts[real_length] = app_shortcut;
-			real_length++;
-		}
-
-		free(desktop_files[i]);
-	}
-
-	free(desktop_files);
-
-	*_length = real_length;
-
-	return app_shortcuts;
+	return desktop_files;
 }
 
 char** appshortcut_get_desktop_files(char *foldername, int *length) {

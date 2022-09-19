@@ -90,31 +90,8 @@ int cache_update(void) {
 
 	sqlite3_finalize(stmt);
 
-	int length1 = 0;
-	int length2 = 0;
-	int length3 = 0;
-	char **desktop_files1 = appshortcut_get_desktop_files("/usr/share/applications/", &length1);
-	char **desktop_files2 = appshortcut_get_desktop_files("/usr/local/share/applications/", &length2);
-	char **desktop_files3 = appshortcut_get_desktop_files(user_home, &length3);
-
-	int length = length1 + length2 + length3;
-	char **desktop_files = malloc(sizeof(char*) * length);
-
-	int i;
-	for (i = 0; i < length1; i++) {
-		desktop_files[i] = desktop_files1[i];
-	}
-	free(desktop_files1);
-
-	for (int j = 0; j < length2; i++, j++) {
-		desktop_files[i] = desktop_files2[j];
-	}
-	free(desktop_files2);
-
-	for (int j = 0; j < length3; i++, j++) {
-		desktop_files[i] = desktop_files3[j];
-	}
-	free(desktop_files3);
+	int length = 0;
+	char **desktop_files = appshortcut_get_all_desktop_files(&length);
 
 	for (int i = 0; i < length; i++) {
 		sqlite3_stmt *select_stmt;
