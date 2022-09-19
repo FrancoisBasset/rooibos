@@ -10,7 +10,7 @@ struct appshortcut {
 	char *file;
 };
 
-struct appshortcut* appshortcut_get_app_shortcuts(int *length);
+char** appshortcut_get_all_desktop_files(int *length);
 char** appshortcut_get_desktop_files(char *foldername, int *length);
 struct appshortcut appshortcut_get_app_shortcut(char *filename);
 
