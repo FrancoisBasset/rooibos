@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2022-09-19
+### [Changed]
+* I optimized the update cache system to get app shortcuts
+
 ## 2022-09-18
 ### [Added]
 * I added a cache system to get app shortcuts faster

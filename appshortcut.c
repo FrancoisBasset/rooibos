@@ -61,7 +61,7 @@ struct appshortcut* appshortcut_get_app_shortcuts(int *_length) {
 	return app_shortcuts;
 }
 
-static char** appshortcut_get_desktop_files(char *foldername, int *length) {
+char** appshortcut_get_desktop_files(char *foldername, int *length) {
 	if (access(foldername, F_OK) != 0) {
 		return malloc(sizeof(char*) * 0);
 	}
@@ -96,7 +96,7 @@ static char** appshortcut_get_desktop_files(char *foldername, int *length) {
 	return desktop_files;
 }
 
-static struct appshortcut appshortcut_get_app_shortcut(char *filename) {
+struct appshortcut appshortcut_get_app_shortcut(char *filename) {
 	FILE *file = fopen(filename, "r");
 
 	char *line = malloc(sizeof(char) * 100);
