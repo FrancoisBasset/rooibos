@@ -73,33 +73,83 @@ int cache_update(void) {
 	sqlite3_stmt *stmt;
 	const char **unused_sql;
 
-	sqlite3_prepare_v2(db, "DELETE FROM appshortcuts", 24, &stmt, unused_sql);
-	sqlite3_step(stmt);
-	sqlite3_finalize(stmt);
+	sqlite3_prepare_v2(db, "SELECT file FROM appshortcuts", 29, &stmt, unused_sql);
 
-	int length = 0;
-	struct appshortcut *app_shortcuts = appshortcut_get_app_shortcuts(&length);
+	int stmt_status;
+	while ((stmt_status = sqlite3_step(stmt)) == 100) {
+		const unsigned char *file = sqlite3_column_text(stmt, 0);
 
-	for (int i = 0; i < length; i++) {
-		sqlite3_prepare_v2(db, "INSERT INTO appshortcuts VALUES (?, ?, ?, ?, ?)", 1000, &stmt, unused_sql);
-		sqlite3_bind_text(stmt, 1, app_shortcuts[i].name, strlen(app_shortcuts[i].name), SQLITE_STATIC);
-		sqlite3_bind_text(stmt, 2, app_shortcuts[i].exec, strlen(app_shortcuts[i].exec), SQLITE_STATIC);
-		sqlite3_bind_text(stmt, 3, app_shortcuts[i].categorie, strlen(app_shortcuts[i].categorie), SQLITE_STATIC);
-		sqlite3_bind_text(stmt, 4, app_shortcuts[i].icon, strlen(app_shortcuts[i].icon), SQLITE_STATIC);
-		sqlite3_bind_text(stmt, 5, app_shortcuts[i].file, strlen(app_shortcuts[i].file), SQLITE_STATIC);
-
-		sqlite3_step(stmt);
-
-		free(app_shortcuts[i].name);
-		free(app_shortcuts[i].exec);
-		free(app_shortcuts[i].categorie);
-		free(app_shortcuts[i].icon);
-		free(app_shortcuts[i].file);
-
-		sqlite3_finalize(stmt);
+		if (access(file, F_OK) != 0) {
+			sqlite3_stmt *delete_stmt;
+			sqlite3_prepare_v2(db, "DELETE FROM appshortcuts WHERE file = ?", 50 + strlen(file), &delete_stmt, unused_sql);
+			sqlite3_bind_text(delete_stmt, 1, file, strlen(file), SQLITE_STATIC);
+			sqlite3_step(delete_stmt);
+			sqlite3_finalize(delete_stmt);
+		}
 	}
 
-	free(app_shortcuts);
+	sqlite3_finalize(stmt);
+
+	int length1 = 0;
+	int length2 = 0;
+	int length3 = 0;
+	char **desktop_files1 = appshortcut_get_desktop_files("/usr/share/applications/", &length1);
+	char **desktop_files2 = appshortcut_get_desktop_files("/usr/local/share/applications/", &length2);
+	char **desktop_files3 = appshortcut_get_desktop_files(user_home, &length3);
+
+	int length = length1 + length2 + length3;
+	char **desktop_files = malloc(sizeof(char*) * length);
+
+	int i;
+	for (i = 0; i < length1; i++) {
+		desktop_files[i] = desktop_files1[i];
+	}
+	free(desktop_files1);
+
+	for (int j = 0; j < length2; i++, j++) {
+		desktop_files[i] = desktop_files2[j];
+	}
+	free(desktop_files2);
+
+	for (int j = 0; j < length3; i++, j++) {
+		desktop_files[i] = desktop_files3[j];
+	}
+	free(desktop_files3);
+
+	for (int i = 0; i < length; i++) {
+		sqlite3_stmt *select_stmt;
+		sqlite3_prepare_v2(db, "SELECT file FROM appshortcuts WHERE file = ?", 50 + strlen(desktop_files[i]), &select_stmt, unused_sql);
+		sqlite3_bind_text(select_stmt, 1, desktop_files[i], strlen(desktop_files[i]), SQLITE_STATIC);
+		sqlite3_step(select_stmt);
+
+		const unsigned char *file = sqlite3_column_text(select_stmt, 0);
+		sqlite3_finalize(select_stmt);
+
+		if (file == NULL) {
+			struct appshortcut app_shortcut = appshortcut_get_app_shortcut(desktop_files[i]);
+			if (app_shortcut.name != NULL) {
+				sqlite3_stmt *insert_stmt;
+				sqlite3_prepare_v2(db, "INSERT INTO appshortcuts VALUES (?, ?, ?, ?, ?)", 1000, &insert_stmt, unused_sql);
+				sqlite3_bind_text(insert_stmt, 1, app_shortcut.name, strlen(app_shortcut.name), SQLITE_STATIC);
+				sqlite3_bind_text(insert_stmt, 2, app_shortcut.exec, strlen(app_shortcut.exec), SQLITE_STATIC);
+				sqlite3_bind_text(insert_stmt, 3, app_shortcut.categorie, strlen(app_shortcut.categorie), SQLITE_STATIC);
+				sqlite3_bind_text(insert_stmt, 4, app_shortcut.icon, strlen(app_shortcut.icon), SQLITE_STATIC);
+				sqlite3_bind_text(insert_stmt, 5, app_shortcut.file, strlen(app_shortcut.file), SQLITE_STATIC);
+				sqlite3_step(insert_stmt);
+				sqlite3_finalize(insert_stmt);
+
+				free(app_shortcut.name);
+				free(app_shortcut.exec);
+				free(app_shortcut.categorie);
+				free(app_shortcut.icon);
+				free(app_shortcut.file);
+			}
+		}
+
+		free(desktop_files[i]);
+	}
+
+	free(desktop_files);
 
 	sqlite3_close(db);
 
@@ -127,12 +177,12 @@ struct appshortcut* cache_get_app_shortcuts(int *length) {
 	sqlite3_stmt *stmt;
 	const char **tail;
 
-	sqlite3_prepare(db, "SELECT COUNT(*) FROM appshortcuts", 33, &stmt, tail);
+	sqlite3_prepare_v2(db, "SELECT COUNT(*) FROM appshortcuts", 33, &stmt, tail);
 	sqlite3_step(stmt);
 	*length = sqlite3_column_int(stmt, 0);
 	sqlite3_finalize(stmt);
 
-	sqlite3_prepare(db, "SELECT * FROM appshortcuts ORDER BY name COLLATE NOCASE", 55, &stmt, tail);
+	sqlite3_prepare_v2(db, "SELECT * FROM appshortcuts ORDER BY name COLLATE NOCASE", 55, &stmt, tail);
 
 	struct appshortcut *app_shortcuts = malloc(sizeof(struct appshortcut) * *length);
 	int stmt_status;

@@ -9,7 +9,6 @@ All my tasks will be written in this file.
 - [ ] Create man pages
 
 ### In Progress
-- [ ] Proof of concept : Apps shortcuts
 
 ### Done
 - [X] Prepare Kanban
@@ -20,3 +19,4 @@ All my tasks will be written in this file.
 - [X] Add a TODO file
 - [X] Add a CHANGELOG file
 - [X] Add concept in README
+- [X] Proof of concept : Apps shortcuts
