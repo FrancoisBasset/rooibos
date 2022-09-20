@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2022-09-20
+### [Changed]
+* I replaced the word "categorie" by "category"
+
 ## 2022-09-19
 ### [Added]
 * I added the appshortcut_get_all_desktop_files method

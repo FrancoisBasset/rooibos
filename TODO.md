@@ -9,7 +9,6 @@ All my tasks will be written in this file.
 - [ ] Create man pages
 
 ### In Progress
-- [ ] Replace "categorie" by "category"
 
 ### Done
 - [X] Prepare Kanban
@@ -22,3 +21,4 @@ All my tasks will be written in this file.
 - [X] Add concept in README
 - [X] Proof of concept : Apps shortcuts
 - [X] Refactorize the cache update system
+- [X] Replace "categorie" by "category"
