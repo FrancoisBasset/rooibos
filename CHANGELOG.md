@@ -15,6 +15,7 @@ There are 6 types of changes :
 ## 2022-09-20
 ### [Changed]
 * I replaced the word "categorie" by "category"
+* I replaced the appshortcuts executable name by rooibos
 
 ## 2022-09-19
 ### [Added]
