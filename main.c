@@ -39,10 +39,10 @@ int main(int argc, char **argv) {
 	struct appshortcut *app_shortcuts = cache_get_app_shortcuts(&length);
 
 	for (int i = 0; i < length; i++) {
-		printf("%s\n%s -- %s -- %s -- %s\n\n", app_shortcuts[i].file, app_shortcuts[i].name, app_shortcuts[i].exec, app_shortcuts[i].categorie, app_shortcuts[i].icon);
+		printf("%s\n%s -- %s -- %s -- %s\n\n", app_shortcuts[i].file, app_shortcuts[i].name, app_shortcuts[i].exec, app_shortcuts[i].category, app_shortcuts[i].icon);
 		free(app_shortcuts[i].name);
 		free(app_shortcuts[i].exec);
-		free(app_shortcuts[i].categorie);
+		free(app_shortcuts[i].category);
 		free(app_shortcuts[i].icon);
 		free(app_shortcuts[i].file);
 	}

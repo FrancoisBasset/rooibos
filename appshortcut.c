@@ -135,10 +135,10 @@ struct appshortcut appshortcut_get_app_shortcut(char *filename) {
 		return null_shortcut;
 	}
 
-	char *categorie = appshortcut_get_categorie(categories);
+	char *category = appshortcut_get_category(categories);
 	free(categories);
 
-	struct appshortcut app_shortcut = { name, exec, categorie, icon };
+	struct appshortcut app_shortcut = { name, exec, category, icon };
 	app_shortcut.file = malloc(sizeof(char) * 100);
 	strcpy(app_shortcut.file, filename);
 
@@ -155,8 +155,8 @@ static int filter_icon(const char *path, const struct stat *sb, int typeflag) {
 	return 0;
 }
 
-static char* appshortcut_get_categorie(char* categories) {
-	char *new_categorie = NULL;
+static char* appshortcut_get_category(char* categories) {
+	char *new_category = NULL;
 
 	char *categories_replacement[8][2] = {
 		{ "Game;", "Games" },
@@ -171,16 +171,16 @@ static char* appshortcut_get_categorie(char* categories) {
 
 	for (int i = 0; i < 8; i++) {
 		if (strstr(categories, categories_replacement[i][0])) {
-			new_categorie = malloc(sizeof(char) * (strlen(categories_replacement[i][1]) + 1));
-			strcpy(new_categorie, categories_replacement[i][1]);
-			return new_categorie;
+			new_category = malloc(sizeof(char) * (strlen(categories_replacement[i][1]) + 1));
+			strcpy(new_category, categories_replacement[i][1]);
+			return new_category;
 		}
 	}
 
-	new_categorie = malloc(sizeof(char) * 6);
-	strcpy(new_categorie, "Other");
+	new_category = malloc(sizeof(char) * 6);
+	strcpy(new_category, "Other");
 
-	return new_categorie;
+	return new_category;
 }
 
 static char* appshortcut_get_icon(char *icon) {

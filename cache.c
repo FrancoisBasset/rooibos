@@ -32,7 +32,7 @@ int cache_init(void) {
 	}
 
 	sqlite3_stmt *stmt;
-	char *sql = "CREATE TABLE IF NOT EXISTS appshortcuts ('name' TEXT NOT NULL, 'exec' TEXT NOT NULL, 'categorie' TEXT NOT NULL, 'icon' TEXT NOT NULL, 'file' TEXT NOT NULL)";
+	char *sql = "CREATE TABLE IF NOT EXISTS appshortcuts ('name' TEXT NOT NULL, 'exec' TEXT NOT NULL, 'category' TEXT NOT NULL, 'icon' TEXT NOT NULL, 'file' TEXT NOT NULL)";
 	const char **unused_sql;
 	int prepare_status = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, unused_sql);
 	if (prepare_status != SQLITE_OK) {
@@ -109,7 +109,7 @@ int cache_update(void) {
 				sqlite3_prepare_v2(db, "INSERT INTO appshortcuts VALUES (?, ?, ?, ?, ?)", 1000, &insert_stmt, unused_sql);
 				sqlite3_bind_text(insert_stmt, 1, app_shortcut.name, strlen(app_shortcut.name), SQLITE_STATIC);
 				sqlite3_bind_text(insert_stmt, 2, app_shortcut.exec, strlen(app_shortcut.exec), SQLITE_STATIC);
-				sqlite3_bind_text(insert_stmt, 3, app_shortcut.categorie, strlen(app_shortcut.categorie), SQLITE_STATIC);
+				sqlite3_bind_text(insert_stmt, 3, app_shortcut.category, strlen(app_shortcut.category), SQLITE_STATIC);
 				sqlite3_bind_text(insert_stmt, 4, app_shortcut.icon, strlen(app_shortcut.icon), SQLITE_STATIC);
 				sqlite3_bind_text(insert_stmt, 5, app_shortcut.file, strlen(app_shortcut.file), SQLITE_STATIC);
 				sqlite3_step(insert_stmt);
@@ -117,7 +117,7 @@ int cache_update(void) {
 
 				free(app_shortcut.name);
 				free(app_shortcut.exec);
-				free(app_shortcut.categorie);
+				free(app_shortcut.category);
 				free(app_shortcut.icon);
 				free(app_shortcut.file);
 			}
@@ -167,7 +167,7 @@ struct appshortcut* cache_get_app_shortcuts(int *length) {
 	while ((stmt_status = sqlite3_step(stmt)) == 100) {
 		const unsigned char *name = sqlite3_column_text(stmt, 0);
 		const unsigned char *exec = sqlite3_column_text(stmt, 1);
-		const unsigned char *categorie = sqlite3_column_text(stmt, 2);
+		const unsigned char *category = sqlite3_column_text(stmt, 2);
 		const unsigned char *icon = sqlite3_column_text(stmt, 3);
 		const unsigned char *file = sqlite3_column_text(stmt, 4);
 
@@ -179,8 +179,8 @@ struct appshortcut* cache_get_app_shortcuts(int *length) {
 		app_shortcut.exec = malloc(sizeof(char) * (strlen(exec) + 1));
 		strcpy(app_shortcut.exec, exec);
 
-		app_shortcut.categorie = malloc(sizeof(char) * (strlen(categorie) + 1));
-		strcpy(app_shortcut.categorie, categorie);
+		app_shortcut.category = malloc(sizeof(char) * (strlen(category) + 1));
+		strcpy(app_shortcut.category, category);
 
 		app_shortcut.icon = malloc(sizeof(char) * (strlen(icon) + 1));
 		strcpy(app_shortcut.icon, icon);
