@@ -22,3 +22,4 @@ All my tasks will be written in this file.
 - [X] Proof of concept : Apps shortcuts
 - [X] Refactorize the cache update system
 - [X] Replace "categorie" by "category"
+- [X] Replace the appshortcuts executable by rooibos executable
