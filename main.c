@@ -8,23 +8,23 @@
 int main(int argc, char **argv) {
 	if (argc > 1) {
 		if (strcmp(argv[1], "cache-init") == 0) {
-			printf("Beginning cache init\n");
+			printf("rooibos : Starting cache init...\n");
 
 			int init_status = cache_init();
 			if (init_status == 0) {
-				printf("Success cache init !\n");
+				printf("rooibos : Success cache init ! :)\n");
 			} else {
-				printf("Error cache init !\n");
+				printf("rooibos : Error cache init ! :(\n");
 				return -1;
 			}
 		} else if (strcmp(argv[1], "cache-update") == 0) {
-			printf("Beginning cache update !\n");
+			printf("rooibos : Starting cache update...\n");
 
 			int update_status = cache_update();
 			if (update_status == 0) {
-				printf("Success cache update !\n");
+				printf("rooibos : Success cache update ! :)\n");
 			} else {
-				printf("Error cache update !\n");
+				printf("rooibos : Error cache update ! :(\n");
 				return -1;
 			}
 		} else {
@@ -37,6 +37,10 @@ int main(int argc, char **argv) {
 
 	int length = 0;
 	struct appshortcut *app_shortcuts = cache_get_app_shortcuts(&length);
+	if (app_shortcuts == NULL) {
+		printf("rooibos : Error cache get");
+		return -1;
+	}
 
 	for (int i = 0; i < length; i++) {
 		printf("%s\n%s -- %s -- %s -- %s\n\n", app_shortcuts[i].file, app_shortcuts[i].name, app_shortcuts[i].exec, app_shortcuts[i].category, app_shortcuts[i].icon);
