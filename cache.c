@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -61,14 +60,19 @@ int cache_update(void) {
 
 	sqlite3 *db;
 	int success = sqlite3_open(cache_path, &db);
-	free(cache_path);
 
 	if (success != 0) {
-		printf("Cannot get cache !\n");
-		printf("Trying to recreate cache !\n");
 		sqlite3_close(db);
-		return -1;
+		int init_status = cache_init();
+		if (init_status == -1) {
+			free(cache_path);
+			return -1;
+		}
+
+		sqlite3_open(cache_path, &db);
 	}
+
+	free(cache_path);
 
 	sqlite3_stmt *stmt;
 	const char **unused_sql;
@@ -142,14 +146,20 @@ struct appshortcut* cache_get_app_shortcuts(int *length) {
 
 	sqlite3 *db;
 	int success = sqlite3_open_v2(cache_path, &db, SQLITE_OPEN_READONLY, NULL);
-	free(cache_path);
 
 	if (success != 0) {
-		printf("Cannot get cache !\n");
-		printf("Trying to recreate cache !\n");
 		sqlite3_close(db);
-		return NULL;
+		int init_status = cache_init();
+		if (init_status == -1) {
+			free(cache_path);
+			return NULL;
+		}
+
+		cache_update();
+		sqlite3_open_v2(cache_path, &db, SQLITE_OPEN_READONLY, NULL);
 	}
+
+	free(cache_path);
 
 	sqlite3_stmt *stmt;
 	const char **tail;

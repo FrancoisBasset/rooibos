@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2022-09-21
+### [Fixed]
+* I recreated cache if cache is not present
+
 ## 2022-09-20
 ### [Changed]
 * I replaced the word "categorie" by "category"

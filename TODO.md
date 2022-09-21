@@ -7,8 +7,10 @@ All my tasks will be written in this file.
 - [ ] Find great design
 - [ ] Create documentation
 - [ ] Create man pages
+- [ ] Tidy app shortcuts by category
 
 ### In Progress
+- [ ] Add an autocomplete system for rooibos executable
 
 ### Done
 - [X] Prepare Kanban
@@ -23,3 +25,4 @@ All my tasks will be written in this file.
 - [X] Refactorize the cache update system
 - [X] Replace "categorie" by "category"
 - [X] Replace the appshortcuts executable by rooibos executable
+- [X] Recreate cache if cache is not present
