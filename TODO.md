@@ -22,6 +22,7 @@ All my tasks will be written in this file.
 - [X] Add a CHANGELOG file
 - [X] Add concept in README
 - [X] Proof of concept : Apps shortcuts
+- [X] Create Makefile
 - [X] Refactorize the cache update system
 - [X] Replace "categorie" by "category"
 - [X] Replace the appshortcuts executable by rooibos executable
