@@ -10,6 +10,21 @@
 static char *icon_to_search;
 static char *result;
 
+struct appshortcut* appshortcut_get_app_shortcuts_by_category(struct appshortcut* app_shortcuts, char *category, int length, int *new_length) {
+	struct appshortcut *new_app_shortcuts = malloc(sizeof(struct appshortcut) * length);
+	*new_length = 0;
+
+	for (int i = 0, j = 0; i < length; i++) {
+		if (strcmp(app_shortcuts[i].category, category) == 0) {
+			new_app_shortcuts[j] = app_shortcuts[i];
+			j++;
+			(*new_length)++;
+		}
+	}
+
+	return new_app_shortcuts;
+}
+
 char** appshortcut_get_all_desktop_files(int *length) {
 	int length1 = 0;
 	int length2 = 0;
