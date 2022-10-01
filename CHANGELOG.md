@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2022-10-01
+### [Added]
+* I added a method to get app shortcuts by category
+
 ## 2022-09-21
 ### [Added]
 * I added an entry in TODO.md

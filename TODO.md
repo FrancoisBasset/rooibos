@@ -7,10 +7,10 @@ All my tasks will be written in this file.
 - [ ] Find great design
 - [ ] Create documentation
 - [ ] Create man pages
-- [ ] Tidy app shortcuts by category
+- [ ] Add an autocomplete system for rooibos executable
 
 ### In Progress
-- [ ] Add an autocomplete system for rooibos executable
+- [ ] Tidy app shortcuts by category
 
 ### Done
 - [X] Prepare Kanban
