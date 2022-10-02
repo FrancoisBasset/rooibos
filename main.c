@@ -4,6 +4,7 @@
 #include <sqlite3.h>
 #include "appshortcut.h"
 #include "cache.h"
+#include "utils.h"
 
 void green(void) {
 	printf("\033[0;32m");
@@ -63,6 +64,14 @@ int main(int argc, char **argv) {
 		}
 
 		return 0;
+	}
+
+	int is_root = utils_is_root();
+	if (is_root) {
+		red();
+		printf("Root is not allowed to launch the rooibos window manager\n");
+		reset();
+		return -1;
 	}
 
 	int length = 0;

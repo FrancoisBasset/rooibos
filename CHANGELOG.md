@@ -17,6 +17,7 @@ There are 6 types of changes :
 * I added the VERSION file
 ### [Changed]
 * I replaced the method getpwuid by getpwnam
+* I disallowed root user to start rooibos for security
 
 ## 2022-10-01
 ### [Added]

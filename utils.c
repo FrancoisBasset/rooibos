@@ -18,3 +18,11 @@ char* utils_get_user_home(void) {
 
 	return pw->pw_dir;
 }
+
+int utils_is_root(void) {
+	if (getuid() == 0) {
+		return 1;
+	} else {
+		return 0;
+	}
+}

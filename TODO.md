@@ -18,7 +18,6 @@ All my tasks will be written in this file.
 - [ ] Create package for Arch
 - [ ] Create RPM package
 - [ ] Publish .deb package in Debian repositories
-- [ ] Add a verification : root not allowed to launch the window manager
 
 ### Waiting
 - [ ] Create Debian package
@@ -43,3 +42,4 @@ All my tasks will be written in this file.
 - [X] Tidy app shortcuts by category
 - [X] Use the getlogin() function
 - [X] Add VERSION file
+- [X] Add a verification : root not allowed to launch the window manager
