@@ -3,14 +3,29 @@ All my tasks will be written in this file.
 
 ### Todo
 - [ ] Proof of concept : Window decoration
-- [ ] Create Makefile
 - [ ] Find great design
 - [ ] Create documentation
 - [ ] Create man pages
 - [ ] Add an autocomplete system for rooibos executable
+- [ ] Add a CRON to launch rooibos cache-update
+- [ ] Change "Xlib" to "XCB" in README
+- [ ] Expand the DEBIAN folder in package
+- [ ] Add "version" command
+- [ ] Create a release in GitHub
+- [ ] Add INSTALL file
+- [ ] Add install target in Makefile
+- [ ] Add uninstall target in Makefile
+- [ ] Create package for Arch
+- [ ] Create RPM package
+- [ ] Publish .deb package in Debian repositories
+- [ ] Add a verification : root not allowed to launch the window manager
+
+### Waiting
+- [ ] Create Debian package
+- [ ] Add VERSION file
 
 ### In Progress
-- [ ] Tidy app shortcuts by category
+- [ ] Use the getlogin() function
 
 ### Done
 - [X] Prepare Kanban
@@ -27,3 +42,4 @@ All my tasks will be written in this file.
 - [X] Replace "categorie" by "category"
 - [X] Replace the appshortcuts executable by rooibos executable
 - [X] Recreate cache if cache is not present
+- [X] Tidy app shortcuts by category
