@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2022-10-02
+### [Changed]
+* I replaced the method getpwuid by getpwnam
+
 ## 2022-10-01
 ### [Added]
 * I added a method to get app shortcuts by category

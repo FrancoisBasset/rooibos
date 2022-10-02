@@ -25,7 +25,6 @@ All my tasks will be written in this file.
 - [ ] Add VERSION file
 
 ### In Progress
-- [ ] Use the getlogin() function
 
 ### Done
 - [X] Prepare Kanban
@@ -43,3 +42,4 @@ All my tasks will be written in this file.
 - [X] Replace the appshortcuts executable by rooibos executable
 - [X] Recreate cache if cache is not present
 - [X] Tidy app shortcuts by category
+- [X] Use the getlogin() function
