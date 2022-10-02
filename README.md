@@ -1,6 +1,6 @@
 # Rooibos
-Rooibos is a window manager written in C with the Xlib library, the low-level library of the X Window System. I decided to create this software because I think that I can provide added value.
-Rooibos is written with the Xlib library because it is a low-level and lightweight library, and to give  the best user experience.
+Rooibos is a window manager written in C with the XCB library, the low-level library of the X Window System. I decided to create this software because I think that I can provide added value.
+Rooibos is written with the XCB library because it is a low-level and lightweight library, and to give the best user experience.
 
 ## Usability
 Window managing is in tilling mode. Window positions is automatic but it can be moved by user.
