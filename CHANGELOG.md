@@ -13,6 +13,8 @@ There are 6 types of changes :
 # Changes
 
 ## 2022-10-02
+### [Added]
+* I added the VERSION file
 ### [Changed]
 * I replaced the method getpwuid by getpwnam
 

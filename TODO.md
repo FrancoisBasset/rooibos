@@ -22,7 +22,6 @@ All my tasks will be written in this file.
 
 ### Waiting
 - [ ] Create Debian package
-- [ ] Add VERSION file
 
 ### In Progress
 
@@ -43,3 +42,4 @@ All my tasks will be written in this file.
 - [X] Recreate cache if cache is not present
 - [X] Tidy app shortcuts by category
 - [X] Use the getlogin() function
+- [X] Add VERSION file
