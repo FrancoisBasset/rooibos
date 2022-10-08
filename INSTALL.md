@@ -9,7 +9,9 @@ These packages are essentials to build the program :
 ==> build-essential
 ==> libsqlite3-dev
 
-First to compile this program run this command :
+First to compile this program run these commands :
+
+==> ./configure.sh
 
 ==> make
 

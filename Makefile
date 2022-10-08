@@ -28,9 +28,13 @@ vg:
 	valgrind --leak-check=full --show-leak-kinds=all ./rooibos
 
 pkg:
+	rm package/usr/bin/.gitkeep
+	rm package/usr/share/man/man1/.gitkeep
 	cp rooibos package/usr/bin
 	gzip < rooibos.1 > package/usr/share/man/man1/rooibos.1.gz
 	dpkg-deb --build package rooibos_$(VERSION)_$(ARCH).deb
+	> package/usr/bin/.gitkeep
+	> package/usr/share/man/man1/.gitkeep
 
 start:
 	./rooibos

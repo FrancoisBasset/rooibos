@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2022-10-08
+### [Added]
+* Version 0.1.0
+
 ## 2022-10-02
 ### [Added]
 * I added the VERSION file

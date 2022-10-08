@@ -11,7 +11,6 @@ All my tasks will be written in this file.
 - [ ] Publish .deb package in Debian repositories
 
 ### Waiting
-- [ ] Delete .gitkeep file
 
 ### In Progress
 
@@ -47,3 +46,4 @@ All my tasks will be written in this file.
 - [X] Create AUTHOR FILE
 - [X] Choose the MIT license
 - [X] Add a configure script
+- [X] Delete .gitkeep file

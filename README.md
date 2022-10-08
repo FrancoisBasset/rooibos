@@ -16,7 +16,9 @@ The installation of this program is done in 2 steps :
 - Compilation, the process of translating source code by machine code
 - Installation, the process of copying executables and configuration files into a file system
 
-First to compile this program run this command :
+First to compile this program run these commands :
+
+==> ./configure.sh
 
 ==> make
 
