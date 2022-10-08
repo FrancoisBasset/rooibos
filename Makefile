@@ -42,7 +42,13 @@ start:
 install:
 	cp rooibos /usr/bin/rooibos
 	cp package/usr/share/bash-completion/completions/rooibos /usr/share/bash-completion/completions/rooibos
+	gzip < rooibos.1 > /usr/share/man/man1/rooibos.1.gz
+	cp package/etc/init.d/rooibos.sh /etc/init.d/rooibos.sh
+	rooibos cache-init
+	rooibos cache-update
 
 uninstall:
 	rm -f /usr/bin/rooibos
 	rm -f /usr/share/bash-completion/completions/rooibos
+	rm -f /usr/share/man/man1/rooibos.1.gz
+	rm -f /etc/init.d/rooibos.sh
