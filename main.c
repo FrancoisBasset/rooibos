@@ -5,6 +5,7 @@
 #include "appshortcut.h"
 #include "cache.h"
 #include "utils.h"
+#include "VERSION.h"
 
 void green(void) {
 	printf("\033[0;32m");
@@ -56,6 +57,8 @@ int main(int argc, char **argv) {
 				reset();
 				return -1;
 			}
+		} else if (strcmp(argv[1], "version") == 0) {
+			printf("%s\n", VERSION);
 		} else {
 			red();
 			printf("Not a valid command !\n");

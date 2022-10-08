@@ -4,23 +4,14 @@ All my tasks will be written in this file.
 ### Todo
 - [ ] Proof of concept : Window decoration
 - [ ] Find great design
-- [ ] Create documentation
-- [ ] Create man pages
-- [ ] Add an autocomplete system for rooibos executable
-- [ ] Add a CRON to launch rooibos cache-update
-- [ ] Change "Xlib" to "XCB" in README
 - [ ] Expand the DEBIAN folder in package
-- [ ] Add "version" command
 - [ ] Create a release in GitHub
-- [ ] Add INSTALL file
-- [ ] Add install target in Makefile
-- [ ] Add uninstall target in Makefile
 - [ ] Create package for Arch
 - [ ] Create RPM package
 - [ ] Publish .deb package in Debian repositories
 
 ### Waiting
-- [ ] Create Debian package
+- [ ] Delete .gitkeep file
 
 ### In Progress
 
@@ -43,3 +34,16 @@ All my tasks will be written in this file.
 - [X] Use the getlogin() function
 - [X] Add VERSION file
 - [X] Add a verification : root not allowed to launch the window manager
+- [X] Change "Xlib" to "XCB" in README
+- [X] Add an autocomplete system for rooibos executable
+- [X] Create Debian package
+- [X] Add "version" command
+- [X] Add install target in Makefile
+- [X] Add uninstall target in Makefile
+- [X] Add INSTALL file
+- [X] Add a CRON to launch rooibos cache-update
+- [X] Create man pages
+- [X] Strip executable
+- [X] Create AUTHOR FILE
+- [X] Choose the MIT license
+- [X] Add a configure script

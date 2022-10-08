@@ -1,0 +1,17 @@
+#!/bin/sh
+rooibos cache-init
+rooibos cache-update
+
+if [ "$SUDO_USER" != "root" ]
+then
+	ROOIBOS_USER=$SUDO_USER
+fi
+
+if [ "$USER" != "root" ]
+then
+	ROOIBOS_USER=$USER
+fi
+
+chown -R $ROOIBOS_USER:$ROOIBOS_USER "/home/"$ROOIBOS_USER"/.rooibos"
+
+/etc/init.d/rooibos.sh &

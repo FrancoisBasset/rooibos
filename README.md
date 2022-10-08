@@ -1,6 +1,46 @@
 # Rooibos
-Rooibos is a window manager written in C with the XCB library, the low-level library of the X Window System. I decided to create this software because I think that I can provide added value.
+Rooibos is a modern window manager written in C with the XCB library, the low-level library of the X Window System. I decided to create this software because I think that I can provide added value.
 Rooibos is written with the XCB library because it is a low-level and lightweight library, and to give the best user experience.
+
+![Rooibos can get all app shortcuts for menu](/assets/rooibos_appshortcuts.png))
+
+## Requirements :
+
+These packages are essentials to build the program :
+==> build-essential
+==> libsqlite3-dev
+
+## Installation
+
+The installation of this program is done in 2 steps :
+- Compilation, the process of translating source code by machine code
+- Installation, the process of copying executables and configuration files into a file system
+
+First to compile this program run this command :
+
+==> make
+
+Then to install this program there are 2 ways :
+
+- CLASSICAL MAKE INSTALL :
+
+	Run this command :
+	==> sudo make install
+	to copy files in /usr/bin and /usr/share folders
+
+OR
+
+- DEBIAN PACKAGE INSTALLATION
+
+	Run these 2 commands :
+
+	Command 1
+	==> make pkg
+	to build the Debian package
+
+	Command 2
+	==> sudo dpkg -i <package.deb>
+	to install the generated .deb package
 
 ## Usability
 Window managing is in tilling mode. Window positions is automatic but it can be moved by user.
