@@ -13,3 +13,7 @@ VERSION.h
 package/usr/bin/rooibos
 package/usr/share/man/man1/rooibos.1.gz
 *.deb
+
+#vscode
+.vscode
+compile_commands.json

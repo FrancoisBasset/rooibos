@@ -10,7 +10,11 @@
 static char *icon_to_search;
 static char *result;
 
-struct appshortcut* appshortcut_get_app_shortcuts_by_category(struct appshortcut* app_shortcuts, char *category, int length, int *new_length) {
+static int filter_icon(const char *path, const struct stat *sb, int typeflag);
+static char* appshortcut_get_category(const char* categories);
+static char* appshortcut_get_icon(char *icon);
+
+struct appshortcut* appshortcut_get_app_shortcuts_by_category(const struct appshortcut* app_shortcuts, const char *category, int length, int *new_length) {
 	struct appshortcut *new_app_shortcuts = malloc(sizeof(struct appshortcut) * length);
 	*new_length = 0;
 
@@ -55,7 +59,7 @@ char** appshortcut_get_all_desktop_files(int *length) {
 	return desktop_files;
 }
 
-char** appshortcut_get_desktop_files(char *foldername, int *length) {
+char** appshortcut_get_desktop_files(const char *foldername, int *length) {
 	if (access(foldername, F_OK) != 0) {
 		return malloc(sizeof(char*) * 0);
 	}
@@ -64,7 +68,7 @@ char** appshortcut_get_desktop_files(char *foldername, int *length) {
 
 	*length = 0;
 
-	struct dirent *file;
+	const struct dirent *file;
 	while ((file = readdir(dir)) != NULL) {
 		if (strstr(file->d_name, ".desktop")) {
 			(*length)++;
@@ -90,7 +94,7 @@ char** appshortcut_get_desktop_files(char *foldername, int *length) {
 	return desktop_files;
 }
 
-struct appshortcut appshortcut_get_app_shortcut(char *filename) {
+struct appshortcut appshortcut_get_app_shortcut(const char *filename) {
 	FILE *file = fopen(filename, "r");
 
 	char *line = malloc(sizeof(char) * 100);
@@ -170,7 +174,7 @@ static int filter_icon(const char *path, const struct stat *sb, int typeflag) {
 	return 0;
 }
 
-static char* appshortcut_get_category(char* categories) {
+static char* appshortcut_get_category(const char* categories) {
 	char *new_category = NULL;
 
 	char *categories_replacement[8][2] = {

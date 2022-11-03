@@ -24,6 +24,9 @@ clean:
 check:
 	cppcheck --language=c --enable=all --template=gcc --suppress=missingIncludeSystem .
 
+bear:
+	bear -- make
+
 vg:
 	valgrind --leak-check=full --show-leak-kinds=all ./rooibos
 

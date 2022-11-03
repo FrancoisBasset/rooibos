@@ -9,6 +9,9 @@ All my tasks will be written in this file.
 - [ ] Create package for Arch
 - [ ] Create RPM package
 - [ ] Publish .deb package in Debian repositories
+- [ ] Delete CRON system
+- [ ] Study the 9wm program
+- [ ] Create a short program with Xlib
 
 ### Waiting
 
@@ -47,3 +50,5 @@ All my tasks will be written in this file.
 - [X] Choose the MIT license
 - [X] Add a configure script
 - [X] Delete .gitkeep file
+- [X] Create a short program with XCB
+- [X] Refactorize with Sonarlint
