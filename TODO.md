@@ -2,18 +2,17 @@
 All my tasks will be written in this file.
 
 ### Todo
-- [ ] Proof of concept : Window decoration
 - [ ] Find great design
 - [ ] Expand the DEBIAN folder in package
-- [ ] Create a release in GitHub
 - [ ] Create package for Arch
 - [ ] Create RPM package
 - [ ] Publish .deb package in Debian repositories
-- [ ] Delete CRON system
-- [ ] Study the 9wm program
-- [ ] Create a short program with Xlib
 
 ### Waiting
+- [ ] Proof of concept : Window decoration
+- [ ] Delete CRON system
+- [ ] Create window structure
+- [ ] Create widgets to manage windows
 
 ### In Progress
 
@@ -52,3 +51,6 @@ All my tasks will be written in this file.
 - [X] Delete .gitkeep file
 - [X] Create a short program with XCB
 - [X] Refactorize with Sonarlint
+- [X] Study the 9wm program
+- [X] Create a short program with Xlib
+- [X] Create a release in GitHub

@@ -6,6 +6,7 @@
 #include "cache.h"
 #include "utils.h"
 #include "VERSION.h"
+#include "rooibos.h"
 
 void green(void) {
 	printf("\033[0;32m");
@@ -77,7 +78,7 @@ int main(int argc, char **argv) {
 		return -1;
 	}
 
-	int length = 0;
+	/*int length = 0;
 	struct appshortcut *app_shortcuts = cache_get_app_shortcuts(&length);
 	if (app_shortcuts == NULL) {
 		red();
@@ -117,5 +118,7 @@ int main(int argc, char **argv) {
 		free(app_shortcuts[i].file);
 	}
 
-	free(app_shortcuts);
+	free(app_shortcuts);*/
+
+	rooibos();
 }

@@ -3,8 +3,8 @@ VERSION = $(shell cat VERSION)
 ARCH = $(shell uname --machine)
 VERSION_LENGTH = $$(( $(shell wc -m < VERSION) - 1 ))
 
-rooibos: utils.o appshortcut.o cache.o VERSION.h main.o
-	gcc $(CFLAGS) *.o -o rooibos -lsqlite3
+rooibos: utils.o appshortcut.o cache.o VERSION.h rooibos.o main.o
+	gcc $(CFLAGS) *.o -o rooibos -lsqlite3 -lX11
 	strip rooibos
 
 VERSION.h:
