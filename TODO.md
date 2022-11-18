@@ -10,7 +10,6 @@ All my tasks will be written in this file.
 
 ### Waiting
 - [ ] Proof of concept : Window decoration
-- [ ] Delete CRON system
 - [ ] Create window structure
 - [ ] Create widgets to manage windows
 
@@ -54,3 +53,4 @@ All my tasks will be written in this file.
 - [X] Study the 9wm program
 - [X] Create a short program with Xlib
 - [X] Create a release in GitHub
+- [X] Delete CRON system

@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2022-11-18
+### [Removed]
+* I deleted the CRON system
+
 ## 2022-11-17
 ### [Added]
 * I created a working base for Xlib

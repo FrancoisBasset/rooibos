@@ -13,5 +13,3 @@ then
 fi
 
 chown -R $ROOIBOS_USER:$ROOIBOS_USER "/home/"$ROOIBOS_USER"/.rooibos"
-
-/etc/init.d/rooibos.sh &
