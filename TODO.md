@@ -10,10 +10,10 @@ All my tasks will be written in this file.
 
 ### Waiting
 - [ ] Proof of concept : Window decoration
-- [ ] Create window structure
 - [ ] Create widgets to manage windows
 
 ### In Progress
+- [ ] Create window structure
 
 ### Done
 - [X] Prepare Kanban

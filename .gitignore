@@ -8,6 +8,7 @@ index.html
 *.o
 rooibos
 VERSION.h
+debug.txt
 
 #package
 package/usr/bin/rooibos
