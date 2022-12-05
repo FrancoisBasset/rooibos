@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2022-12-05
+### [Added]
+* I added window structure
+
 ## 2022-11-18
 ### [Removed]
 * I deleted the CRON system

@@ -10,10 +10,9 @@ All my tasks will be written in this file.
 
 ### Waiting
 - [ ] Proof of concept : Window decoration
-- [ ] Create widgets to manage windows
 
 ### In Progress
-- [ ] Create window structure
+- [ ] Create widgets to manage windows
 
 ### Done
 - [X] Prepare Kanban
@@ -54,3 +53,4 @@ All my tasks will be written in this file.
 - [X] Create a short program with Xlib
 - [X] Create a release in GitHub
 - [X] Delete CRON system
+- [X] Create window structure
