@@ -12,7 +12,6 @@ All my tasks will be written in this file.
 - [ ] Proof of concept : Window decoration
 
 ### In Progress
-- [ ] Create widgets to manage windows
 
 ### Done
 - [X] Prepare Kanban
@@ -54,3 +53,4 @@ All my tasks will be written in this file.
 - [X] Create a release in GitHub
 - [X] Delete CRON system
 - [X] Create window structure
+- [X] Create widgets to manage windows

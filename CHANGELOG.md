@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2022-12-21
+### [Added]
+* I added widgets to manage windows
+
 ## 2022-12-05
 ### [Added]
 * I added window structure
