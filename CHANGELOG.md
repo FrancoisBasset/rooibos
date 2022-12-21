@@ -15,6 +15,8 @@ There are 6 types of changes :
 ## 2022-12-21
 ### [Added]
 * I added widgets to manage windows
+### [Changed]
+* I changed configure.sh command
 
 ## 2022-12-05
 ### [Added]

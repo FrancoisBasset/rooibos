@@ -2,29 +2,18 @@ green="\e[32m"
 red="\e[31m"
 normal="\e[0m"
 
-check_stdlib() {
-	echo "Checking stdlib installed..."
-
-	if [ -f /usr/include/stdlib.h ]
-	then
-		echo -e "${green}stdlib is installed $normal"
-	else
-		echo -e "${red}Please install build-essential $normal"
-	fi
-}
-
 check_installed() {
-	echo "Checking $1 installed..."
-
-	dpkg -l $1 > /dev/null 2>&1
-
-	if [ $? -eq 0 ]
+	if [ -f $2 ]
 	then
-		echo -e "$green$1 is installed $normal"
+		echo -e "${green}$1 is installed $normal"
 	else
-		echo -e "${red}Please install $1 $normal"
+		echo -e "${red}Please install $3 $normal"
 	fi
 }
 
-check_stdlib
-check_installed libsqlite3-dev
+check_installed make /usr/bin/make make
+check_installed gcc /usr/bin/gcc gcc
+check_installed xorg /usr/bin/startx xorg
+check_installed stdlib /usr/include/stdlib.h build-essential
+check_installed libsqlite3-dev /usr/include/sqlite3.h libsqlite3-dev
+check_installed xterm /usr/bin/xterm xterm
