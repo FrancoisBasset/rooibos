@@ -3,56 +3,63 @@
 #include <string.h>
 #include <X11/Xlib.h>
 #include "taskbar.h"
+#include "objects.h"
+#include "window.h"
 
 static GC gc_taskbar;
 static GC gc_taskbar_button;
 static GC gc_taskbar_button_border;
 static GC gc_text_button;
+struct taskbar *tb;
 
-struct taskbar* taskbar_init(Display *display, Window window, Screen *screen, int width, int height) {
-    struct taskbar *tb = malloc(sizeof(struct taskbar));
+struct taskbar* taskbar_init() {
+    tb = malloc(sizeof(struct taskbar));
     tb->x = 0;
-    tb->y = height - 50;
-    tb->width = width;
-    tb->height = height;
+    tb->y = screen_height - 50;
+    tb->width = screen_width;
+    tb->height = screen_height;
     tb->tb_buttons = malloc(sizeof(struct taskbar_button));
     tb->buttons_length = 0;
 
     Colormap colormap_taskbar = XDefaultColormapOfScreen(screen);
-    XColor color_taskbar;
-    color_taskbar.red = 53300;
-    color_taskbar.green = 53300;
-    color_taskbar.blue = 53300;
+    XColor color_taskbar = {
+        .red = 53300,
+        .green = 53300,
+        .blue = 53300
+    };
     XAllocColor(display, colormap_taskbar, &color_taskbar);
-    XGCValues gcv_taskbar;
-    gcv_taskbar.foreground = color_taskbar.pixel;
+    XGCValues gcv_taskbar = { .foreground = color_taskbar.pixel };
     gc_taskbar = XCreateGC(display, window, GCForeground, &gcv_taskbar);
 
     Colormap colormap_taskbar_button = XDefaultColormapOfScreen(screen);
-    XColor color_taskbar_button;
-    color_taskbar_button.red = 0;
-    color_taskbar_button.green = 53300;
-    color_taskbar_button.blue = 53300;
-    XAllocColor(display, colormap_taskbar, &color_taskbar_button);
-    XGCValues gcv_taskbar_button;
-    gcv_taskbar_button.foreground = color_taskbar_button.pixel;
+    XColor color_taskbar_button = {
+        .red = 0,
+        .green = 53300,
+        .blue = 53300
+    };
+    XAllocColor(display, colormap_taskbar_button, &color_taskbar_button);
+    XGCValues gcv_taskbar_button = { .foreground = color_taskbar_button.pixel };
     gc_taskbar_button = XCreateGC(display, window, GCForeground, &gcv_taskbar_button);
 
-    XGCValues gcv_taskbar_button_border;
-    gcv_taskbar_button.foreground = color_taskbar_button.pixel;
-    gcv_taskbar_button.background = XBlackPixelOfScreen(screen);
+    XGCValues gcv_taskbar_button_border = {
+        .foreground = color_taskbar_button.pixel,
+        .background = black_pixel
+    };
     gc_taskbar_button_border = XCreateGC(display, window, GCForeground | GCBackground, &gcv_taskbar_button_border);
 
     Font font_text_button = XLoadFont(display, "-*-times-*-r-*-*-14-*-*-*-*-*-*-*");
-	XGCValues gcv_text_button;
-	gcv_text_button.foreground = XBlackPixelOfScreen(screen);
-	gcv_text_button.font = font_text_button;
+	XGCValues gcv_text_button = {
+        .foreground = black_pixel,
+        .font = font_text_button
+    };
 	gc_text_button = XCreateGC(display, window, GCForeground | GCFont, &gcv_text_button);
 
     return tb;
 }
 
-void taskbar_set_windows(struct taskbar *tb, struct windows *ws) {
+void taskbar_update_windows() {
+    struct windows *ws = windows_get();
+
     for (int i = 0; i < tb->buttons_length; i++) {
         free(tb->tb_buttons[i]);
     }
@@ -74,18 +81,18 @@ void taskbar_set_windows(struct taskbar *tb, struct windows *ws) {
         struct taskbar_button *tb_button = malloc(sizeof(struct taskbar_button));
         tb_button->x = x;
         tb_button->y = tb->y;
-        tb_button->width = 100;
+        tb_button->width = 200;
         tb_button->height = 50;
         tb_button->window = w;
 
         tb->tb_buttons[i] = tb_button;
 
         i++;
-        x += 100;
+        x += 200;
     } while ((w = w->next) != NULL);
 }
 
-void taskbar_refresh(Display *display, Window window, struct taskbar *tb) {
+void taskbar_refresh() {
     XFillRectangle(display, window, gc_taskbar, tb->x, tb->y, tb->width, tb->height);
 
     for (int i = 0; i < tb->buttons_length; i++) {

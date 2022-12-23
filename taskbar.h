@@ -20,8 +20,10 @@ struct taskbar {
     int buttons_length;
 };
 
-struct taskbar* taskbar_init(Display *display, Window window, Screen *screen, int width, int height);
-void taskbar_set_windows(struct taskbar *tb, struct windows *ws);
-void taskbar_refresh(Display *display, Window window, struct taskbar *tb);
+extern struct taskbar *tb;
+
+struct taskbar* taskbar_init();
+void taskbar_update_windows();
+void taskbar_refresh();
 void taskbar_click(void);
 #endif
