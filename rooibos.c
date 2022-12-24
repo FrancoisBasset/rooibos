@@ -5,10 +5,6 @@
 #include "taskbar.h"
 #include "event.h"
 
-char mode = ' ';
-struct window *window_focus = NULL;
-int moving = 0;
-int resizing = 0;
 FILE *debug;
 
 void rooibos(void) {

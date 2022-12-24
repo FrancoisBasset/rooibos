@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2022-12-24
+### [Fixed]
+* I made a refacto
+
 ## 2022-12-23
 ### [Fixed]
 * I made a refacto

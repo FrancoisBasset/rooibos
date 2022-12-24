@@ -5,6 +5,7 @@
 #include "taskbar.h"
 #include "objects.h"
 #include "window.h"
+#include "event.h"
 
 static GC gc_taskbar;
 static GC gc_taskbar_button;
@@ -99,5 +100,28 @@ void taskbar_refresh() {
         XFillRectangle(display, window, gc_taskbar_button, tb->tb_buttons[i]->x, tb->tb_buttons[i]->y, tb->tb_buttons[i]->width, tb->tb_buttons[i]->height);
         XDrawRectangle(display, window, gc_taskbar_button_border, tb->tb_buttons[i]->x, tb->tb_buttons[i]->y, tb->tb_buttons[i]->width, tb->tb_buttons[i]->height - 1);
         XDrawString(display, window, gc_text_button, tb->tb_buttons[i]->x, tb->tb_buttons[i]->y + 28, tb->tb_buttons[i]->window->title, strlen(tb->tb_buttons[i]->window->title));
+    }
+}
+
+int taskbar_is_pressed(int x, int y) {
+    return x >= tb->x && x <= screen_width && y >= tb->y && y <= screen_height;
+}
+
+void taskbar_on_press(int x, int y) {
+    for (int i = 0; i < tb->buttons_length; i++) {
+        struct taskbar_button *button = tb->tb_buttons[i];
+
+        if (x >= button->x && x <= button->x + button->width &&
+            y >= button->y && y <= button->y + button->height) {
+                if (button->window->visible == 1) {
+                    window_focus = NULL;
+                    XUnmapWindow(display, button->window->id);
+                    button->window->visible = 0;
+                } else {
+                    window_focus = button->window;
+                    XMapWindow(display, button->window->id);
+                    button->window->visible = 1;
+                }
+            }
     }
 }

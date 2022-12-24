@@ -26,4 +26,6 @@ struct taskbar* taskbar_init();
 void taskbar_update_windows();
 void taskbar_refresh();
 void taskbar_click(void);
+int taskbar_is_pressed(int x, int y);
+void taskbar_on_press(int x, int y);
 #endif

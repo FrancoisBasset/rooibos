@@ -1,5 +1,6 @@
 #ifndef WINDOW_H
 #define WINDOW_H
+#include <stdio.h>
 struct window {
     int id;
     char *title;

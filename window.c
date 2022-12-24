@@ -1,6 +1,8 @@
+#include <X11/Xlib.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "objects.h"
 #include "window.h"
 
 static struct windows *ws;
@@ -103,6 +105,18 @@ void window_update(int id, const char *property, const void *value) {
                 free(w->title);
                 w->title = malloc(sizeof(char) * (strlen(value) + 1));
                 strcpy(w->title, value);
+
+                Font font_text_button = XLoadFont(display, "-*-times-*-r-*-*-14-*-*-*-*-*-*-*");
+                XFontStruct *fontstruct = XQueryFont(display, font_text_button);
+
+                int width = 200;
+                int length = (int) strlen(w->title) + 1;
+                while (width >= 200) {
+                    length--;
+                    width = XTextWidth(fontstruct, w->title, length);
+                }
+                
+                w->title[length] = '\0';
             } else if (strcmp(property, "x") == 0) {
                 w->x = *((int *) value);
             } else if (strcmp(property, "y") == 0) {

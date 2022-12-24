@@ -15,4 +15,6 @@ extern GC gc_text_button_toolbar;
 
 void toolbar_init(void);
 void toolbar_refresh(void);
+int toolbar_is_pressed(int y);
+int toolbar_on_click(int x);
 #endif
