@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-01-04
+### [Added]
+* I am able to draw icons
+
 ## 2022-12-24
 ### [Fixed]
 * I made a refacto
