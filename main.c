@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
 	//rooibos();
 }
 
-void show_apps_by_category(struct appshortcut *app_shortcuts, int length) {
+void show_apps_by_category(const struct appshortcut *app_shortcuts, int length) {
 	char *categories[9] = { "Games", "System", "Graphics", "Development", "Network", "Multimedia", "Office", "Settings", "Other" };
 	int new_length = 0;
 
@@ -65,7 +65,7 @@ void show_apps_by_category(struct appshortcut *app_shortcuts, int length) {
 }
 
 int handle_arguments(char **argv) {
-	if (strcmp(argv[1], "cache-init") == 0) {
+	if (strcmp(argv[1], "cache:init") == 0) {
 		printf("%srooibos : Starting cache init...%s\n", yellow_color, normal_color);
 
 		int init_status = cache_init();
@@ -75,7 +75,7 @@ int handle_arguments(char **argv) {
 			printf("%srooibos : Error cache init ! :(%s\n", red_color, normal_color);
 			return -1;
 		}
-	} else if (strcmp(argv[1], "cache-update") == 0) {
+	} else if (strcmp(argv[1], "cache:update") == 0) {
 		printf("%srooibos : Starting cache update...%s\n", yellow_color, normal_color);
 
 		int update_status = cache_update();

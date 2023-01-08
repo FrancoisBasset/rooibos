@@ -50,13 +50,9 @@ int cache_init(void) {
 }
 
 int cache_update(void) {
-	const char *user_home = utils_get_user_home();
-	char *cache_path = malloc(sizeof(char) * (strlen(user_home) + 19));
-
-	strcpy(cache_path, user_home);
-	strcat(cache_path, "/.rooibos/cache.db");
-
 	sqlite3 *db;
+
+	char* cache_path = utils_get_cache_path();
 	int success = sqlite3_open(cache_path, &db);
 
 	if (success != 0) {
@@ -158,13 +154,9 @@ int cache_update(void) {
 }
 
 struct appshortcut* cache_get_app_shortcuts(int *length) {
-	const char *user_home = utils_get_user_home();
-	char *cache_path = malloc(sizeof(char) * (strlen(user_home) + 19));
-
-	strcpy(cache_path, user_home);
-	strcat(cache_path, "/.rooibos/cache.db");
-
 	sqlite3 *db;
+	
+	char* cache_path = utils_get_cache_path();
 	int success = sqlite3_open_v2(cache_path, &db, SQLITE_OPEN_READONLY, NULL);
 
 	if (success != 0) {

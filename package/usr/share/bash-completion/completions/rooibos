@@ -1,1 +1,1 @@
-complete -W "cache-init cache-update version" rooibos
+complete -W "cache:init cache:update version" rooibos

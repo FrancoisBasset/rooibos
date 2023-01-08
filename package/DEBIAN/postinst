@@ -1,6 +1,6 @@
 #!/bin/sh
-rooibos cache-init
-rooibos cache-update
+rooibos cache:init
+rooibos cache:update
 
 if [ "$SUDO_USER" != "root" ]
 then

@@ -22,7 +22,7 @@ char* utils_get_user_home(void) {
 }
 
 char* utils_get_local_apps_dir(void) {
-	char *user_home = utils_get_user_home();
+	const char *user_home = utils_get_user_home();
 	
 	char *local_apps_dir = malloc(sizeof(char) * (28 + strlen(user_home)));
 	strcpy(local_apps_dir, user_home);
@@ -32,13 +32,23 @@ char* utils_get_local_apps_dir(void) {
 }
 
 char* utils_get_local_icons_dir(void) {
-	char *user_home = utils_get_user_home();
-	
+	const char *user_home = utils_get_user_home();
+
 	char *local_icons_dir = malloc(sizeof(char) * (21 + strlen(user_home)));
 	strcpy(local_icons_dir, user_home);
 	strcat(local_icons_dir, "/.local/share/icons/");
 
 	return local_icons_dir;
+}
+
+char* utils_get_cache_path(void) {
+	const char *user_home = utils_get_user_home();
+	
+	char *cache_path = malloc(sizeof(char) * (strlen(user_home) + 19));
+	strcpy(cache_path, user_home);
+	strcat(cache_path, "/.rooibos/cache.db");
+
+	return cache_path;
 }
 
 int utils_is_root(void) {
