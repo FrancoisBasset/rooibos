@@ -13,6 +13,8 @@ There are 6 types of changes :
 # Changes
 
 ## 2023-01-08
+### [Changed]
+* I renamed all structures names to end with the _t suffix
 ### [Fixed]
 * I fixed shortcuts list errors
 

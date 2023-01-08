@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
 	}
 
 	int length = 0;
-	struct appshortcut *app_shortcuts = cache_get_app_shortcuts(&length);
+	struct appshortcut_t *app_shortcuts = cache_get_app_shortcuts(&length);
 
 	show_apps_by_category(app_shortcuts, length);
 
@@ -40,17 +40,17 @@ int main(int argc, char **argv) {
 
 	free(app_shortcuts);
 
-	//rooibos();
+	rooibos();
 }
 
-void show_apps_by_category(const struct appshortcut *app_shortcuts, int length) {
+void show_apps_by_category(const struct appshortcut_t *app_shortcuts, int length) {
 	char *categories[9] = { "Games", "System", "Graphics", "Development", "Network", "Multimedia", "Office", "Settings", "Other" };
 	int new_length = 0;
 
 	for (int i = 0; i < 9; i++) {
 		printf("%s%s%s \n", green_color, categories[i], normal_color);
 
-		struct appshortcut *shortcuts_categories = appshortcut_get_app_shortcuts_by_category(app_shortcuts, categories[i], length, &new_length);
+		struct appshortcut_t *shortcuts_categories = appshortcut_get_app_shortcuts_by_category(app_shortcuts, categories[i], length, &new_length);
 
 		for (int j = 0; j < new_length; j++) {
 			printf("%s\n%s -- %s -- %s -- %s\n\n", shortcuts_categories[j].file, shortcuts_categories[j].name, shortcuts_categories[j].exec, shortcuts_categories[j].category, shortcuts_categories[j].icon);

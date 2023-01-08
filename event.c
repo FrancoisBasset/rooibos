@@ -8,7 +8,7 @@
 #include "toolbar.h"
 
 char mode = ' ';
-struct window *window_focus = NULL;
+struct window_t *window_focus = NULL;
 int moving = 0;
 int resizing = 0;
 
@@ -97,7 +97,7 @@ void event_on_configure(Window child, int x, int y, int width, int height) {
         if (window_get(child) == NULL) {
             XSelectInput(display, child, PropertyChangeMask);
             XMoveWindow(display, child, 200, 200);
-            struct window *new_window = window_init(child, title, x, y, width, height);
+            struct window_t *new_window = window_init(child, title, x, y, width, height);
             window_add(new_window);
             taskbar_update_windows();
         } else {

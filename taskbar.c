@@ -11,15 +11,15 @@ static GC gc_taskbar;
 static GC gc_taskbar_button;
 static GC gc_taskbar_button_border;
 static GC gc_text_button;
-struct taskbar *tb;
+struct taskbar_t *tb;
 
-struct taskbar* taskbar_init() {
-    tb = malloc(sizeof(struct taskbar));
+struct taskbar_t* taskbar_init() {
+    tb = malloc(sizeof(struct taskbar_t));
     tb->x = 0;
     tb->y = screen_height - 50;
     tb->width = screen_width;
     tb->height = screen_height;
-    tb->tb_buttons = malloc(sizeof(struct taskbar_button));
+    tb->tb_buttons = malloc(sizeof(struct taskbar_button_h));
     tb->buttons_length = 0;
 
     Colormap colormap_taskbar = XDefaultColormapOfScreen(screen);
@@ -59,7 +59,7 @@ struct taskbar* taskbar_init() {
 }
 
 void taskbar_update_windows() {
-    struct windows *ws = windows_get();
+    struct windows_t *ws = windows_get();
 
     for (int i = 0; i < tb->buttons_length; i++) {
         free(tb->tb_buttons[i]);
@@ -67,19 +67,19 @@ void taskbar_update_windows() {
     free(tb->tb_buttons);
 
     tb->buttons_length = ws->length;
-    tb->tb_buttons = malloc(sizeof(struct taskbar_button) * ws->length);
+    tb->tb_buttons = malloc(sizeof(struct taskbar_button_h) * ws->length);
 
     if (ws->first == NULL) {
         return;
     }
 
-    struct window *w = ws->first;
+    struct window_t *w = ws->first;
 
     int i = 0;
     int x = 0;
 
     do {
-        struct taskbar_button *tb_button = malloc(sizeof(struct taskbar_button));
+        struct taskbar_button_h *tb_button = malloc(sizeof(struct taskbar_button_h));
         tb_button->x = x;
         tb_button->y = tb->y;
         tb_button->width = 200;
@@ -109,7 +109,7 @@ int taskbar_is_pressed(int x, int y) {
 
 void taskbar_on_press(int x, int y) {
     for (int i = 0; i < tb->buttons_length; i++) {
-        struct taskbar_button *button = tb->tb_buttons[i];
+        struct taskbar_button_h *button = tb->tb_buttons[i];
 
         if (x >= button->x && x <= button->x + button->width &&
             y >= button->y && y <= button->y + button->height) {

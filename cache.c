@@ -106,7 +106,7 @@ int cache_update(void) {
 		sqlite3_finalize(select_stmt);
 
 		if (file == NULL) {
-			struct appshortcut app_shortcut = appshortcut_get_app_shortcut(desktop_files[i]);
+			struct appshortcut_t app_shortcut = appshortcut_get_app_shortcut(desktop_files[i]);
 			if (app_shortcut.name != NULL) {
 				int has_duplicate = 0;
 				for (int j = 0; j < length2; j++) {
@@ -153,7 +153,7 @@ int cache_update(void) {
 	return 0;
 }
 
-struct appshortcut* cache_get_app_shortcuts(int *length) {
+struct appshortcut_t* cache_get_app_shortcuts(int *length) {
 	sqlite3 *db;
 	
 	char* cache_path = utils_get_cache_path();
@@ -183,7 +183,7 @@ struct appshortcut* cache_get_app_shortcuts(int *length) {
 
 	sqlite3_prepare_v2(db, "SELECT * FROM appshortcuts ORDER BY name COLLATE NOCASE", 55, &stmt, tail);
 
-	struct appshortcut *app_shortcuts = malloc(sizeof(struct appshortcut) * *length);
+	struct appshortcut_t *app_shortcuts = malloc(sizeof(struct appshortcut_t) * *length);
 	int stmt_status = sqlite3_step(stmt);
 	int i = 0;
 	while (stmt_status == 100) {
@@ -193,7 +193,7 @@ struct appshortcut* cache_get_app_shortcuts(int *length) {
 		const unsigned char *icon = sqlite3_column_text(stmt, 3);
 		const unsigned char *file = sqlite3_column_text(stmt, 4);
 
-		struct appshortcut app_shortcut = { NULL, NULL, NULL, NULL, NULL};
+		struct appshortcut_t app_shortcut = { NULL, NULL, NULL, NULL, NULL};
 
 		app_shortcut.name = malloc(sizeof(char) * (strlen(name) + 1));
 		strcpy(app_shortcut.name, name);

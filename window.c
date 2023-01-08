@@ -5,11 +5,11 @@
 #include "objects.h"
 #include "window.h"
 
-static struct windows *ws;
-static struct window *current;
+static struct windows_t *ws;
+static struct window_t *current;
 
-struct window* window_init(int id, const char *title, int x, int y, int width, int height) {
-    struct window *new_window = malloc(sizeof(struct window));
+struct window_t* window_init(int id, const char *title, int x, int y, int width, int height) {
+    struct window_t *new_window = malloc(sizeof(struct window_t));
     new_window->id = id;
     new_window->x = x;
     new_window->y = y;
@@ -24,7 +24,7 @@ struct window* window_init(int id, const char *title, int x, int y, int width, i
 }
 
 void windows_init(void) {
-    ws = malloc(sizeof(struct windows));
+    ws = malloc(sizeof(struct windows_t));
     ws->first = NULL;
     ws->last = NULL;
     ws->length = 0;
@@ -34,7 +34,7 @@ void window_reset(void) {
     current = NULL;
 }
 
-struct window* window_next(void) {
+struct window_t* window_next(void) {
     if (current == NULL) {
         if (ws->first == NULL) {
             return NULL;
@@ -49,8 +49,8 @@ struct window* window_next(void) {
     return current;
 }
 
-struct window* window_get(int id) {
-    struct window *w = NULL;
+struct window_t* window_get(int id) {
+    struct window_t *w = NULL;
 
     window_reset();
     while (w = window_next()) {
@@ -62,7 +62,7 @@ struct window* window_get(int id) {
     return NULL;
 }
 
-void window_print(FILE *debug, struct window* w) {
+void window_print(FILE *debug, struct window_t* w) {
     char visible = '-';
     if (w->visible == 1) {
         visible = '+';
@@ -71,7 +71,7 @@ void window_print(FILE *debug, struct window* w) {
 }
 
 void windows_print(FILE *debug) {
-    struct window *w = NULL;
+    struct window_t *w = NULL;
     
     window_reset();
     while (w = window_next()) {
@@ -79,7 +79,7 @@ void windows_print(FILE *debug) {
     }
 }
 
-void window_add(struct window *w) {
+void window_add(struct window_t *w) {
     if (window_get(w->id) != NULL) {
         return;
     }
@@ -96,7 +96,7 @@ void window_add(struct window *w) {
 }
 
 void window_update(int id, const char *property, const void *value) {
-    struct window *w = NULL;
+    struct window_t *w = NULL;
 
     window_reset();
     while (w = window_next()) {
@@ -136,7 +136,7 @@ void window_delete(int id) {
         return;
     }
 
-    struct window *w = ws->first;
+    struct window_t *w = ws->first;
     if (w->id == id) {
         ws->first = w->next;
         window_free(w);
@@ -147,7 +147,7 @@ void window_delete(int id) {
     window_reset();
     while (w = window_next()) {
         if (w->next->id == id) {
-            struct window* next = w->next;
+            struct window_t* next = w->next;
             w->next = w->next->next;
             window_free(next);
             ws->length--;
@@ -156,7 +156,7 @@ void window_delete(int id) {
     }
 }
 
-void window_free(struct window* w) {
+void window_free(struct window_t* w) {
     free(w->title);
     free(w);
 }
@@ -169,8 +169,8 @@ void windows_free(void) {
     }
 
     window_reset();
-    struct window *w = ws->first;
-    struct window *next = NULL;
+    struct window_t *w = ws->first;
+    struct window_t *next = NULL;
 
     do {
         next = w->next;
@@ -180,6 +180,6 @@ void windows_free(void) {
     free(ws);
 }
 
-struct windows* windows_get(void) {
+struct windows_t* windows_get(void) {
     return ws;
 }

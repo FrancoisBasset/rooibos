@@ -1,7 +1,7 @@
 #ifndef TOOLBAR_H
 #define TOOLBAR_H
 #include <X11/Xlib.h>
-struct toolbar_button {
+struct toolbar_button_t {
     char *title;
     int x;
     int y;

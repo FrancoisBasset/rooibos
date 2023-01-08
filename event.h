@@ -3,7 +3,7 @@
 #include <X11/Xlib.h>
 
 extern char mode;
-extern struct window *window_focus;
+extern struct window_t *window_focus;
 extern int moving;
 extern int resizing;
 
