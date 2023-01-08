@@ -63,7 +63,7 @@ char** appshortcut_get_all_desktop_files(int *length) {
 
 char** appshortcut_get_desktop_files(const char *foldername, int *length) {
 	if (access(foldername, F_OK) != 0) {
-		return malloc(sizeof(char*) * 0);
+		return malloc(0);
 	}
 
 	DIR *dir = opendir(foldername);
