@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-01-08
+### [Fixed]
+* I fixed shortcuts list errors
+
 ## 2023-01-04
 ### [Added]
 * I am able to draw icons

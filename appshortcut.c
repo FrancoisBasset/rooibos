@@ -35,7 +35,9 @@ char** appshortcut_get_all_desktop_files(int *length) {
 	int length3 = 0;
 	char **desktop_files1 = appshortcut_get_desktop_files("/usr/share/applications/", &length1);
 	char **desktop_files2 = appshortcut_get_desktop_files("/usr/local/share/applications/", &length2);
-	char **desktop_files3 = appshortcut_get_desktop_files(utils_get_user_home(), &length3);
+	char *local_apps_dir = utils_get_local_apps_dir();
+	char **desktop_files3 = appshortcut_get_desktop_files(local_apps_dir, &length3);
+	free(local_apps_dir);
 
 	*length = length1 + length2 + length3;
 	char **desktop_files = malloc(sizeof(char*) * (length1 + length2 + length3));
@@ -101,9 +103,12 @@ struct appshortcut appshortcut_get_app_shortcut(const char *filename) {
 	char *key = malloc(sizeof(char) * 100);
 	char *value = malloc(sizeof(char) * 100);
 	char *name = malloc(sizeof(char) * 100);
+	strcpy(name, "");
 	char *exec = malloc(sizeof(char) * 100);
+	strcpy(exec, "");
 	char *categories = malloc(sizeof(char) * 100);
 	char *icon = malloc(sizeof(char) * 100);
+	strcpy(icon, "");
 
 	strcpy(categories, "");
 
@@ -114,15 +119,22 @@ struct appshortcut appshortcut_get_app_shortcut(const char *filename) {
 
 		sscanf(line, "%50[^=]=%50[^\n]", key, value);
 
-		if (strcmp(key, "Name") == 0) {
+		if (strcmp(key, "Name") == 0 && strcmp(name, "") == 0) {
 			strcpy(name, value);
-		} else if (strcmp(key, "Exec") == 0) {
+		} else if (strcmp(key, "Exec") == 0 && strcmp(exec, "") == 0) {
+			for (int i = 0; i < strlen(value); i++) {
+				if (value[i] == '%') {
+					value[i] = '\0';
+				}
+			}
+			
 			strcpy(exec, value);
 		} else if (strcmp(key, "Categories") == 0) {
 			strcpy(categories, value);
-		} else if (strcmp(key, "Icon") == 0) {
-			strcpy(icon, value);
-		} else if (strcmp(key, "Terminal") == 0) {
+		} else if (strcmp(key, "Icon") == 0 && strcmp(icon, "") == 0) {
+			strcat(icon, "/");
+			strcat(icon, value);
+		} else if (strcmp(key, "Terminal") == 0 || strcmp(key, "NoDisplay") == 0) {
 			if (strcmp(value, "true") == 0) {
 				struct appshortcut null_shortcut = { NULL, NULL, NULL, NULL };
 				free(line);
@@ -165,7 +177,7 @@ struct appshortcut appshortcut_get_app_shortcut(const char *filename) {
 }
 
 static int filter_icon(const char *path, const struct stat *sb, int typeflag) {
-	if (strstr(path, icon_to_search)) {
+	if (strstr(path, icon_to_search) && strstr(path, ".xpm") == NULL) {
 		result = malloc(sizeof(char) * (strlen(path) + 1));
 		strcpy(result, path);
 		return 1;
@@ -207,15 +219,16 @@ static char* appshortcut_get_icon(char *icon) {
 		return NULL;
 	}
 
-	if (icon[0] == '/') {
-		return icon;
-	}
-
 	icon_to_search = icon;
 
 	ftw("/usr/share/pixmaps", filter_icon, 50);
 	if (result == NULL) {
 		ftw("/usr/share/icons", filter_icon, 50);
+		if (result == NULL) {
+			char *local_icons_dir = utils_get_local_icons_dir();
+			ftw(local_icons_dir, filter_icon, 50);
+			free(local_icons_dir);
+		}
 	}
 
 	if (result) {

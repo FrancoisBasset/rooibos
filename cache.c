@@ -97,6 +97,9 @@ int cache_update(void) {
 	int length = 0;
 	char **desktop_files = appshortcut_get_all_desktop_files(&length);
 
+	char **all_names = malloc(sizeof(char*) * length);
+	int length2 = 0;
+
 	for (int i = 0; i < length; i++) {
 		sqlite3_stmt *select_stmt;
 		sqlite3_prepare_v2(db, "SELECT file FROM appshortcuts WHERE file = ?", 50 + (int) strlen(desktop_files[i]), &select_stmt, unused_sql);
@@ -109,15 +112,28 @@ int cache_update(void) {
 		if (file == NULL) {
 			struct appshortcut app_shortcut = appshortcut_get_app_shortcut(desktop_files[i]);
 			if (app_shortcut.name != NULL) {
-				sqlite3_stmt *insert_stmt;
-				sqlite3_prepare_v2(db, "INSERT INTO appshortcuts VALUES (?, ?, ?, ?, ?)", 1000, &insert_stmt, unused_sql);
-				sqlite3_bind_text(insert_stmt, 1, app_shortcut.name, (int) strlen(app_shortcut.name), SQLITE_STATIC);
-				sqlite3_bind_text(insert_stmt, 2, app_shortcut.exec, (int) strlen(app_shortcut.exec), SQLITE_STATIC);
-				sqlite3_bind_text(insert_stmt, 3, app_shortcut.category, (int) strlen(app_shortcut.category), SQLITE_STATIC);
-				sqlite3_bind_text(insert_stmt, 4, app_shortcut.icon, (int) strlen(app_shortcut.icon), SQLITE_STATIC);
-				sqlite3_bind_text(insert_stmt, 5, app_shortcut.file, (int) strlen(app_shortcut.file), SQLITE_STATIC);
-				sqlite3_step(insert_stmt);
-				sqlite3_finalize(insert_stmt);
+				int has_duplicate = 0;
+				for (int j = 0; j < length2; j++) {
+					if (strcmp(all_names[j], app_shortcut.name) == 0) {
+						has_duplicate = 1;
+					}
+				}
+
+				all_names[length2] = malloc(sizeof(char) * (strlen(app_shortcut.name) + 1));
+				strcpy(all_names[length2], app_shortcut.name);
+				length2++;
+
+				if (has_duplicate == 0) {
+					sqlite3_stmt *insert_stmt;
+					sqlite3_prepare_v2(db, "INSERT INTO appshortcuts VALUES (?, ?, ?, ?, ?)", 1000, &insert_stmt, unused_sql);
+					sqlite3_bind_text(insert_stmt, 1, app_shortcut.name, (int) strlen(app_shortcut.name), SQLITE_STATIC);
+					sqlite3_bind_text(insert_stmt, 2, app_shortcut.exec, (int) strlen(app_shortcut.exec), SQLITE_STATIC);
+					sqlite3_bind_text(insert_stmt, 3, app_shortcut.category, (int) strlen(app_shortcut.category), SQLITE_STATIC);
+					sqlite3_bind_text(insert_stmt, 4, app_shortcut.icon, (int) strlen(app_shortcut.icon), SQLITE_STATIC);
+					sqlite3_bind_text(insert_stmt, 5, app_shortcut.file, (int) strlen(app_shortcut.file), SQLITE_STATIC);
+					sqlite3_step(insert_stmt);
+					sqlite3_finalize(insert_stmt);
+				}
 
 				free(app_shortcut.name);
 				free(app_shortcut.exec);
@@ -130,6 +146,10 @@ int cache_update(void) {
 		free(desktop_files[i]);
 	}
 
+	for (int i = 0; i < length2; i++) {
+		free(all_names[i]);
+	}
+	free(all_names);
 	free(desktop_files);
 
 	sqlite3_close(db);
