@@ -15,6 +15,7 @@ There are 6 types of changes :
 ## 2023-01-08
 ### [Changed]
 * I renamed all structures names to end with the _t suffix
+* I transformed all structs with the typedef keyword
 ### [Fixed]
 * I fixed shortcuts list errors
 

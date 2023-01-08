@@ -14,8 +14,8 @@ static int filter_icon(const char *path, const struct stat *sb, int typeflag);
 static char* appshortcut_get_category(const char* categories);
 static char* appshortcut_get_icon(char *icon);
 
-struct appshortcut_t* appshortcut_get_app_shortcuts_by_category(const struct appshortcut_t* app_shortcuts, const char *category, int length, int *new_length) {
-	struct appshortcut_t *new_app_shortcuts = malloc(sizeof(struct appshortcut_t) * length);
+appshortcut_t* appshortcut_get_app_shortcuts_by_category(const appshortcut_t* app_shortcuts, const char *category, int length, int *new_length) {
+	appshortcut_t *new_app_shortcuts = malloc(sizeof(appshortcut_t) * length);
 	*new_length = 0;
 
 	for (int i = 0, j = 0; i < length; i++) {
@@ -96,7 +96,7 @@ char** appshortcut_get_desktop_files(const char *foldername, int *length) {
 	return desktop_files;
 }
 
-struct appshortcut_t appshortcut_get_app_shortcut(const char *filename) {
+appshortcut_t appshortcut_get_app_shortcut(const char *filename) {
 	FILE *file = fopen(filename, "r");
 
 	char *line = malloc(sizeof(char) * 100);
@@ -136,7 +136,7 @@ struct appshortcut_t appshortcut_get_app_shortcut(const char *filename) {
 			strcat(icon, value);
 		} else if (strcmp(key, "Terminal") == 0 || strcmp(key, "NoDisplay") == 0) {
 			if (strcmp(value, "true") == 0) {
-				struct appshortcut_t null_shortcut = { NULL, NULL, NULL, NULL };
+				appshortcut_t null_shortcut = { NULL, NULL, NULL, NULL };
 				free(line);
 				free(key);
 				free(value);
@@ -158,7 +158,7 @@ struct appshortcut_t appshortcut_get_app_shortcut(const char *filename) {
 	fclose(file);
 
 	if (icon == NULL) {
-		struct appshortcut_t null_shortcut = { NULL, NULL, NULL, NULL };
+		appshortcut_t null_shortcut = { NULL, NULL, NULL, NULL };
 		free(name);
 		free(exec);
 		free(categories);
@@ -169,7 +169,7 @@ struct appshortcut_t appshortcut_get_app_shortcut(const char *filename) {
 	char *category = appshortcut_get_category(categories);
 	free(categories);
 
-	struct appshortcut_t app_shortcut = { name, exec, category, icon };
+	appshortcut_t app_shortcut = { name, exec, category, icon };
 	app_shortcut.file = malloc(sizeof(char) * 100);
 	strcpy(app_shortcut.file, filename);
 

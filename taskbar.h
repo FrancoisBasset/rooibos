@@ -3,26 +3,26 @@
 #include <X11/Xlib.h>
 #include "window.h"
 
-struct taskbar_button_h {
+typedef struct taskbar_button_h {
     int x;
     int y;
     int width;
     int height;
-    struct window_t *window;
-};
+    window_t *window;
+} taskbar_button_h;
 
-struct taskbar_t {
+typedef struct taskbar_t {
     int x;
     int y;
     int width;
     int height;
-    struct taskbar_button_h **tb_buttons;
+    taskbar_button_h **tb_buttons;
     int buttons_length;
-};
+} taskbar_t;
 
-extern struct taskbar_t *tb;
+extern taskbar_t *tb;
 
-struct taskbar_t* taskbar_init();
+taskbar_t* taskbar_init();
 void taskbar_update_windows();
 void taskbar_refresh();
 void taskbar_click(void);

@@ -1,13 +1,13 @@
 #ifndef TOOLBAR_H
 #define TOOLBAR_H
 #include <X11/Xlib.h>
-struct toolbar_button_t {
+typedef struct toolbar_button_t {
     char *title;
     int x;
     int y;
     int width;
     int height;
-};
+} toolbar_button_t;
 
 extern Font font_text_button_toolbar;
 extern GC gc_toolbar_button;
