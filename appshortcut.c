@@ -177,7 +177,15 @@ appshortcut_t appshortcut_get_app_shortcut(const char *filename) {
 }
 
 static int filter_icon(const char *path, const struct stat *sb, int typeflag) {
-	if (strstr(path, icon_to_search) && strstr(path, ".xpm") == NULL) {
+	if (strstr(path, ".png") != NULL && (strstr(path, "16x16") != NULL || strstr(path, "32x32") != NULL)) {
+		return 0;
+	}
+
+	if (strstr(path, ".xpm") != NULL) {
+		return 0;
+	} 
+
+	if (strstr(path, icon_to_search) != NULL) {
 		result = malloc(sizeof(char) * (strlen(path) + 1));
 		strcpy(result, path);
 		return 1;

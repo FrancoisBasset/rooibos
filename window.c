@@ -8,7 +8,7 @@
 static windows_t *ws;
 static window_t *current;
 
-window_t* window_init(int id, const char *title, int x, int y, int width, int height) {
+window_t* window_init(Window id, const char *title, int x, int y, int width, int height) {
     window_t *new_window = malloc(sizeof(window_t));
     new_window->id = id;
     new_window->x = x;
@@ -49,7 +49,7 @@ window_t* window_next(void) {
     return current;
 }
 
-window_t* window_get(int id) {
+window_t* window_get(Window id) {
     window_t *w = NULL;
 
     window_reset();
@@ -67,7 +67,7 @@ void window_print(FILE *debug, window_t* w) {
     if (w->visible == 1) {
         visible = '+';
     }
-    fprintf(debug, "%c <%d> <%s> <%d,%d> <%dx%d>\n", visible, w->id, w->title, w->x, w->y, w->width, w->height);
+    fprintf(debug, "%c <%ld> <%s> <%d,%d> <%dx%d>\n", visible, w->id, w->title, w->x, w->y, w->width, w->height);
 }
 
 void windows_print(FILE *debug) {
@@ -95,7 +95,7 @@ void window_add(window_t *w) {
     ws->length++;
 }
 
-void window_update(int id, const char *property, const void *value) {
+void window_update(Window id, const char *property, const void *value) {
     window_t *w = NULL;
 
     window_reset();
@@ -106,14 +106,11 @@ void window_update(int id, const char *property, const void *value) {
                 w->title = malloc(sizeof(char) * (strlen(value) + 1));
                 strcpy(w->title, value);
 
-                Font font_text_button = XLoadFont(display, "-*-times-*-r-*-*-14-*-*-*-*-*-*-*");
-                XFontStruct *fontstruct = XQueryFont(display, font_text_button);
-
                 int width = 200;
                 int length = (int) strlen(w->title) + 1;
                 while (width >= 200) {
                     length--;
-                    width = XTextWidth(fontstruct, w->title, length);
+                    width = XTextWidth(font_struct, w->title, length);
                 }
                 
                 w->title[length] = '\0';
@@ -131,7 +128,7 @@ void window_update(int id, const char *property, const void *value) {
     }
 }
 
-void window_delete(int id) {
+void window_delete(Window id) {
     if (ws->first == NULL) {
         return;
     }

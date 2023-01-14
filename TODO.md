@@ -10,11 +10,10 @@ All my tasks will be written in this file.
 
 ### Waiting
 - [ ] Proof of concept : Window decoration
-- [ ] Create a draft menu with categories
-- [ ] Add Call To Action for menu icons
 
 ### In Progress
-- [ ] Show all menu icons when pressing Meta
+- [ ] Add Call To Action for menu icons
+- [ ] Create menu with categories
 
 ### Done
 - [X] Prepare Kanban
@@ -60,3 +59,4 @@ All my tasks will be written in this file.
 - [X] Be able to draw icons
 - [X] Refactorize the app_shortcuts system
 - [X] Rename structures names
+- [X] Show all menu icons when pressing Meta

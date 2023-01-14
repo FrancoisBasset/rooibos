@@ -9,7 +9,6 @@ typedef struct toolbar_button_t {
     int height;
 } toolbar_button_t;
 
-extern Font font_text_button_toolbar;
 extern GC gc_toolbar_button;
 extern GC gc_text_button_toolbar;
 

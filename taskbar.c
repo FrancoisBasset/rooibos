@@ -10,7 +10,6 @@
 static GC gc_taskbar;
 static GC gc_taskbar_button;
 static GC gc_taskbar_button_border;
-static GC gc_text_button;
 taskbar_t *tb;
 
 taskbar_t* taskbar_init() {
@@ -22,23 +21,21 @@ taskbar_t* taskbar_init() {
     tb->tb_buttons = malloc(sizeof(taskbar_button_h));
     tb->buttons_length = 0;
 
-    Colormap colormap_taskbar = XDefaultColormapOfScreen(screen);
     XColor color_taskbar = {
         .red = 53300,
         .green = 53300,
         .blue = 53300
     };
-    XAllocColor(display, colormap_taskbar, &color_taskbar);
+    XAllocColor(display, colormap, &color_taskbar);
     XGCValues gcv_taskbar = { .foreground = color_taskbar.pixel };
     gc_taskbar = XCreateGC(display, window, GCForeground, &gcv_taskbar);
 
-    Colormap colormap_taskbar_button = XDefaultColormapOfScreen(screen);
     XColor color_taskbar_button = {
         .red = 0,
         .green = 53300,
         .blue = 53300
     };
-    XAllocColor(display, colormap_taskbar_button, &color_taskbar_button);
+    XAllocColor(display, colormap, &color_taskbar_button);
     XGCValues gcv_taskbar_button = { .foreground = color_taskbar_button.pixel };
     gc_taskbar_button = XCreateGC(display, window, GCForeground, &gcv_taskbar_button);
 
@@ -47,13 +44,6 @@ taskbar_t* taskbar_init() {
         .background = black_pixel
     };
     gc_taskbar_button_border = XCreateGC(display, window, GCForeground | GCBackground, &gcv_taskbar_button_border);
-
-    Font font_text_button = XLoadFont(display, "-*-times-*-r-*-*-14-*-*-*-*-*-*-*");
-	XGCValues gcv_text_button = {
-        .foreground = black_pixel,
-        .font = font_text_button
-    };
-	gc_text_button = XCreateGC(display, window, GCForeground | GCFont, &gcv_text_button);
 
     return tb;
 }
@@ -99,7 +89,7 @@ void taskbar_refresh() {
     for (int i = 0; i < tb->buttons_length; i++) {
         XFillRectangle(display, window, gc_taskbar_button, tb->tb_buttons[i]->x, tb->tb_buttons[i]->y, tb->tb_buttons[i]->width, tb->tb_buttons[i]->height);
         XDrawRectangle(display, window, gc_taskbar_button_border, tb->tb_buttons[i]->x, tb->tb_buttons[i]->y, tb->tb_buttons[i]->width, tb->tb_buttons[i]->height - 1);
-        XDrawString(display, window, gc_text_button, tb->tb_buttons[i]->x, tb->tb_buttons[i]->y + 28, tb->tb_buttons[i]->window->title, strlen(tb->tb_buttons[i]->window->title));
+        XDrawString(display, window, gc_text_black, tb->tb_buttons[i]->x, tb->tb_buttons[i]->y + 28, tb->tb_buttons[i]->window->title, (int) strlen(tb->tb_buttons[i]->window->title));
     }
 }
 

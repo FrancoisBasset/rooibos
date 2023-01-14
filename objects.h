@@ -9,6 +9,13 @@ extern unsigned long white_pixel;
 extern unsigned long black_pixel;
 extern int screen_width;
 extern int screen_height;
+extern Font font;
+extern XFontStruct *font_struct;
+extern Cursor cursor;
+extern Cursor hand_cursor;
+extern GC gc_text_black;
+extern GC gc_text_white;
+extern Colormap colormap;
 
 void objects_init(void);
 #endif

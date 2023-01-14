@@ -25,21 +25,6 @@ int main(int argc, char **argv) {
 		return -1;
 	}
 
-	int length = 0;
-	appshortcut_t *app_shortcuts = cache_get_app_shortcuts(&length);
-
-	show_apps_by_category(app_shortcuts, length);
-
-	for (int i = 0; i < length; i++) {
-		free(app_shortcuts[i].name);
-		free(app_shortcuts[i].exec);
-		free(app_shortcuts[i].category);
-		free(app_shortcuts[i].icon);
-		free(app_shortcuts[i].file);
-	}
-
-	free(app_shortcuts);
-
 	rooibos();
 }
 

@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include "event.h"
 #include "objects.h"
@@ -6,11 +8,15 @@
 #include "rooibos.h"
 #include "taskbar.h"
 #include "toolbar.h"
+#include "cache.h"
+#include "icon.h"
 
 char mode = ' ';
 window_t *window_focus = NULL;
 int moving = 0;
 int resizing = 0;
+
+int menu_showed = 0;
 
 int handle_event(void) {
     int quit = 0;
@@ -24,6 +30,18 @@ int handle_event(void) {
             break;
         case ButtonPress: {
             quit = event_on_button_press(event.xbutton.x, event.xbutton.y);
+            break;
+        }
+        case KeyPress: {
+            if (event.xkey.keycode == 133) {
+                if (menu_showed == 0) {
+                    menu_showed = 1;
+                    icons_show();
+                } else {
+                    menu_showed = 0;
+                    icons_clear();
+                }
+            }
             break;
         }
         case MotionNotify: {
@@ -85,10 +103,18 @@ void event_on_motion(int x, int y) {
         resizing = 1;
         XResizeWindow(display, window_focus->id, (x - window_focus->x) - 10, (y - window_focus->y) - 10);
     }
+    
+    if (menu_showed == 1) {
+        icons_on_hover(x, y);
+    }
 }
 
 void event_on_configure(Window child, int x, int y, int width, int height) {
     XMapWindow(display, child);
+
+    if (y < 100 && menu_showed == 1) {
+        icons_show();
+    }
 
     char *title;
     XFetchName(display, child, &title);
@@ -97,8 +123,8 @@ void event_on_configure(Window child, int x, int y, int width, int height) {
         if (window_get(child) == NULL) {
             XSelectInput(display, child, PropertyChangeMask);
             XMoveWindow(display, child, 200, 200);
-            window_t *new_window = window_init(child, title, x, y, width, height);
-            window_add(new_window);
+            window_t *new_window_ = window_init(child, title, x, y, width, height);
+            window_add(new_window_);
             taskbar_update_windows();
         } else {
             window_focus = window_get(child);

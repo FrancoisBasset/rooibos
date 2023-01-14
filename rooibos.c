@@ -4,6 +4,7 @@
 #include "toolbar.h"
 #include "taskbar.h"
 #include "event.h"
+#include "icon.h"
 
 FILE *debug;
 
@@ -20,6 +21,7 @@ void rooibos(void) {
 	toolbar_init();
 	taskbar_init();
 	windows_init();
+	icons_init();
 
 	while (1) {
 		int quit = handle_event();
