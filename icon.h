@@ -7,6 +7,7 @@
 typedef struct icon_t {
     char *filename;
     char* name;
+    char* exec;
     int x;
     int y;
     int width;
@@ -24,4 +25,5 @@ void icons_init(void);
 void icons_show(void);
 void icons_clear(void);
 void icons_on_hover(int x, int y);
+void icons_on_click(int x, int y);
 #endif

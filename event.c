@@ -90,6 +90,10 @@ int event_on_button_press(int x, int y) {
         mode = ' ';
     }
 
+    if (menu_showed == 1) {
+        icons_on_click(x, y);
+    }
+
     return quit;
 }
 

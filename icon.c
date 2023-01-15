@@ -90,7 +90,7 @@ void icons_init(void) {
             menu_height = y + width + 20;
         }
 
-        icon_t new_icon = { app_shortcuts[i].icon, app_shortcuts[i].name, x, y, width, width, NULL, NULL };
+        icon_t new_icon = { app_shortcuts[i].icon, app_shortcuts[i].name, app_shortcuts[i].exec, x, y, width, width, NULL, NULL };
 
         if (strstr(app_shortcuts[i].icon, ".svg") != NULL) {
             new_icon.rsvg_handle = icon_get_surface_svg(new_icon.filename);
@@ -165,5 +165,16 @@ void icons_on_hover(int x, int y) {
         XClearArea(display, window, icons[previous_icon].x, icons[previous_icon].y, 100, 100, 1);
         icon_draw(icons[previous_icon]);
         XDefineCursor(display, window, cursor);
+    }
+}
+
+void icons_on_click(int x, int y) {
+    for (int i = 0; i < app_shortcuts_length; i++) {
+        if (x >= icons[i].x && x <= icons[i].x + icons[i].width &&
+        y >= icons[i].y && y <= icons[i].y + icons[i].height) {
+            if (fork() == 0) {
+                execlp(icons[i].exec, icons[i].exec, NULL);
+            }
+        }
     }
 }

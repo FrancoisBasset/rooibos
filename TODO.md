@@ -12,7 +12,6 @@ All my tasks will be written in this file.
 - [ ] Proof of concept : Window decoration
 
 ### In Progress
-- [ ] Add Call To Action for menu icons
 - [ ] Create menu with categories
 
 ### Done
@@ -60,3 +59,4 @@ All my tasks will be written in this file.
 - [X] Refactorize the app_shortcuts system
 - [X] Rename structures names
 - [X] Show all menu icons when pressing Meta
+- [X] Add Call To Action for menu icons

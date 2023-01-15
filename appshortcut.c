@@ -124,7 +124,7 @@ appshortcut_t appshortcut_get_app_shortcut(const char *filename) {
 		} else if (strcmp(key, "Exec") == 0 && strcmp(exec, "") == 0) {
 			for (int i = 0; i < strlen(value); i++) {
 				if (value[i] == '%') {
-					value[i] = '\0';
+					value[i - 1] = '\0';
 				}
 			}
 			
