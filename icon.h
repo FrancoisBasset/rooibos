@@ -23,7 +23,6 @@ void icon_draw_png(cairo_surface_t *cairo_surface, const char* name, int x, int 
 void icon_draw_svg(RsvgHandle *rsvg_handle, const char* name, int x, int y, int width, int height);
 void icons_init(void);
 void icons_show(void);
-void icons_clear(void);
 void icons_on_hover(int x, int y);
 void icons_on_click(int x, int y);
 #endif

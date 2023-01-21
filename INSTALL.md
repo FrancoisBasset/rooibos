@@ -1,4 +1,4 @@
--------------------- ROOIBOS WINDOW MANAGER INSTALLATION GUIDE --------------------
+# Rooibos Window Manager Installation Guide
 
 The installation of this program is done in 2 steps :
 - Compilation, the process of translating source code by machine code
@@ -6,8 +6,11 @@ The installation of this program is done in 2 steps :
 
 REQUIREMENTS :
 These packages are essentials to build the program :
-==> build-essential
-==> libsqlite3-dev
+- make
+- gcc
+- build-essential
+- libx11-dev
+- libsqlite3-dev
 
 First to compile this program run these commands :
 

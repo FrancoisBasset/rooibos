@@ -9,6 +9,7 @@
 
 static char *icon_to_search;
 static char *result;
+static int do_size_filter = 1;
 
 static int filter_icon(const char *path, const struct stat *sb, int typeflag);
 static char* appshortcut_get_category(const char* categories);
@@ -177,7 +178,7 @@ appshortcut_t appshortcut_get_app_shortcut(const char *filename) {
 }
 
 static int filter_icon(const char *path, const struct stat *sb, int typeflag) {
-	if (strstr(path, ".png") != NULL && (strstr(path, "16x16") != NULL || strstr(path, "32x32") != NULL)) {
+	if (strstr(path, ".png") != NULL && do_size_filter == 1 && (strstr(path, "16x16") != NULL || strstr(path, "32x32") != NULL)) {
 		return 0;
 	}
 
@@ -229,13 +230,21 @@ static char* appshortcut_get_icon(char *icon) {
 
 	icon_to_search = icon;
 
-	ftw("/usr/share/pixmaps", filter_icon, 50);
-	if (result == NULL) {
-		ftw("/usr/share/icons", filter_icon, 50);
+	do_size_filter = 1;
+
+	while (result == NULL) {
+		ftw("/usr/share/pixmaps", filter_icon, 50);
+		if (result == NULL) {
+			ftw("/usr/share/icons", filter_icon, 50);
+		}
 		if (result == NULL) {
 			char *local_icons_dir = utils_get_local_icons_dir();
 			ftw(local_icons_dir, filter_icon, 50);
 			free(local_icons_dir);
+		}
+
+		if (result == NULL) {
+			do_size_filter = 0;
 		}
 	}
 

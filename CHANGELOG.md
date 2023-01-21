@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-01-21
+### [Added]
+* I added a menu and a wallpaper
+
 ## 2023-01-15
 ### [Added]
 * I added a Call To Action for menu icons

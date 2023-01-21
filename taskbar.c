@@ -83,7 +83,7 @@ void taskbar_update_windows() {
     } while ((w = w->next) != NULL);
 }
 
-void taskbar_refresh() {
+void taskbar_show() {
     XFillRectangle(display, window, gc_taskbar, tb->x, tb->y, tb->width, tb->height);
 
     for (int i = 0; i < tb->buttons_length; i++) {
@@ -91,6 +91,10 @@ void taskbar_refresh() {
         XDrawRectangle(display, window, gc_taskbar_button_border, tb->tb_buttons[i]->x, tb->tb_buttons[i]->y, tb->tb_buttons[i]->width, tb->tb_buttons[i]->height - 1);
         XDrawString(display, window, gc_text_black, tb->tb_buttons[i]->x, tb->tb_buttons[i]->y + 28, tb->tb_buttons[i]->window->title, (int) strlen(tb->tb_buttons[i]->window->title));
     }
+}
+
+void taskbar_hide(void) {
+	XClearArea(display, window, 0, screen_height, screen_width, 100, 1);
 }
 
 int taskbar_is_pressed(int x, int y) {

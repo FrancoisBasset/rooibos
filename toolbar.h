@@ -13,7 +13,8 @@ extern GC gc_toolbar_button;
 extern GC gc_text_button_toolbar;
 
 void toolbar_init(void);
-void toolbar_refresh(void);
+void toolbar_show(void);
+void toolbar_hide(void);
 int toolbar_is_pressed(int y);
 int toolbar_on_click(int x);
 #endif

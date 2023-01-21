@@ -14,7 +14,7 @@ void toolbar_init(void) {
 	gc_toolbar_button = XCreateGC(display, window, GCForeground, &gcv_toolbar_button);
 }
 
-void toolbar_refresh(void) {
+void toolbar_show(void) {
 	int button_width = screen_width / 7;
 	char *labels[7] = { "New window", "Move window", "Resize window", "Minimize window", "Maximize window", "Close window", "Exit" };
 	for (int i = 0; i < 7; i++) {
@@ -26,6 +26,10 @@ void toolbar_refresh(void) {
 		XDrawRectangle(display, window, gc_toolbar_button, button_width * i, screen_height - 100, button_width, 50);
 		XDrawString(display, window, gc_text_white, (button_width * i) + x, screen_height - 70, labels[i], (int) strlen(labels[i]));
 	}
+}
+
+void toolbar_hide(void) {
+	XClearArea(display, window, 0, screen_height - 100, screen_width, 100, 1);
 }
 
 int toolbar_is_pressed(int y) {

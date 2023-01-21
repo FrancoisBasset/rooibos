@@ -5,6 +5,7 @@
 #include "taskbar.h"
 #include "event.h"
 #include "icon.h"
+#include "menu.h"
 
 FILE *debug;
 
@@ -21,7 +22,12 @@ void rooibos(void) {
 	toolbar_init();
 	taskbar_init();
 	windows_init();
+	menu_init();
+	XDefineCursor(display, window, wait_cursor);
+    XFlush(display);
 	icons_init();
+    XDefineCursor(display, window, cursor);
+    XFlush(display);
 
 	while (1) {
 		int quit = handle_event();

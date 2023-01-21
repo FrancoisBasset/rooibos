@@ -10,10 +10,12 @@ unsigned long white_pixel;
 unsigned long black_pixel;
 int screen_width;
 int screen_height;
+int screen_depth;
 Font font;
 XFontStruct *font_struct;
 Cursor cursor;
 Cursor hand_cursor;
+Cursor wait_cursor;
 GC gc_text_black;
 GC gc_text_white;
 Colormap colormap;
@@ -27,11 +29,12 @@ void objects_init(void) {
     black_pixel = XBlackPixelOfScreen(screen);
     screen_width = XWidthOfScreen(screen);
     screen_height = XHeightOfScreen(screen);
-    int screen_depth = XDefaultDepthOfScreen(screen);
+    screen_depth = XDefaultDepthOfScreen(screen);
     cursor = XCreateFontCursor(display, XC_arrow);
     hand_cursor = XCreateFontCursor(display, XC_hand1);
+    wait_cursor = XCreateFontCursor(display, XC_watch);
 
-    font = XLoadFont(display, "-*-times-*-r-*-*-14-*-*-*-*-*-*-*");
+    font = XLoadFont(display, "-*-*-*-r-*-*-12-*-*-*-*-*-*-*");
     font_struct = XQueryFont(display, font);
 
     XSetWindowAttributes window_attributes = {

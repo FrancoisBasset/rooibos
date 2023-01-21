@@ -1,17 +1,20 @@
 #include <cairo/cairo.h>
 #include <cairo/cairo-xlib.h>
 #include <librsvg-2.0/librsvg/rsvg.h>
+#include <math.h>
 #include "objects.h"
 #include "icon.h"
 #include "rooibos.h"
 #include "appshortcut.h"
 #include "cache.h"
+#include "menu.h"
 
 icon_t *icons;
 int app_shortcuts_length = 0;
-int menu_height = 0;
 char *icon_hover = NULL;
-int previous_icon;
+int previous_icon = -1;
+
+int icon_width = 0;
 
 void icon_draw(icon_t icon) {
     if (strstr(icon.filename, ".svg") != NULL) {
@@ -32,7 +35,7 @@ RsvgHandle* icon_get_surface_svg(const char *filename) {
 }
 
 void icon_draw_png(cairo_surface_t *cairo_surface, const char* name, int x, int y, int width, int height) {
-    cairo_surface_t *x11_surface = cairo_xlib_surface_create(display, window, XDefaultVisualOfScreen(screen), screen_width - 100, screen_height - 100);
+    cairo_surface_t *x11_surface = cairo_xlib_surface_create(display, window, XDefaultVisualOfScreen(screen), screen_width, screen_height);
     cairo_t *context = cairo_create(x11_surface);
 
     double surface_width = (double) cairo_image_surface_get_width(cairo_surface) / width;
@@ -76,21 +79,56 @@ void icon_draw_svg(RsvgHandle *rsvg_handle, const char* name, int x, int  y, int
 }
 
 void icons_init(void) {
+    cache_update();
     appshortcut_t *app_shortcuts = cache_get_app_shortcuts(&app_shortcuts_length);
-    int x = 0;
-    int y = 0;
-    int width = 100;
+    int x = menu.x;
+    int y = menu.y + 20;
 
     icons = malloc(sizeof(icon_t) * app_shortcuts_length);
 
+    int square_root = (int) sqrt(app_shortcuts_length);
+    int nb_x = square_root + 1;
+    int nb_y = square_root + 1;
+
+    while (1) {
+        if (menu.width > menu.height) {
+            if ((nb_x + 1) * (nb_y - 1) < app_shortcuts_length) {
+                break;
+            }
+
+            nb_x++;
+            nb_y--;
+        } else {
+            if ((nb_x - 1) * (nb_y + 1) < app_shortcuts_length) {
+                break;
+            }
+
+            nb_x--;
+            nb_y++;
+        }
+    }
+
+    const int menu_width = (int) (menu.width * 0.60);
+    const int menu_height = (int) (menu.height * 0.80);
+
+    const int space_x = (menu.width - menu_width) / nb_x;
+    const int space_y = (menu.height - menu_height) / nb_y;
+
+    x += (space_x / 2);
+    y += (space_y / 2);
+
+    const int width = menu_width / nb_x;
+    const int height = menu_height / nb_y;
+
+    icon_width = width < height ? width : height;
+
     for (int i = 0; i < app_shortcuts_length; i++) {
-        if (x >= screen_width - width - 20) {
-            x = 0;
-            y += width + 40;
-            menu_height = y + width + 20;
+        if (x >= menu.x + menu.width - icon_width) {
+            x = menu.x + (space_x / 2);
+            y += icon_width + space_y + (space_y / 2);
         }
 
-        icon_t new_icon = { app_shortcuts[i].icon, app_shortcuts[i].name, app_shortcuts[i].exec, x, y, width, width, NULL, NULL };
+        icon_t new_icon = { app_shortcuts[i].icon, app_shortcuts[i].name, app_shortcuts[i].exec, x, y, icon_width, icon_width, NULL, NULL };
 
         if (strstr(app_shortcuts[i].icon, ".svg") != NULL) {
             new_icon.rsvg_handle = icon_get_surface_svg(new_icon.filename);
@@ -100,7 +138,7 @@ void icons_init(void) {
 
         icons[i] = new_icon;
 
-        x += width;
+        x += icon_width + space_x;
     }
 
     /*for (int i = 0; i < app_shortcuts_length; i++) {
@@ -118,10 +156,6 @@ void icons_show(void) {
     for (int i = 0; i < app_shortcuts_length; i++) {
         icon_draw(icons[i]);
     }
-}
-
-void icons_clear(void) {
-    XClearArea(display, window, 0, 0, screen_width, menu_height, 1);
 }
 
 void icons_on_hover(int x, int y) {
@@ -147,14 +181,24 @@ void icons_on_hover(int x, int y) {
             }
 
             XDefineCursor(display, window, hand_cursor);
-            XClearArea(display, window, icons[previous_icon].x, icons[previous_icon].y, 100, 100, 1);
-            XFillRectangle(display, window, gc, icons[i].x, icons[i].y, icons[i].width, icons[i].height);
             
-            icon_draw(icons[previous_icon]);
-            icon_draw(icons[i]);
+            if (previous_icon != -1) {
+                icons[previous_icon].x += 5;
+                icons[previous_icon].y += 5;
+                icons[previous_icon].width -= 10;
+                icons[previous_icon].height -= 10;
+            }
+
+            icons[i].x -= 5;
+            icons[i].y -= 5;
+            icons[i].width += 10;
+            icons[i].height += 10;
 
             icon_hover = icons[i].name;
             previous_icon = i;
+
+            //XEvent event = { .type = Expose };
+            //XSendEvent(display, window, 0, ExposureMask, &event);
             
             break;
         }
@@ -162,8 +206,8 @@ void icons_on_hover(int x, int y) {
 
     if (icon_hover != NULL && is_hover == 0) {
         icon_hover = NULL;
-        XClearArea(display, window, icons[previous_icon].x, icons[previous_icon].y, 100, 100, 1);
-        icon_draw(icons[previous_icon]);
+        //XEvent event = { .type = Expose };
+        //XSendEvent(display, window, 0, ExposureMask, &event);
         XDefineCursor(display, window, cursor);
     }
 }

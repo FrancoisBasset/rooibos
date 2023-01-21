@@ -10,13 +10,14 @@
 #include "toolbar.h"
 #include "cache.h"
 #include "icon.h"
+#include "menu.h"
 
 char mode = ' ';
 window_t *window_focus = NULL;
 int moving = 0;
 int resizing = 0;
 
-int menu_showed = 0;
+cairo_surface_t *wallpaper_surface = NULL;
 
 int handle_event(void) {
     int quit = 0;
@@ -34,12 +35,19 @@ int handle_event(void) {
         }
         case KeyPress: {
             if (event.xkey.keycode == 133) {
-                if (menu_showed == 0) {
-                    menu_showed = 1;
-                    icons_show();
+                if (menu.is_showed == 0) {
+                    XDefineCursor(display, window, wait_cursor);
+                    XFlush(display);
+                    icons_init();
+                    XDefineCursor(display, window, cursor);
+                    XFlush(display);
+                    menu_show();
+                    taskbar_show();
+                    toolbar_show();
                 } else {
-                    menu_showed = 0;
-                    icons_clear();
+                    menu_clear();
+                    taskbar_hide();
+                    toolbar_hide();
                 }
             }
             break;
@@ -71,16 +79,24 @@ int handle_event(void) {
 }
 
 void event_on_expose(void) {
-    taskbar_refresh();
-    toolbar_refresh();
+    if (wallpaper_surface == NULL) {
+        wallpaper_surface = icon_get_surface_png("tux.png");
+    }
+    icon_draw_png(wallpaper_surface, "", 0, 0, screen_width, screen_height);
+
+    if (menu.is_showed) {
+        menu_show();
+        taskbar_show();
+        toolbar_show();
+    }
 }
 
 int event_on_button_press(int x, int y) {
     int quit = 0;
 
-    if (taskbar_is_pressed(x, y)) {
+    if (menu.is_showed && taskbar_is_pressed(x, y)) {
         taskbar_on_press(x, y);
-    } else if (toolbar_is_pressed(y)) {
+    } else if (menu.is_showed && toolbar_is_pressed(y)) {
         quit = toolbar_on_click(x);
     }
 
@@ -90,7 +106,7 @@ int event_on_button_press(int x, int y) {
         mode = ' ';
     }
 
-    if (menu_showed == 1) {
+    if (menu.is_showed == 1) {
         icons_on_click(x, y);
     }
 
@@ -108,7 +124,7 @@ void event_on_motion(int x, int y) {
         XResizeWindow(display, window_focus->id, (x - window_focus->x) - 10, (y - window_focus->y) - 10);
     }
     
-    if (menu_showed == 1) {
+    if (menu.is_showed == 1) {
         icons_on_hover(x, y);
     }
 }
@@ -116,7 +132,7 @@ void event_on_motion(int x, int y) {
 void event_on_configure(Window child, int x, int y, int width, int height) {
     XMapWindow(display, child);
 
-    if (y < 100 && menu_showed == 1) {
+    if (y < 100 && menu.is_showed == 1) {
         icons_show();
     }
 
@@ -145,7 +161,7 @@ void event_on_property(Window child) {
     char *title;
     XFetchName(display, child, &title);
     window_update(child, "title", title);
-    taskbar_refresh();
+    taskbar_show();
 }
 
 void event_on_destroy(Window child) {
@@ -154,7 +170,7 @@ void event_on_destroy(Window child) {
     mode = ' ';
     window_delete(child);
     taskbar_update_windows();
-    taskbar_refresh();
+    taskbar_show();
 }
 
 void new_window(void) {

@@ -98,9 +98,24 @@ int cache_update(void) {
 
 	for (int i = 0; i < length; i++) {
 		sqlite3_stmt *select_stmt;
-		sqlite3_prepare_v2(db, "SELECT file FROM appshortcuts WHERE file = ?", 50 + (int) strlen(desktop_files[i]), &select_stmt, unused_sql);
-		sqlite3_bind_text(select_stmt, 1, desktop_files[i], (int) strlen(desktop_files[i]), SQLITE_STATIC);
+
+		char *short_file = malloc(sizeof(char) * (strlen(desktop_files[i]) + 3));
+		strcpy(short_file, desktop_files[i]);
+
+		const unsigned char *tmp = strtok(short_file, "/");
+		while ((tmp = strtok(NULL, "/")) != NULL) {
+			if (tmp != NULL) {
+				strcpy(short_file, "%");
+				strcat(short_file, tmp);
+				strcat(short_file, "%");
+			}
+    	}
+
+		sqlite3_prepare_v2(db, "SELECT file FROM appshortcuts WHERE file LIKE ?", 50 + (int) strlen(short_file), &select_stmt, unused_sql);
+		sqlite3_bind_text(select_stmt, 1, short_file, (int) strlen(short_file), SQLITE_STATIC);
 		sqlite3_step(select_stmt);
+
+		free(short_file);
 
 		const unsigned char *file = sqlite3_column_text(select_stmt, 0);
 		sqlite3_finalize(select_stmt);
