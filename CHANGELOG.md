@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-01-22
+### [Added]
+* I added colors in toolbar and taskbar
+
 ## 2023-01-21
 ### [Added]
 * I added a menu and a wallpaper

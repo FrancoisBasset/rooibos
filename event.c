@@ -48,6 +48,7 @@ int handle_event(void) {
                     menu_clear();
                     taskbar_hide();
                     toolbar_hide();
+                    XDefineCursor(display, window, cursor);
                 }
             }
             break;
@@ -96,7 +97,7 @@ int event_on_button_press(int x, int y) {
 
     if (menu.is_showed && taskbar_is_pressed(x, y)) {
         taskbar_on_press(x, y);
-    } else if (menu.is_showed && toolbar_is_pressed(y)) {
+    } else if (menu.is_showed && toolbar_is_hover(y)) {
         quit = toolbar_on_click(x);
     }
 
@@ -125,7 +126,13 @@ void event_on_motion(int x, int y) {
     }
     
     if (menu.is_showed == 1) {
-        icons_on_hover(x, y);
+        if (icons_on_hover(x, y) == 0) {
+            if (toolbar_is_hover(y) == 1) {
+                XDefineCursor(display, window, hand_cursor);
+            } else {
+                XDefineCursor(display, window, cursor);
+            }
+        }        
     }
 }
 
@@ -161,7 +168,9 @@ void event_on_property(Window child) {
     char *title;
     XFetchName(display, child, &title);
     window_update(child, "title", title);
-    taskbar_show();
+    if (menu.is_showed) {
+        taskbar_show();
+    }
 }
 
 void event_on_destroy(Window child) {
@@ -170,7 +179,9 @@ void event_on_destroy(Window child) {
     mode = ' ';
     window_delete(child);
     taskbar_update_windows();
-    taskbar_show();
+    if (menu.is_showed) {
+        taskbar_show();
+    }
 }
 
 void new_window(void) {

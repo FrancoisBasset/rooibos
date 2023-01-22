@@ -2,16 +2,20 @@
 Rooibos is a modern window manager written in C with the Xlib library, the low-level library of the X Window System. I decided to create this software because I think that I can provide added value.
 Rooibos is written with the Xlib library because it is a low-level and lightweight library, and to give the best user experience.
 
-![Rooibos menu](/assets/rooibos.png))
+## The Rooibos menu
+![Rooibos menu](/assets/rooibos.png)
+
+## Rooibos with a terminal
+![Rooibos with a terminal](/assets/rooibos2.png)
 
 ## Requirements :
 
 These packages are essentials to build the program :
-- make
-- gcc
-- build-essential
-- libx11-dev
-- libsqlite3-dev
+- `make`
+- `gcc`
+- `build-essential`
+- `libx11-dev`
+- `libsqlite3-dev`
 
 ## Installation
 
@@ -21,31 +25,20 @@ The installation of this program is done in 2 steps :
 
 First to compile this program run these commands :
 
-==> ./configure.sh
-
-==> make
+- `./configure.sh`
+- `make`
 
 Then to install this program there are 2 ways :
 
-- CLASSICAL MAKE INSTALL :
+- Classical make install :
 
-	Run this command :
-	==> sudo make install
-	to copy files in /usr/bin and /usr/share folders
+	Run this command : `sudo make install` to copy files in /usr/bin and /usr/share folders
 
-OR
+- Debian package install
 
-- DEBIAN PACKAGE INSTALLATION
-
-	Run these 2 commands :
-
-	Command 1
-	==> make pkg
-	to build the Debian package
-
-	Command 2
-	==> sudo dpkg -i <package.deb>
-	to install the generated .deb package
+  Run these 2 commands :
+	- `make pkg` to build the Debian package
+	- `sudo dpkg -i <package.deb>` to install the generated .deb package
 
 ## Usability
 Window managing is in tilling mode. Window positions is automatic but it can be moved by user.

@@ -18,6 +18,13 @@ extern Cursor wait_cursor;
 extern GC gc_text_black;
 extern GC gc_text_white;
 extern Colormap colormap;
+extern XColor color_new_window;
+extern XColor color_move_window;
+extern XColor color_resize_window;
+extern XColor color_minimize_window;
+extern XColor color_maximize_window;
+extern XColor color_close_window;
+extern XColor color_exit;
 
 void objects_init(void);
 #endif

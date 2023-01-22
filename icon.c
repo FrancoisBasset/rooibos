@@ -158,7 +158,7 @@ void icons_show(void) {
     }
 }
 
-void icons_on_hover(int x, int y) {
+int icons_on_hover(int x, int y) {
     XColor color_taskbar = {
         .red = 15000,
         .green = 15000,
@@ -210,6 +210,8 @@ void icons_on_hover(int x, int y) {
         //XSendEvent(display, window, 0, ExposureMask, &event);
         XDefineCursor(display, window, cursor);
     }
+
+    return is_hover;
 }
 
 void icons_on_click(int x, int y) {

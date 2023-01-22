@@ -9,6 +9,7 @@
 
 static GC gc_taskbar;
 static GC gc_taskbar_button;
+static GC gc_taskbar_button_hidden;
 static GC gc_taskbar_button_border;
 taskbar_t *tb;
 
@@ -21,26 +22,23 @@ taskbar_t* taskbar_init() {
     tb->tb_buttons = malloc(sizeof(taskbar_button_h));
     tb->buttons_length = 0;
 
-    XColor color_taskbar = {
-        .red = 53300,
-        .green = 53300,
-        .blue = 53300
-    };
+    XColor color_taskbar = { .red = 65535, .green = 65535, .blue = 65535 };
     XAllocColor(display, colormap, &color_taskbar);
     XGCValues gcv_taskbar = { .foreground = color_taskbar.pixel };
     gc_taskbar = XCreateGC(display, window, GCForeground, &gcv_taskbar);
 
-    XColor color_taskbar_button = {
-        .red = 0,
-        .green = 53300,
-        .blue = 53300
-    };
+    XColor color_taskbar_button = { .red = 65535, .green = 35000, .blue = 10000 };
     XAllocColor(display, colormap, &color_taskbar_button);
     XGCValues gcv_taskbar_button = { .foreground = color_taskbar_button.pixel };
     gc_taskbar_button = XCreateGC(display, window, GCForeground, &gcv_taskbar_button);
 
+    XColor color_taskbar_button_hidden = { .red = 20000, .green = 20000, .blue = 20000 };
+    XAllocColor(display, colormap, &color_taskbar_button_hidden);
+    XGCValues gcv_taskbar_button_hidden = { .foreground = color_taskbar_button_hidden.pixel };
+    gc_taskbar_button_hidden = XCreateGC(display, window, GCForeground, &gcv_taskbar_button_hidden);
+
     XGCValues gcv_taskbar_button_border = {
-        .foreground = color_taskbar_button.pixel,
+        .foreground = color_taskbar.pixel,
         .background = black_pixel
     };
     gc_taskbar_button_border = XCreateGC(display, window, GCForeground | GCBackground, &gcv_taskbar_button_border);
@@ -68,18 +66,23 @@ void taskbar_update_windows() {
     int i = 0;
     int x = 0;
 
+    int width = 200;
+    if (width * ws->length > screen_width) {
+        width = screen_width / ws->length;
+    }
+
     do {
         taskbar_button_h *tb_button = malloc(sizeof(taskbar_button_h));
         tb_button->x = x;
         tb_button->y = tb->y;
-        tb_button->width = 200;
+        tb_button->width = width;
         tb_button->height = 50;
         tb_button->window = w;
 
         tb->tb_buttons[i] = tb_button;
 
         i++;
-        x += 200;
+        x += width + 1;
     } while ((w = w->next) != NULL);
 }
 
@@ -87,9 +90,13 @@ void taskbar_show() {
     XFillRectangle(display, window, gc_taskbar, tb->x, tb->y, tb->width, tb->height);
 
     for (int i = 0; i < tb->buttons_length; i++) {
-        XFillRectangle(display, window, gc_taskbar_button, tb->tb_buttons[i]->x, tb->tb_buttons[i]->y, tb->tb_buttons[i]->width, tb->tb_buttons[i]->height);
+        if (tb->tb_buttons[i]->window->visible == 1) {
+            XFillRectangle(display, window, gc_taskbar_button, tb->tb_buttons[i]->x, tb->tb_buttons[i]->y, tb->tb_buttons[i]->width, tb->tb_buttons[i]->height);
+        } else {
+            XFillRectangle(display, window, gc_taskbar_button_hidden, tb->tb_buttons[i]->x, tb->tb_buttons[i]->y, tb->tb_buttons[i]->width, tb->tb_buttons[i]->height);
+        }
         XDrawRectangle(display, window, gc_taskbar_button_border, tb->tb_buttons[i]->x, tb->tb_buttons[i]->y, tb->tb_buttons[i]->width, tb->tb_buttons[i]->height - 1);
-        XDrawString(display, window, gc_text_black, tb->tb_buttons[i]->x, tb->tb_buttons[i]->y + 28, tb->tb_buttons[i]->window->title, (int) strlen(tb->tb_buttons[i]->window->title));
+        XDrawString(display, window, gc_text_white, tb->tb_buttons[i]->x, tb->tb_buttons[i]->y + 28, tb->tb_buttons[i]->window->title, (int) strlen(tb->tb_buttons[i]->window->title));
     }
 }
 
@@ -118,4 +125,6 @@ void taskbar_on_press(int x, int y) {
                 }
             }
     }
+
+    taskbar_show();
 }

@@ -5,25 +5,33 @@
 #include "window.h"
 #include "event.h"
 
+XGCValues gcv_toolbar_button;
 GC gc_toolbar_button;
 
 toolbar_button_t toolbar_buttons[7];
 
 void toolbar_init(void) {
-    XGCValues gcv_toolbar_button = { .foreground = white_pixel };
+    gcv_toolbar_button = (XGCValues) { .foreground = white_pixel };
 	gc_toolbar_button = XCreateGC(display, window, GCForeground, &gcv_toolbar_button);
 }
 
 void toolbar_show(void) {
 	int button_width = screen_width / 7;
+
+	XColor colors[7] = { color_new_window, color_move_window, color_resize_window, color_minimize_window, color_maximize_window, color_close_window, color_exit };
 	char *labels[7] = { "New window", "Move window", "Resize window", "Minimize window", "Maximize window", "Close window", "Exit" };
+
 	for (int i = 0; i < 7; i++) {
 		int width = XTextWidth(font_struct, labels[i], (int) strlen(labels[i]));
 		int x = (button_width - width) / 2;
 
 		toolbar_button_t new_tbb = { labels[i], button_width * i, screen_height - 100, button_width, 50 };
 		toolbar_buttons[i] = new_tbb;
-		XDrawRectangle(display, window, gc_toolbar_button, button_width * i, screen_height - 100, button_width, 50);
+
+		gcv_toolbar_button.foreground = colors[i].pixel;
+		XChangeGC(display, gc_toolbar_button, GCForeground, &gcv_toolbar_button);
+
+		XFillRectangle(display, window, gc_toolbar_button, button_width * i, screen_height - 100, button_width, 50);
 		XDrawString(display, window, gc_text_white, (button_width * i) + x, screen_height - 70, labels[i], (int) strlen(labels[i]));
 	}
 }
@@ -32,7 +40,7 @@ void toolbar_hide(void) {
 	XClearArea(display, window, 0, screen_height - 100, screen_width, 100, 1);
 }
 
-int toolbar_is_pressed(int y) {
+int toolbar_is_hover(int y) {
 	return y >= screen_height - 100 && y <= screen_height - 50;
 }
 
