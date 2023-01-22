@@ -30,7 +30,7 @@ int handle_event(void) {
             event_on_expose();
             break;
         case ButtonPress: {
-            quit = event_on_button_press(event.xbutton.x, event.xbutton.y);
+            quit = event_on_button_press(event.xbutton.button, event.xbutton.x, event.xbutton.y);
             break;
         }
         case KeyPress: {
@@ -92,7 +92,19 @@ void event_on_expose(void) {
     }
 }
 
-int event_on_button_press(int x, int y) {
+int event_on_button_press(int button, int x, int y) {
+    int quit = 0;
+
+    if (button == 1) {
+        quit = event_on_left_button_press(x, y);
+    } else if (button == 3) {
+        quit = event_on_right_button_press(x, y);
+    }
+
+    return quit;
+}
+
+int event_on_left_button_press(int x, int y) {
     int quit = 0;
 
     if (menu.is_showed && taskbar_is_pressed(x, y)) {
@@ -112,6 +124,10 @@ int event_on_button_press(int x, int y) {
     }
 
     return quit;
+}
+
+int event_on_right_button_press(int x, int y) {
+    return 0;
 }
 
 void event_on_motion(int x, int y) {
