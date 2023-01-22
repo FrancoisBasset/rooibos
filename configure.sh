@@ -15,5 +15,8 @@ check_installed make /usr/bin/make make
 check_installed gcc /usr/bin/gcc gcc
 check_installed xorg /usr/bin/startx xorg
 check_installed stdlib /usr/include/stdlib.h build-essential
+check_installed libx11-dev /usr/include/X11/Xlib.h libx11-dev
 check_installed libsqlite3-dev /usr/include/sqlite3.h libsqlite3-dev
+check_installed libcairo2-dev /usr/include/cairo/cairo.h libcairo2-dev
+check_installed librsvg2-dev /usr/include/librsvg-2.0/librsvg/rsvg.h librsvg2-dev
 check_installed xterm /usr/bin/xterm xterm
