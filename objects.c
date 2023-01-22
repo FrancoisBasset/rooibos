@@ -44,8 +44,24 @@ void objects_init(void) {
     font = XLoadFont(display, "-*-*-*-r-*-*-12-*-*-*-*-*-*-*");
     font_struct = XQueryFont(display, font);
 
+    colormap = XDefaultColormapOfScreen(screen);
+    color_new_window = (XColor) { .red = 0, .green = 40000, .blue = 0 };
+	color_move_window = (XColor) { .red = 0, .green = 0, .blue = 65535 };
+	color_resize_window = (XColor) { .red = 30000, .green = 30000, .blue = 0 };
+	color_minimize_window = (XColor) { .red = 0, .green = 0, .blue = 30000 };
+	color_maximize_window = (XColor) { .red = 30000, .green = 0, .blue = 30000 };
+	color_close_window = (XColor) { .red = 65535, .green = 0, .blue = 0 };
+	color_exit = (XColor) { .red = 0, .green = 0, .blue = 0 };
+	XAllocColor(display, colormap, &color_new_window);
+	XAllocColor(display, colormap, &color_move_window);
+	XAllocColor(display, colormap, &color_resize_window);
+	XAllocColor(display, colormap, &color_minimize_window);
+	XAllocColor(display, colormap, &color_maximize_window);
+	XAllocColor(display, colormap, &color_close_window);
+	XAllocColor(display, colormap, &color_exit);
+
     XSetWindowAttributes window_attributes = {
-        .background_pixel = black_pixel,
+        .background_pixel = color_new_window.pixel,
         .cursor = cursor,
         .event_mask = ExposureMask | ButtonPressMask | PointerMotionMask | KeyPressMask
     };
@@ -63,21 +79,4 @@ void objects_init(void) {
         .font = font
     };
 	gc_text_white = XCreateGC(display, window, GCForeground | GCFont, &gcv_text_white);
-
-    colormap = XDefaultColormapOfScreen(screen);
-
-    color_new_window = (XColor) { .red = 0, .green = 40000, .blue = 0 };
-	color_move_window = (XColor) { .red = 0, .green = 0, .blue = 65535 };
-	color_resize_window = (XColor) { .red = 30000, .green = 30000, .blue = 0 };
-	color_minimize_window = (XColor) { .red = 0, .green = 0, .blue = 30000 };
-	color_maximize_window = (XColor) { .red = 30000, .green = 0, .blue = 30000 };
-	color_close_window = (XColor) { .red = 65535, .green = 0, .blue = 0 };
-	color_exit = (XColor) { .red = 0, .green = 0, .blue = 0 };
-	XAllocColor(display, colormap, &color_new_window);
-	XAllocColor(display, colormap, &color_move_window);
-	XAllocColor(display, colormap, &color_resize_window);
-	XAllocColor(display, colormap, &color_minimize_window);
-	XAllocColor(display, colormap, &color_maximize_window);
-	XAllocColor(display, colormap, &color_close_window);
-	XAllocColor(display, colormap, &color_exit);
 }

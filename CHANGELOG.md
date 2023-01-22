@@ -17,6 +17,7 @@ There are 6 types of changes :
 * I deleted the right click action for now
 ### [Added]
 * I added colors in toolbar and taskbar
+* I added a splash screen
 
 ## 2023-01-21
 ### [Added]

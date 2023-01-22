@@ -19,16 +19,30 @@ void rooibos(void) {
 
 	debug = fopen("./debug.txt", "w");
 
-	toolbar_init();
-	taskbar_init();
-	windows_init();
-	menu_init();
 	XDefineCursor(display, window, wait_cursor);
-    XFlush(display);
+	RsvgHandle *rooibos_icon = icon_get_surface_svg("./assets/logo.svg");
+	int x = (screen_width - 300) / 2;
+    int y = (screen_height - 300) / 2;
+	icon_draw_svg(rooibos_icon, "", x, y, 300, 300);
+
+	int width = XTextWidth(font_struct, "Welcome on Rooibos !", 20);
+	x = (screen_width - width) / 2;
+	XDrawString(display, window, gc_text_white, x, y + 350, "Welcome on Rooibos !", 20);
+
+	width = XTextWidth(font_struct, "Press Meta key to show menu", 27);
+	x = (screen_width - width) / 2;
+	XDrawString(display, window, gc_text_white, x, y + 370, "Press Meta key to show menu", 27);
+
+	XFlush(display);
 	icons_init();
     XDefineCursor(display, window, cursor);
     XFlush(display);
 
+	toolbar_init();
+	taskbar_init();
+	windows_init();
+	menu_init();
+	
 	while (1) {
 		int quit = handle_event();
 
