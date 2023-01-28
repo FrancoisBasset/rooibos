@@ -34,4 +34,7 @@ void window_delete(Window id);
 
 void window_free(window_t* w);
 void windows_free(void);
+
+void window_show_all_visible(void);
+void window_hide_all_visible(void);
 #endif

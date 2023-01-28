@@ -180,3 +180,25 @@ void windows_free(void) {
 windows_t* windows_get(void) {
     return ws;
 }
+
+void window_show_all_visible(void) {
+    window_t *w = NULL;
+
+    window_reset();
+    while (w = window_next()) {
+        if (w->visible == 1) {
+            XMapWindow(display, w->id);
+        }
+    }
+}
+
+void window_hide_all_visible(void) {
+    window_t *w = NULL;
+
+    window_reset();
+    while (w = window_next()) {
+        if (w->visible == 1) {
+            XUnmapWindow(display, w->id);
+        }
+    }
+}

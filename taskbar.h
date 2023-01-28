@@ -26,7 +26,6 @@ taskbar_t* taskbar_init(void);
 void taskbar_update_windows(void);
 void taskbar_show(void);
 void taskbar_hide(void);
-void taskbar_click(void);
 int taskbar_is_pressed(int x, int y);
 void taskbar_on_press(int x, int y);
 #endif

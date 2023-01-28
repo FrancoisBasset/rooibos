@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-01-28
+### [Changed]
+* I made many refacto
+
 ## 2023-01-22
 ### [Removed]
 * I deleted the right click action for now

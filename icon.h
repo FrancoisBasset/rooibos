@@ -24,5 +24,5 @@ void icon_draw_svg(RsvgHandle *rsvg_handle, const char* name, int x, int y, int 
 void icons_init(void);
 void icons_show(void);
 int icons_on_hover(int x, int y);
-void icons_on_click(int x, int y);
+void icons_on_press(int x, int y);
 #endif

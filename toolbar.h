@@ -16,5 +16,5 @@ void toolbar_init(void);
 void toolbar_show(void);
 void toolbar_hide(void);
 int toolbar_is_hover(int y);
-int toolbar_on_click(int x);
+int toolbar_on_press(int x);
 #endif

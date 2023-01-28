@@ -44,7 +44,7 @@ int toolbar_is_hover(int y) {
 	return y >= screen_height - 100 && y <= screen_height - 50;
 }
 
-int toolbar_on_click(int x) {
+int toolbar_on_press(int x) {
 	int position = (int) (((double) x / (double) screen_width) * 7);
 
 	switch (position) {

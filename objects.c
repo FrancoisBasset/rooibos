@@ -61,12 +61,11 @@ void objects_init(void) {
 	XAllocColor(display, colormap, &color_exit);
 
     XSetWindowAttributes window_attributes = {
-        .background_pixel = color_new_window.pixel,
         .cursor = cursor,
         .event_mask = ExposureMask | ButtonPressMask | PointerMotionMask | KeyPressMask
     };
 
-    window = XCreateWindow(display, root_window, 0, 0, screen_width, screen_height, 0, screen_depth, InputOutput, visual, CWBackPixel | CWCursor | CWEventMask, &window_attributes);
+    window = XCreateWindow(display, root_window, 0, 0, screen_width, screen_height, 0, screen_depth, InputOutput, visual, CWCursor | CWEventMask, &window_attributes);
 
     XGCValues gcv_text_black = {
         .foreground = black_pixel,

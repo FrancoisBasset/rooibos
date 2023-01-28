@@ -214,7 +214,7 @@ int icons_on_hover(int x, int y) {
     return is_hover;
 }
 
-void icons_on_click(int x, int y) {
+void icons_on_press(int x, int y) {
     for (int i = 0; i < app_shortcuts_length; i++) {
         if (x >= icons[i].x && x <= icons[i].x + icons[i].width &&
         y >= icons[i].y && y <= icons[i].y + icons[i].height) {

@@ -10,6 +10,7 @@ All my tasks will be written in this file.
 
 ### Waiting
 - [ ] Proof of concept : Window decoration
+- [ ] Do short press/long press
 
 ### In Progress
 - [ ] Create menu with categories
