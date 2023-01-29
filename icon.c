@@ -81,8 +81,12 @@ void icon_draw_svg(RsvgHandle *rsvg_handle, const char* name, int x, int  y, int
 void icons_init(void) {
     cache_update();
     appshortcut_t *app_shortcuts = cache_get_app_shortcuts(&app_shortcuts_length);
+    if (menu.category_index != -1) {
+        app_shortcuts = appshortcut_get_app_shortcuts_by_category(app_shortcuts, categories[menu.category_index], app_shortcuts_length, &app_shortcuts_length);
+    }
+    
     int x = menu.x;
-    int y = menu.y + 20;
+    int y = menu.y + 80;
 
     icons = malloc(sizeof(icon_t) * app_shortcuts_length);
 

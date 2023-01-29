@@ -5,19 +5,24 @@
 Display *display;
 Screen *screen;
 Window root_window;
-Window window;
+Visual *visual;
+
 unsigned long white_pixel;
 unsigned long black_pixel;
+
 int screen_width;
 int screen_height;
 int screen_depth;
+
+Window window;
+
 Font font;
 XFontStruct *font_struct;
+
 Cursor cursor;
 Cursor hand_cursor;
 Cursor wait_cursor;
-GC gc_text_black;
-GC gc_text_white;
+
 Colormap colormap;
 XColor color_new_window;
 XColor color_move_window;
@@ -26,23 +31,37 @@ XColor color_minimize_window;
 XColor color_maximize_window;
 XColor color_close_window;
 XColor color_exit;
+XColor color_category_button;
+
+GC gc_text_white;
+GC gc_text_black;
+GC gc_category_button;
 
 void objects_init(void) {
     display = XOpenDisplay(NULL);
     screen = XDefaultScreenOfDisplay(display);
     root_window = XDefaultRootWindow(display);
-    Visual *visual = XDefaultVisualOfScreen(screen);
+    visual = XDefaultVisualOfScreen(screen);
+
     white_pixel = XWhitePixelOfScreen(screen);
     black_pixel = XBlackPixelOfScreen(screen);
+
     screen_width = XWidthOfScreen(screen);
     screen_height = XHeightOfScreen(screen);
     screen_depth = XDefaultDepthOfScreen(screen);
-    cursor = XCreateFontCursor(display, XC_arrow);
-    hand_cursor = XCreateFontCursor(display, XC_hand1);
-    wait_cursor = XCreateFontCursor(display, XC_watch);
+
+    XSetWindowAttributes window_attributes = {
+        .cursor = cursor,
+        .event_mask = ExposureMask | ButtonPressMask | PointerMotionMask | KeyPressMask
+    };
+    window = XCreateWindow(display, root_window, 0, 0, screen_width, screen_height, 0, screen_depth, InputOutput, visual, CWCursor | CWEventMask, &window_attributes);
 
     font = XLoadFont(display, "-*-*-*-r-*-*-12-*-*-*-*-*-*-*");
     font_struct = XQueryFont(display, font);
+
+    cursor = XCreateFontCursor(display, XC_arrow);
+    hand_cursor = XCreateFontCursor(display, XC_hand1);
+    wait_cursor = XCreateFontCursor(display, XC_watch);
 
     colormap = XDefaultColormapOfScreen(screen);
     color_new_window = (XColor) { .red = 0, .green = 40000, .blue = 0 };
@@ -52,6 +71,8 @@ void objects_init(void) {
 	color_maximize_window = (XColor) { .red = 30000, .green = 0, .blue = 30000 };
 	color_close_window = (XColor) { .red = 65535, .green = 0, .blue = 0 };
 	color_exit = (XColor) { .red = 0, .green = 0, .blue = 0 };
+    color_category_button = (XColor) { .red = 0, .green = 40000, .blue = 0 };
+
 	XAllocColor(display, colormap, &color_new_window);
 	XAllocColor(display, colormap, &color_move_window);
 	XAllocColor(display, colormap, &color_resize_window);
@@ -59,23 +80,19 @@ void objects_init(void) {
 	XAllocColor(display, colormap, &color_maximize_window);
 	XAllocColor(display, colormap, &color_close_window);
 	XAllocColor(display, colormap, &color_exit);
-
-    XSetWindowAttributes window_attributes = {
-        .cursor = cursor,
-        .event_mask = ExposureMask | ButtonPressMask | PointerMotionMask | KeyPressMask
-    };
-
-    window = XCreateWindow(display, root_window, 0, 0, screen_width, screen_height, 0, screen_depth, InputOutput, visual, CWCursor | CWEventMask, &window_attributes);
-
-    XGCValues gcv_text_black = {
-        .foreground = black_pixel,
-        .font = font
-    };
-	gc_text_black = XCreateGC(display, window, GCForeground | GCFont, &gcv_text_black);
+    XAllocColor(display, colormap, &color_category_button);
 
     XGCValues gcv_text_white = {
         .foreground = white_pixel,
         .font = font
     };
 	gc_text_white = XCreateGC(display, window, GCForeground | GCFont, &gcv_text_white);
+    XGCValues gcv_text_black = {
+        .foreground = black_pixel,
+        .font = font
+    };
+	gc_text_black = XCreateGC(display, window, GCForeground | GCFont, &gcv_text_black);
+
+    XGCValues gcv_category_button = { .foreground = color_category_button.pixel };
+    gc_category_button = XCreateGC(display, window, GCForeground, &gcv_category_button);
 }

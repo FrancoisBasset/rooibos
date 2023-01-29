@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-01-29
+### [Added]
+* I added categories in menu
+
 ## 2023-01-28
 ### [Changed]
 * I made many refacto

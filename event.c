@@ -136,7 +136,17 @@ int event_on_left_button_press(int x, int y) {
     }
 
     if (menu.is_showed == 1) {
-        icons_on_press(x, y);
+        if (x >= menu.x && x <= menu.x + menu.width && y >= menu.y && y <= menu.y + menu.height) {
+            icons_on_press(x, y);
+
+            int category_button = menu_category_buttons_on_hover(x, y);
+            menu_category_buttons_on_press(category_button);
+        } else {
+            menu_clear();
+            window_show_all_visible();
+            taskbar_show();
+            toolbar_show();
+        }
     }
 
     return quit;
@@ -166,6 +176,21 @@ void event_on_key_press(int key) {
             toolbar_show();
             XDefineCursor(display, window, cursor);
         }
+    } else if (key == 113) {
+        if (menu.is_showed && menu.category_index > -1) {
+            menu_go_to_previous_category();
+        }
+    } else if (key == 114) {
+        if (menu.is_showed && menu.category_index < 8) {
+            menu_go_to_next_category();
+        }
+    } else if (key == 9) {
+        if (menu.is_showed == 1) {
+            menu_clear();
+            window_show_all_visible();
+            taskbar_show();
+            toolbar_show();
+        }
     }
 }
 
@@ -181,7 +206,9 @@ void event_on_motion(int x, int y) {
     }
     
     if (menu.is_showed == 1) {
-        icons_on_hover(x, y);
+        if (icons_on_hover(x, y) == 0) {
+            menu_category_buttons_on_hover(x, y);
+        }
     } else {
         if (toolbar_is_hover(y) == 1) {
             XDefineCursor(display, window, hand_cursor);

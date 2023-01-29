@@ -10,10 +10,9 @@ All my tasks will be written in this file.
 
 ### Waiting
 - [ ] Proof of concept : Window decoration
-- [ ] Do short press/long press
 
 ### In Progress
-- [ ] Create menu with categories
+- [ ] Do short press/long press
 
 ### Done
 - [X] Prepare Kanban
@@ -61,3 +60,4 @@ All my tasks will be written in this file.
 - [X] Rename structures names
 - [X] Show all menu icons when pressing Meta
 - [X] Add Call To Action for menu icons
+- [X] Create menu with categories
