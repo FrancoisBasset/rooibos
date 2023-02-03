@@ -40,8 +40,11 @@ void prompt_exec(void) {
         if (strcmp(command, "") == 0) {
             execlp("xterm", "xterm", NULL);
         } else {
-            char *xterm_option = malloc(sizeof(char) * (strlen(command) + 6));
+            char *xterm_option = malloc(sizeof(char) * (strlen(command) + 16));
             strcpy(xterm_option, command);
+            if (strcmp(command, "ls") == 0) {
+                strcat(xterm_option, " --color");
+            }
             strcat(xterm_option, ";bash");
             execlp("xterm", "xterm", "-e", xterm_option, NULL);
             free(xterm_option);

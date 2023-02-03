@@ -178,14 +178,18 @@ appshortcut_t appshortcut_get_app_shortcut(const char *filename) {
 }
 
 static int filter_icon(const char *path, const struct stat *sb, int typeflag) {
-	if (strstr(path, ".png") != NULL && do_size_filter == 1 && (strstr(path, "16x16") != NULL || strstr(path, "32x32") != NULL)) {
+	if (strstr(path, ".png") != NULL && do_size_filter == 1 && (strstr(path, "16") != NULL || strstr(path, "22") != NULL || strstr(path, "24") != NULL || strstr(path, "32") != NULL)) {
 		return 0;
 	}
 
 	if (strstr(path, ".xpm") != NULL) {
 		return 0;
 	} 
-
+	
+	if (strcmp(icon_to_search, "/pix") == 0 && strstr(path, "/usr/share/pixmaps") != NULL) {
+		return 0;
+	}
+	
 	if (strstr(path, icon_to_search) != NULL) {
 		result = malloc(sizeof(char) * (strlen(path) + 1));
 		strcpy(result, path);

@@ -1,14 +1,13 @@
 #include <stdio.h>
 #include "rooibos.h"
 #include "objects.h"
+#include "debug.h"
 #include "toolbar.h"
 #include "taskbar.h"
 #include "event.h"
 #include "icon.h"
 #include "menu.h"
 #include "prompt.h"
-
-FILE *debug;
 
 void rooibos(void) {
 	objects_init();
@@ -18,8 +17,7 @@ void rooibos(void) {
 	XMapWindow(display, window);
 	XFlush(display);
 
-	debug = fopen("./debug.txt", "w");
-
+	debug_init();
 	XDefineCursor(display, window, wait_cursor);
 	RsvgHandle *rooibos_icon = icon_get_surface_svg("./assets/logo.svg");
 	int x = (screen_width - 300) / 2;
@@ -55,7 +53,7 @@ void rooibos(void) {
 
 	if (debug) {
 		windows_print(debug);
-		fclose(debug);
+		debug_free();
 	}
 
 	XCloseDisplay(display);

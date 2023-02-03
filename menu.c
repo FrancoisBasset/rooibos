@@ -18,8 +18,7 @@ void menu_init(void) {
     int x = (screen_width - width) / 2;
     int y = (screen_height - height) / 2;
 
-    menu_t tmp_menu = { x, y, width, height, -1, 0 };
-    menu = tmp_menu;
+    menu = (menu_t) { x, y, width, height, -1, 0 };
 }
 
 void menu_show(void) {

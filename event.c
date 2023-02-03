@@ -5,6 +5,7 @@
 #include <X11/keysym.h>
 #include "event.h"
 #include "objects.h"
+#include "debug.h"
 #include "window.h"
 #include "rooibos.h"
 #include "taskbar.h"

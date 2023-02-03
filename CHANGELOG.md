@@ -13,6 +13,8 @@ There are 6 types of changes :
 # Changes
 
 ## 2023-02-03
+### [Changed]
+* I made little refacto
 ### [Added]
 * I added the prompt command
 

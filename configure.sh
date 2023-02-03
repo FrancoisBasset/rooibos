@@ -1,6 +1,9 @@
 green="\e[32m"
 red="\e[31m"
+yellow="\e[33m"
 normal="\e[0m"
+
+packages=""
 
 check_installed() {
 	if [ -f $2 ]
@@ -8,6 +11,7 @@ check_installed() {
 		echo -e "${green}$1 is installed $normal"
 	else
 		echo -e "${red}Please install $3 $normal"
+		packages+="$3 "
 	fi
 }
 
@@ -20,3 +24,8 @@ check_installed libsqlite3-dev /usr/include/sqlite3.h libsqlite3-dev
 check_installed libcairo2-dev /usr/include/cairo/cairo.h libcairo2-dev
 check_installed librsvg2-dev /usr/include/librsvg-2.0/librsvg/rsvg.h librsvg2-dev
 check_installed xterm /usr/bin/xterm xterm
+
+if [ "$packages" != "" ]
+then
+	echo -e "${yellow}apt install $packages${normal}"
+fi
