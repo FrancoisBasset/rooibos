@@ -6,6 +6,7 @@
 #include "event.h"
 #include "icon.h"
 #include "menu.h"
+#include "prompt.h"
 
 FILE *debug;
 
@@ -29,9 +30,9 @@ void rooibos(void) {
 	x = (screen_width - width) / 2;
 	XDrawString(display, window, gc_text_white, x, y + 350, "Welcome on Rooibos !", 20);
 
-	width = XTextWidth(font_struct, "Press Meta key to show menu", 27);
+	width = XTextWidth(font_struct, "Press Super key to show menu", 28);
 	x = (screen_width - width) / 2;
-	XDrawString(display, window, gc_text_white, x, y + 370, "Press Meta key to show menu", 27);
+	XDrawString(display, window, gc_text_white, x, y + 370, "Press Super key to show menu", 28);
 
 	XFlush(display);
 	icons_init();
@@ -40,6 +41,7 @@ void rooibos(void) {
 
 	toolbar_init();
 	taskbar_init();
+	prompt_init();
 	windows_init();
 	menu_init();
 	

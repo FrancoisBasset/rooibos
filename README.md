@@ -43,7 +43,7 @@ Then to install this program there are 2 ways :
 ## Usability
 Window managing is in tilling mode. Window positions is automatic but it can be moved by user.
 
-User need to use the Meta key (Windows key) :
+User need to use the Super key (Windows key) :
 * A long press launches a tiny command shell, user is free to type a command. If the command is empty, Rooibos will just launch xterm with no command, else a xterm window will be opened and run the given command. Pressing Escape key will quit this shell.
 * A short press launches a panel containing :
   * Desktop apps shortcuts sorted by category
@@ -57,7 +57,7 @@ User need to use the Meta key (Windows key) :
   * Reboot button
   * Poweroff button
 
-Pressing Meta key, Escape key or click outside will quit this panel.
+Pressing Super key, Escape key or click outside will quit this panel.
 
 Below there is a task bar with buttons which represents windows. Each window has an icon. If a window is shown then the button is green else red.
 When a window appears, all windows shown are reorganized.

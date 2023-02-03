@@ -243,6 +243,10 @@ static char* appshortcut_get_icon(char *icon) {
 			free(local_icons_dir);
 		}
 
+		if (do_size_filter == 0) {
+			break;
+		}
+
 		if (result == NULL) {
 			do_size_filter = 0;
 		}

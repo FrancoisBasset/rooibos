@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <X11/keysym.h>
 #include "event.h"
 #include "objects.h"
 #include "window.h"
@@ -11,6 +12,7 @@
 #include "cache.h"
 #include "icon.h"
 #include "menu.h"
+#include "prompt.h"
 
 char mode = ' ';
 window_t *window_focus = NULL;
@@ -61,7 +63,7 @@ int handle_event(void) {
             break;
         }
         case KeyPress: {
-            event_on_key_press(event.xkey.keycode);
+            event_on_key_press(event.xkey, event.xkey.keycode);
             break;
         }
         case MotionNotify: {
@@ -106,6 +108,10 @@ void event_on_expose(void) {
     if (should_reorganize == 1) {
         event_reorganize();
     }
+
+    if (prompt_active == 1) {
+        prompt_show();
+    }
 }
 
 int event_on_button_press(int button, int x, int y) {
@@ -125,7 +131,7 @@ int event_on_left_button_press(int x, int y) {
 
     if (menu.is_showed == 0 && taskbar_is_pressed(x, y)) {
         taskbar_on_press(x, y);
-    } else if (menu.is_showed == 0 && toolbar_is_hover(y)) {
+    } else if (menu.is_showed == 0 && prompt_active == 0 && toolbar_is_hover(y)) {
         quit = toolbar_on_press(x);
     }
 
@@ -156,8 +162,12 @@ int event_on_right_button_press(int x, int y) {
     return 0;
 }
 
-void event_on_key_press(int key) {
-    if (key == 133) {
+void event_on_key_press(XKeyEvent key_event, int key) {
+    KeySym key_sym = XLookupKeysym(&key_event, 0);
+
+    if (prompt_active == 1) {    
+        prompt_on_key_press(key_event, key_sym);
+    } else if (key_sym == XK_Super_L) {
         if (menu.is_showed == 0) {
             XDefineCursor(display, window, wait_cursor);
             XFlush(display);
@@ -176,20 +186,24 @@ void event_on_key_press(int key) {
             toolbar_show();
             XDefineCursor(display, window, cursor);
         }
-    } else if (key == 113) {
-        if (menu.is_showed && menu.category_index > -1) {
+    } else if (key_sym == XK_Left) {
+        if (menu.is_showed == 1 && menu.category_index > -1) {
             menu_go_to_previous_category();
         }
-    } else if (key == 114) {
-        if (menu.is_showed && menu.category_index < 8) {
+    } else if (key_sym == XK_Right) {
+        if (menu.is_showed == 1 && menu.category_index < 8) {
             menu_go_to_next_category();
         }
-    } else if (key == 9) {
+    } else if (key_sym == XK_Escape) {
         if (menu.is_showed == 1) {
             menu_clear();
             window_show_all_visible();
             taskbar_show();
             toolbar_show();
+        }
+    } else if (key_sym == XK_Control_L) {
+        if (prompt_active == 0 && menu.is_showed == 0) {
+            prompt_show();
         }
     }
 }
@@ -210,7 +224,7 @@ void event_on_motion(int x, int y) {
             menu_category_buttons_on_hover(x, y);
         }
     } else {
-        if (toolbar_is_hover(y) == 1) {
+        if (prompt_active == 0 && toolbar_is_hover(y) == 1) {
             XDefineCursor(display, window, hand_cursor);
         } else {
             XDefineCursor(display, window, cursor);

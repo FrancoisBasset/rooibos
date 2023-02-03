@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-02-03
+### [Added]
+* I added the prompt command
+
 ## 2023-01-29
 ### [Added]
 * I added categories in menu
@@ -37,7 +41,7 @@ There are 6 types of changes :
 
 ## 2023-01-14
 ### [Added]
-* I showed all menu icons when pressing Meta
+* I showed all menu icons when pressing Super
 
 ## 2023-01-08
 ### [Changed]

@@ -12,7 +12,6 @@ All my tasks will be written in this file.
 - [ ] Proof of concept : Window decoration
 
 ### In Progress
-- [ ] Do short press/long press
 
 ### Done
 - [X] Prepare Kanban
@@ -58,6 +57,7 @@ All my tasks will be written in this file.
 - [X] Be able to draw icons
 - [X] Refactorize the app_shortcuts system
 - [X] Rename structures names
-- [X] Show all menu icons when pressing Meta
+- [X] Show all menu icons when pressing Super
 - [X] Add Call To Action for menu icons
 - [X] Create menu with categories
+- [X] Do short press/long press
