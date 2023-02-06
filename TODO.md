@@ -10,8 +10,21 @@ All my tasks will be written in this file.
 
 ### Waiting
 - [ ] Proof of concept : Window decoration
+- [ ] Splash confirmation
+- [ ] Category Mint bugs
+- [ ] CLI History
+- [ ] Prompt Alt key
+- [ ] Grab Super and Left Control in window
+- [ ] Dot active window
+- [ ] Study the XrmDatabase
+- [ ] Add scroll in the menu
+- [ ] Show jpeg images
+- [ ] Make own wallpaper
+- [ ] Create another logo
+- [ ] Add an entry for Display manager
 
 ### In Progress
+- [ ] Refacto utils
 
 ### Done
 - [X] Prepare Kanban
@@ -61,3 +74,4 @@ All my tasks will be written in this file.
 - [X] Add Call To Action for menu icons
 - [X] Create menu with categories
 - [X] Do short press/long press
+- [X] Assets personnalization

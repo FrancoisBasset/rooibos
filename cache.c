@@ -55,7 +55,7 @@ int cache_update(void) {
 	char* cache_path = utils_get_cache_path();
 	int success = sqlite3_open(cache_path, &db);
 
-	if (success != 0) {
+	if (success != 0 || access(cache_path, F_OK) == 0) {
 		sqlite3_close(db);
 		int init_status = cache_init();
 		if (init_status == -1) {

@@ -75,3 +75,9 @@ At the right click in the wallpaper, a window appears, it will serve to :
 * Modify themes
 
 Pressing Escape key or click outside will quit this panel.
+
+To launch Rooibos, you have to execute this command : `startx rooibos`
+
+Splash logo and wallpaper can be modified. You just have to copy these files in `$HOME/.rooibos/`.
+Splash logo must be in .svg format in `$HOME/.rooibos/logo.svg`.
+Wallpaper must be in .png format in `$HOME/.rooibos/wallpaper.png`.

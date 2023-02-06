@@ -31,12 +31,16 @@ vg:
 	valgrind --leak-check=full --show-leak-kinds=all ./rooibos
 
 pkg:
-	rm package/usr/bin/.gitkeep
-	rm package/usr/share/man/man1/.gitkeep
+	rm -f package/usr/bin/.gitkeep
+	rm -f package/usr/share/rooibos/.gitkeep
+	rm -f package/usr/share/man/man1/.gitkeep
 	cp rooibos package/usr/bin
+	cp assets/logo.svg package/usr/share/rooibos
+	cp assets/wallpaper.png package/usr/share/rooibos
 	gzip < rooibos.1 > package/usr/share/man/man1/rooibos.1.gz
 	dpkg-deb --build package rooibos_$(VERSION)_$(ARCH).deb
 	> package/usr/bin/.gitkeep
+	> package/usr/share/rooibos/.gitkeep
 	> package/usr/share/man/man1/.gitkeep
 
 start:
@@ -44,12 +48,16 @@ start:
 
 install:
 	cp rooibos /usr/bin/rooibos
+	mkdir /usr/share/rooibos
+	cp assets/logo.svg /usr/share/rooibos
+	cp assets/wallpaper.png /usr/share/rooibos
 	cp package/usr/share/bash-completion/completions/rooibos /usr/share/bash-completion/completions/rooibos
 	gzip < rooibos.1 > /usr/share/man/man1/rooibos.1.gz
-	rooibos cache:init
-	rooibos cache:update
+	rooibos cache-init
+	rooibos cache-update
 
 uninstall:
 	rm -f /usr/bin/rooibos
+	rm -rf /usr/share/rooibos
 	rm -f /usr/share/bash-completion/completions/rooibos
 	rm -f /usr/share/man/man1/rooibos.1.gz

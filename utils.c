@@ -51,6 +51,26 @@ char* utils_get_cache_path(void) {
 	return cache_path;
 }
 
+char* utils_get_logo_path(void) {
+	const char *user_home = utils_get_user_home();
+	
+	char *logo_path = malloc(sizeof(char) * (strlen(user_home) + 19));
+	strcpy(logo_path, user_home);
+	strcat(logo_path, "/.rooibos/logo.svg");
+
+	return logo_path;
+}
+
+char* utils_get_wallpaper_path(void) {
+	const char *user_home = utils_get_user_home();
+	
+	char *wallpaper_path = malloc(sizeof(char) * (strlen(user_home) + 24));
+	strcpy(wallpaper_path, user_home);
+	strcat(wallpaper_path, "/.rooibos/wallpaper.png");
+
+	return wallpaper_path;
+}
+
 int utils_is_root(void) {
 	if (getuid() == 0) {
 		return 1;

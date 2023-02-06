@@ -14,6 +14,7 @@
 #include "icon.h"
 #include "menu.h"
 #include "prompt.h"
+#include "utils.h"
 
 char mode = ' ';
 window_t *window_focus = NULL;
@@ -94,10 +95,7 @@ int handle_event(void) {
 }
 
 void event_on_expose(void) {
-    if (wallpaper_surface == NULL) {
-        wallpaper_surface = icon_get_surface_png("tux.png");
-    }
-    icon_draw_png(wallpaper_surface, "", 0, 0, screen_width, screen_height);
+    show_wallpaper();
 
     if (menu.is_showed == 1) {
         menu_show();
@@ -292,4 +290,29 @@ void new_window(void) {
 		execlp("xterm", "xterm", NULL);
 	}
     event_reorganize();
+}
+
+void show_wallpaper(void) {
+    if (wallpaper_surface == NULL) {
+        char *wallpaper_file_path = malloc(sizeof(char) * 200);
+        strcpy(wallpaper_file_path, "");
+        if (access("/usr/share/rooibos/wallpaper.png", F_OK) == 0) {
+            strcpy(wallpaper_file_path, "/usr/share/rooibos/wallpaper.png");
+        }
+
+        char *wallpaper_path = utils_get_wallpaper_path();
+        if (access(wallpaper_path, F_OK) == 0) {
+            strcpy(wallpaper_file_path, wallpaper_path);
+        }
+        free(wallpaper_path);
+        
+        if (access("./assets/wallpaper.png", F_OK) == 0) {
+            strcpy(wallpaper_file_path, "./assets/wallpaper.png");
+        }
+
+        wallpaper_surface = icon_get_surface_png(wallpaper_file_path);
+
+        free(wallpaper_file_path);
+    }
+    icon_draw_png(wallpaper_surface, "", 0, 0, screen_width, screen_height);
 }

@@ -1,4 +1,4 @@
-.TH man 1 "07 October 2022" "0.1.0" "rooibos man page"
+.TH man 1 "06 January 2023" "0.1.0" "rooibos man page"
 
 .SH NAME
 rooibos \- A modern window manager for X11
@@ -13,9 +13,15 @@ Rooibos is written with the Xlib library because it is a low-level and lightweig
 .SH OPTIONS
 Options are :
 .TP
-\fBcache:init\fR	Create the cache database
+\fBcache-init\fR	Create the cache database
 .TP
-\fBcache:update\fR	Update the cache database
+\fBcache-update\fR	Update the cache database
+
+To launch Rooibos, you have to execute this command : startx rooibos
+
+Splash logo and wallpaper can be modified. You just have to copy these files in $HOME/.rooibos/.
+Splash logo must be in .svg format in $HOME/.rooibos/logo.svg.
+Wallpaper must be in .png format in $HOME/.rooibos/wallpaper.png.
 
 .SH AUTHOR
 Written by François Basset

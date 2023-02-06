@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-02-06
+### [Added]
+* I made splash and wallpaper customizable
+
 ## 2023-02-03
 ### [Changed]
 * I made little refacto
