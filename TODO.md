@@ -20,10 +20,9 @@ All my tasks will be written in this file.
 - [ ] Show jpeg images
 - [ ] Make own wallpaper
 - [ ] Create another logo
-- [ ] Add an entry for Display manager
 
 ### In Progress
-- [ ] CLI History
+- [ ] Add an entry for Display manager
 
 ### Done
 - [X] Prepare Kanban
@@ -75,3 +74,4 @@ All my tasks will be written in this file.
 - [X] Do short press/long press
 - [X] Assets personnalization
 - [X] Refacto utils
+- [X] CLI History

@@ -25,6 +25,9 @@ char* utils_get(utils_t util) {
 		case UTILS_LOCAL_ICONS:
 			strcat(result, "/.local/share/icons/");
 			break;
+		case UTILS_FOLDER:
+			strcat(result, "/.rooibos");
+			break;
 		case UTILS_CACHE:
 			strcat(result, "/.rooibos/cache.db");
 			break;

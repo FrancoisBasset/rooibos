@@ -13,8 +13,10 @@ There are 6 types of changes :
 # Changes
 
 ## 2023-02-10
+### [Added]
+* I added a history in the prompt
 ### [Changed]
-* I refactorized the utils file.
+* I refactorized the utils file
 
 ## 2023-02-06
 ### [Added]

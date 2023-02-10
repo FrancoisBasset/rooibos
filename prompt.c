@@ -6,14 +6,21 @@
 #include "objects.h"
 #include "prompt.h"
 #include "rooibos.h"
+#include "cache.h"
 
 int prompt_active;
 char *command;
 int cursor_index = 0;
 
+char **history = NULL;
+int history_index = -1;
+int history_length = 0;
+
 void prompt_init(void) {
     command = malloc(sizeof(char) * 1000);
     strcpy(command, "");
+
+	history = cache_get_history(&history_length);
 }
 
 void prompt_show(void) {
@@ -29,6 +36,8 @@ void prompt_show(void) {
 
 void prompt_hide(void) {
     prompt_active = 0;
+	history_index = -1;
+
     strcpy(command, "");
     cursor_index = 0;
     XEvent event = { .type = Expose };
@@ -50,6 +59,10 @@ void prompt_exec(void) {
             free(xterm_option);
         }
     }
+	cache_add_history(command);
+	history = cache_get_history(&history_length);
+	history_index = -1;
+
     prompt_hide();
 }
 
@@ -149,6 +162,42 @@ void prompt_move_right(void) {
     }
 }
 
+void prompt_up(void) {
+	if (history_index == 0) {
+		return;
+	}
+
+	if (history_index == -1) {
+		history_index = history_length;
+	}
+
+	history_index--;
+	strcpy(command, history[history_index]);
+	cursor_index = (int) strlen(command);
+
+	XEvent event = { .type = Expose };
+    XSendEvent(display, window, 0, ExposureMask, &event);
+}
+
+void prompt_down(void) {
+	if (history_index == -1) {
+		return;
+	}
+
+	if (history_index < history_length - 1) {
+		history_index++;
+		strcpy(command, history[history_index]);
+		cursor_index = (int) strlen(command);
+	} else {
+		strcpy(command, "");
+		cursor_index = (int) strlen(command);
+		history_index = -1;
+	}
+
+	XEvent event = { .type = Expose };
+    XSendEvent(display, window, 0, ExposureMask, &event);
+}
+
 void prompt_on_key_press(XKeyEvent key_event, KeySym key_sym) {
     switch (key_sym) {
         case XK_Escape:
@@ -167,6 +216,12 @@ void prompt_on_key_press(XKeyEvent key_event, KeySym key_sym) {
         case XK_Right:
             prompt_move_right();
             break;
+		case XK_Up:
+			prompt_up();
+			break;
+		case XK_Down:
+			prompt_down();
+			break;
         default:
             break;
     }

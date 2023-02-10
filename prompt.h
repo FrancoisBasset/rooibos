@@ -12,5 +12,7 @@ void prompt_erase(void);
 char* prompt_transform_key(char *key);
 void prompt_move_left(void);
 void prompt_move_right(void);
+void prompt_up(void);
+void prompt_down(void);
 void prompt_on_key_press(XKeyEvent key_event, KeySym key_sym);
 #endif

@@ -6,6 +6,7 @@ typedef enum utils_t {
     UTILS_USER_HOME,
     UTILS_LOCAL_APPS,
     UTILS_LOCAL_ICONS,
+	UTILS_FOLDER,
     UTILS_CACHE,
     UTILS_LOGO,
     UTILS_WALLPAPER

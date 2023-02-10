@@ -8,19 +8,13 @@
 #include "utils.h"
 
 int cache_init(void) {
-	const char *user_home = utils_get(UTILS_USER_HOME);
-	char *cache_path = malloc(sizeof(char) * (strlen(user_home) + 19));
-
-	strcpy(cache_path, user_home);
-	strcat(cache_path, "/.rooibos");
-
-	mkdir(cache_path, 0700);
-
-	strcat(cache_path, "/cache.db");
+	char *cache_folder = utils_get(UTILS_FOLDER);
+	mkdir(cache_folder, 0700);
+	free(cache_folder);
 
 	sqlite3 *db;
+	char *cache_path = utils_get(UTILS_CACHE);
 	int open_status = sqlite3_open(cache_path, &db);
-
 	free(cache_path);
 
 	if (open_status != SQLITE_OK) {
@@ -28,19 +22,37 @@ int cache_init(void) {
 		return -1;
 	}
 
+	const char *create_appshortcuts_request =
+		"CREATE TABLE IF NOT EXISTS appshortcuts"
+		"('name' TEXT NOT NULL, 'exec' TEXT NOT NULL, 'category' TEXT NOT NULL, 'icon' TEXT NOT NULL, 'file' TEXT NOT NULL)";
+
+	const char *create_cli_history_request = 
+		"CREATE TABLE IF NOT EXISTS cli_history"
+		"('id' INTEGER NOT NULL, 'command' TEXT NOT NULL, PRIMARY KEY('id' AUTOINCREMENT))";
+
+	int result_stmt1 = cache_init_table(db, create_appshortcuts_request);
+	int result_stmt2 = cache_init_table(db, create_cli_history_request);
+
+	sqlite3_close(db);
+
+	if (result_stmt1 == -1 || result_stmt2 == -1) {
+		return -1;
+	}
+
+	return 0;
+}
+
+int cache_init_table(sqlite3 *db, const char *sql) {
 	sqlite3_stmt *stmt;
-	const char *sql = "CREATE TABLE IF NOT EXISTS appshortcuts ('name' TEXT NOT NULL, 'exec' TEXT NOT NULL, 'category' TEXT NOT NULL, 'icon' TEXT NOT NULL, 'file' TEXT NOT NULL)";
 	const char **unused_sql = NULL;
 	int prepare_status = sqlite3_prepare_v2(db, sql, (int) strlen(sql) + 1, &stmt, unused_sql);
 	if (prepare_status != SQLITE_OK) {
 		sqlite3_finalize(stmt);
-		sqlite3_close(db);
 		return -1;
 	}
 
 	int step_status = sqlite3_step(stmt);
 	sqlite3_finalize(stmt);
-	sqlite3_close(db);
 
 	if (step_status != SQLITE_DONE) {
 		return -1;
@@ -236,4 +248,70 @@ appshortcut_t* cache_get_app_shortcuts(int *length) {
 	sqlite3_close(db);
 
 	return app_shortcuts;
+}
+
+char** cache_get_history(int *length) {
+	sqlite3 *db;
+	char* cache_path = utils_get(UTILS_CACHE);
+	int success = sqlite3_open(cache_path, &db);
+
+	if (success != 0) {
+		free(cache_path);
+		return malloc(sizeof(char*) * 0);
+	}
+
+	free(cache_path);
+
+	sqlite3_stmt *select_stmt;
+	const char **unused_sql = NULL;
+
+	sqlite3_prepare_v2(db, "SELECT COUNT(*) FROM cli_history", 32, &select_stmt, unused_sql);
+	sqlite3_step(select_stmt);
+	*length = sqlite3_column_int(select_stmt, 0);
+	sqlite3_finalize(select_stmt);
+
+	sqlite3_prepare_v2(db, "SELECT command FROM cli_history", 31, &select_stmt, unused_sql);
+
+	char **history = malloc(sizeof(char*) * *length);
+
+	int stmt_status = sqlite3_step(select_stmt);
+	int i = 0;
+	while (stmt_status == 100) {
+		const unsigned char *command = sqlite3_column_text(select_stmt, 0);
+
+		history[i] = malloc(sizeof(char) * (strlen(command) + 1));
+		strcpy(history[i], command);
+
+		i++;
+
+		stmt_status = sqlite3_step(select_stmt);
+	}
+
+	sqlite3_finalize(select_stmt);
+	sqlite3_close(db);
+
+	return history;
+}
+
+void cache_add_history(const char *command) {
+	sqlite3 *db;
+	char* cache_path = utils_get(UTILS_CACHE);
+	int success = sqlite3_open(cache_path, &db);
+
+	if (success != 0) {
+		free(cache_path);
+		return;
+	}
+
+	free(cache_path);
+
+	sqlite3_stmt *insert_stmt;
+	const char **unused_sql = NULL;
+
+	sqlite3_prepare_v2(db, "INSERT INTO cli_history('command') VALUES (?)", 1000, &insert_stmt, unused_sql);
+	sqlite3_bind_text(insert_stmt, 1, command, (int) strlen(command), SQLITE_STATIC);
+
+	sqlite3_step(insert_stmt);
+	sqlite3_finalize(insert_stmt);
+	sqlite3_close(db);
 }
