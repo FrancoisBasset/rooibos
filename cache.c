@@ -116,11 +116,9 @@ int cache_update(void) {
 
 		const unsigned char *tmp = strtok(short_file, "/");
 		while ((tmp = strtok(NULL, "/")) != NULL) {
-			if (tmp != NULL) {
-				strcpy(short_file, "%");
-				strcat(short_file, tmp);
-				strcat(short_file, "%");
-			}
+			strcpy(short_file, "%");
+			strcat(short_file, tmp);
+			strcat(short_file, "%");
     	}
 
 		sqlite3_prepare_v2(db, "SELECT file FROM appshortcuts WHERE file LIKE ?", 50 + (int) strlen(short_file), &select_stmt, unused_sql);

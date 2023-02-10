@@ -163,15 +163,6 @@ void icons_show(void) {
 }
 
 int icons_on_hover(int x, int y) {
-    XColor color_taskbar = {
-        .red = 15000,
-        .green = 15000,
-        .blue = 55000
-    };
-    XAllocColor(display, colormap, &color_taskbar);
-    XGCValues gcv = { .foreground = color_taskbar.pixel };
-    GC gc = XCreateGC(display, window, GCForeground, &gcv);
-
     int is_hover = 0;
 
     for (int i = 0; i < app_shortcuts_length; i++) {

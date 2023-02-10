@@ -21,7 +21,7 @@ All my tasks will be written in this file.
 - [ ] Create another logo
 
 ### In Progress
-- [ ] Splash confirmation
+- [ ] Add debug flag
 
 ### Done
 - [X] Prepare Kanban
@@ -75,3 +75,4 @@ All my tasks will be written in this file.
 - [X] Refacto utils
 - [X] CLI History
 - [X] Add an entry for Display manager
+- [X] Splash confirmation

@@ -2,8 +2,9 @@ CFLAGS = -Werror -O3
 VERSION = $(shell cat VERSION)
 ARCH = $(shell uname --machine)
 VERSION_LENGTH = $$(( $(shell wc -m < VERSION) - 1 ))
+OBJECTS = utils.o appshortcut.o cache.o VERSION.h objects.o window.o icon.o taskbar.o toolbar.o menu.o event.o prompt.o debug.o splash.o rooibos.o main.o
 
-rooibos: utils.o appshortcut.o cache.o VERSION.h objects.o window.o icon.o taskbar.o toolbar.o menu.o event.o prompt.o debug.o rooibos.o main.o
+rooibos: $(OBJECTS)
 	gcc $(CFLAGS) *.o -o rooibos -lsqlite3 -lX11 -lcairo `pkg-config --cflags --libs librsvg-2.0`
 	strip rooibos
 
@@ -20,6 +21,7 @@ clean:
 	rm -f package/usr/bin/rooibos
 	rm -f package/usr/share/man/man1/rooibos.1.gz
 	rm -f *.deb
+	rm -f debug
 
 check:
 	cppcheck --language=c --enable=all --template=gcc --suppress=missingIncludeSystem .

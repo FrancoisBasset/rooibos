@@ -59,10 +59,12 @@ void prompt_exec(void) {
             free(xterm_option);
         }
     }
-	cache_add_history(command);
-	history = cache_get_history(&history_length);
-	history_index = -1;
-
+	if (strcmp(command, "") != 0) {
+		cache_add_history(command);
+		history = cache_get_history(&history_length);
+		history_index = -1;
+	}
+	
     prompt_hide();
 }
 
@@ -163,6 +165,10 @@ void prompt_move_right(void) {
 }
 
 void prompt_up(void) {
+	if (history_length == 0) {
+		return;
+	}
+
 	if (history_index == 0) {
 		return;
 	}
