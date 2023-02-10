@@ -10,7 +10,6 @@ All my tasks will be written in this file.
 
 ### Waiting
 - [ ] Proof of concept : Window decoration
-- [ ] Splash confirmation
 - [ ] Category Mint bugs
 - [ ] Prompt Alt key
 - [ ] Grab Super and Left Control in window
@@ -22,7 +21,7 @@ All my tasks will be written in this file.
 - [ ] Create another logo
 
 ### In Progress
-- [ ] Add an entry for Display manager
+- [ ] Splash confirmation
 
 ### Done
 - [X] Prepare Kanban
@@ -75,3 +74,4 @@ All my tasks will be written in this file.
 - [X] Assets personnalization
 - [X] Refacto utils
 - [X] CLI History
+- [X] Add an entry for Display manager

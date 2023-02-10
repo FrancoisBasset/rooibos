@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Rooibos
+Comment=The Rooibos window manager
+Exec=/usr/bin/rooibos
+TryExec=/usr/bin/rooibos
+Icon=logo.svg
+Type=Application

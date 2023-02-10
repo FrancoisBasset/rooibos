@@ -52,6 +52,7 @@ install:
 	cp assets/logo.svg /usr/share/rooibos
 	cp assets/wallpaper.png /usr/share/rooibos
 	cp package/usr/share/bash-completion/completions/rooibos /usr/share/bash-completion/completions/rooibos
+	cp package/usr/share/xsessions/rooibos.desktop /usr/share/xsessions/rooibos.desktop
 	gzip < rooibos.1 > /usr/share/man/man1/rooibos.1.gz
 	rooibos cache-init
 	rooibos cache-update
@@ -60,4 +61,5 @@ uninstall:
 	rm -f /usr/bin/rooibos
 	rm -rf /usr/share/rooibos
 	rm -f /usr/share/bash-completion/completions/rooibos
+	rm -r /usr/share/xsessions/rooibos.desktop
 	rm -f /usr/share/man/man1/rooibos.1.gz

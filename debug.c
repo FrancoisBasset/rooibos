@@ -4,7 +4,7 @@
 FILE *debug;
 
 void debug_init(void) {
-    debug = fopen("./debug.txt", "w");
+    debug = fopen("./debug", "w");
 }
 
 void debug_free(void) {

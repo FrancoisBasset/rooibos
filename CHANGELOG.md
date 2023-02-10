@@ -15,6 +15,7 @@ There are 6 types of changes :
 ## 2023-02-10
 ### [Added]
 * I added a history in the prompt
+* I added an entry for display managers
 ### [Changed]
 * I refactorized the utils file
 
