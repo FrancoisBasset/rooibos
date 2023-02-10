@@ -300,7 +300,7 @@ void show_wallpaper(void) {
             strcpy(wallpaper_file_path, "/usr/share/rooibos/wallpaper.png");
         }
 
-        char *wallpaper_path = utils_get_wallpaper_path();
+        char *wallpaper_path = utils_get(UTILS_WALLPAPER);
         if (access(wallpaper_path, F_OK) == 0) {
             strcpy(wallpaper_file_path, wallpaper_path);
         }

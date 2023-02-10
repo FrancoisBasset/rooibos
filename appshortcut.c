@@ -36,7 +36,7 @@ char** appshortcut_get_all_desktop_files(int *length) {
 	int length3 = 0;
 	char **desktop_files1 = appshortcut_get_desktop_files("/usr/share/applications/", &length1);
 	char **desktop_files2 = appshortcut_get_desktop_files("/usr/local/share/applications/", &length2);
-	char *local_apps_dir = utils_get_local_apps_dir();
+	char *local_apps_dir = utils_get(UTILS_LOCAL_APPS);
 	char **desktop_files3 = appshortcut_get_desktop_files(local_apps_dir, &length3);
 	free(local_apps_dir);
 
@@ -242,7 +242,7 @@ static char* appshortcut_get_icon(char *icon) {
 			ftw("/usr/share/icons", filter_icon, 50);
 		}
 		if (result == NULL) {
-			char *local_icons_dir = utils_get_local_icons_dir();
+			char *local_icons_dir = utils_get(UTILS_LOCAL_ICONS);
 			ftw(local_icons_dir, filter_icon, 50);
 			free(local_icons_dir);
 		}

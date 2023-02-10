@@ -12,7 +12,6 @@ All my tasks will be written in this file.
 - [ ] Proof of concept : Window decoration
 - [ ] Splash confirmation
 - [ ] Category Mint bugs
-- [ ] CLI History
 - [ ] Prompt Alt key
 - [ ] Grab Super and Left Control in window
 - [ ] Dot active window
@@ -24,7 +23,7 @@ All my tasks will be written in this file.
 - [ ] Add an entry for Display manager
 
 ### In Progress
-- [ ] Refacto utils
+- [ ] CLI History
 
 ### Done
 - [X] Prepare Kanban
@@ -75,3 +74,4 @@ All my tasks will be written in this file.
 - [X] Create menu with categories
 - [X] Do short press/long press
 - [X] Assets personnalization
+- [X] Refacto utils

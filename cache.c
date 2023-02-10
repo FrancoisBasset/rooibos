@@ -8,7 +8,7 @@
 #include "utils.h"
 
 int cache_init(void) {
-	const char *user_home = utils_get_user_home();
+	const char *user_home = utils_get(UTILS_USER_HOME);
 	char *cache_path = malloc(sizeof(char) * (strlen(user_home) + 19));
 
 	strcpy(cache_path, user_home);
@@ -52,7 +52,7 @@ int cache_init(void) {
 int cache_update(void) {
 	sqlite3 *db;
 
-	char* cache_path = utils_get_cache_path();
+	char* cache_path = utils_get(UTILS_CACHE);
 	int success = sqlite3_open(cache_path, &db);
 
 	if (success != 0 || access(cache_path, F_OK) == 0) {
@@ -171,7 +171,7 @@ int cache_update(void) {
 appshortcut_t* cache_get_app_shortcuts(int *length) {
 	sqlite3 *db;
 	
-	char* cache_path = utils_get_cache_path();
+	char* cache_path = utils_get(UTILS_CACHE);
 	int success = sqlite3_open_v2(cache_path, &db, SQLITE_OPEN_READONLY, NULL);
 
 	if (success != 0) {

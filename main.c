@@ -28,27 +28,6 @@ int main(int argc, char **argv) {
 	rooibos();
 }
 
-void show_apps_by_category(const appshortcut_t *app_shortcuts, int length) {
-	char *categories[9] = { "Games", "System", "Graphics", "Development", "Network", "Multimedia", "Office", "Settings", "Other" };
-	int new_length = 0;
-
-	for (int i = 0; i < 9; i++) {
-		printf("%s%s%s \n", green_color, categories[i], normal_color);
-
-		appshortcut_t *shortcuts_categories = appshortcut_get_app_shortcuts_by_category(app_shortcuts, categories[i], length, &new_length);
-
-		for (int j = 0; j < new_length; j++) {
-			printf("%s\n%s -- %s -- %s -- %s\n\n", shortcuts_categories[j].file, shortcuts_categories[j].name, shortcuts_categories[j].exec, shortcuts_categories[j].category, shortcuts_categories[j].icon);
-		}
-
-		if (new_length == 0) {
-			printf("%s0 apps%s\n\n", red_color, normal_color);
-		}
-
-		free(shortcuts_categories);
-	}
-}
-
 int handle_arguments(char **argv) {
 	if (strcmp(argv[1], "cache-init") == 0) {
 		printf("%srooibos : Starting cache init...%s\n", yellow_color, normal_color);

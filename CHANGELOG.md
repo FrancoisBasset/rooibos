@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-02-10
+### [Changed]
+* I refactorized the utils file.
+
 ## 2023-02-06
 ### [Added]
 * I made splash and wallpaper customizable

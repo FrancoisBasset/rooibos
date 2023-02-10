@@ -67,7 +67,7 @@ void rooibos_show_logo(void) {
 		strcpy(logo_file_path, "/usr/share/rooibos/logo.svg");
 	}
 
-	char *logo_path = utils_get_logo_path();
+	char *logo_path = utils_get(UTILS_LOGO);
     if (access(logo_path, F_OK) == 0) {
         strcpy(logo_file_path, logo_path);
 	}
