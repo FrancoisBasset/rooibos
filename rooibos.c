@@ -2,7 +2,9 @@
 #include <X11/keysym.h>
 #include "rooibos.h"
 #include "objects.h"
+#ifdef WILLDEBUG
 #include "debug.h"
+#endif
 #include "toolbar.h"
 #include "taskbar.h"
 #include "event.h"
@@ -14,8 +16,9 @@
 
 void rooibos(void) {
 	objects_init();
+#ifdef WILLDEBUG
 	debug_init();
-	
+#endif
 	XStoreName(display, window, "rooibos");
 	XSelectInput(display, root_window, SubstructureNotifyMask);
 	XMapWindow(display, window);
@@ -41,10 +44,12 @@ void rooibos(void) {
 		}
 	}
 
+#ifdef WILLDEBUG
 	if (debug) {
 		windows_print(debug);
 		debug_free();
 	}
+#endif
 
 	XCloseDisplay(display);
 }

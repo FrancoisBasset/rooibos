@@ -16,12 +16,11 @@ All my tasks will be written in this file.
 - [ ] Dot active window
 - [ ] Study the XrmDatabase
 - [ ] Add scroll in the menu
-- [ ] Show jpeg images
 - [ ] Make own wallpaper
 - [ ] Create another logo
 
 ### In Progress
-- [ ] Add debug flag
+- [ ] Show jpeg images
 
 ### Done
 - [X] Prepare Kanban
@@ -76,3 +75,4 @@ All my tasks will be written in this file.
 - [X] CLI History
 - [X] Add an entry for Display manager
 - [X] Splash confirmation
+- [X] Add debug flag

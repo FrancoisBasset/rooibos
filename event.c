@@ -5,7 +5,9 @@
 #include <X11/keysym.h>
 #include "event.h"
 #include "objects.h"
+#ifdef WILLDEBUG
 #include "debug.h"
+#endif
 #include "window.h"
 #include "rooibos.h"
 #include "taskbar.h"
@@ -85,7 +87,9 @@ int handle_event(void) {
             break;
         }
         default:
+#ifdef WILLDEBUG
             fprintf(debug, "Event %d not implemented !\n", event.type);
+#endif
             break;
     }
 

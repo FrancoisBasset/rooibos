@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-02-16
+### [Added]
+* I added a WILLDEBUG flag
+
 ## 2023-02-10
 ### [Added]
 * I added a splash confirmation

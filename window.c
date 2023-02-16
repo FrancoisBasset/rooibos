@@ -66,8 +66,8 @@ void window_print(FILE *debug, window_t* w) {
     char visible = '-';
     if (w->visible == 1) {
         visible = '+';
-    }
-    fprintf(debug, "%c <%ld> <%s> <%d,%d> <%dx%d>\n", visible, w->id, w->title, w->x, w->y, w->width, w->height);
+	}
+	fprintf(debug, "%c <%ld> <%s> <%d,%d> <%dx%d>\n", visible, w->id, w->title, w->x, w->y, w->width, w->height);
 }
 
 void windows_print(FILE *debug) {

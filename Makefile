@@ -4,15 +4,19 @@ ARCH = $(shell uname --machine)
 VERSION_LENGTH = $$(( $(shell wc -m < VERSION) - 1 ))
 OBJECTS = utils.o appshortcut.o cache.o VERSION.h objects.o window.o icon.o taskbar.o toolbar.o menu.o event.o prompt.o debug.o splash.o rooibos.o main.o
 
+ifndef WILLDEBUG
+	OBJECTS := $(filter-out debug.o,$(OBJECTS))
+endif
+
 rooibos: $(OBJECTS)
-	gcc $(CFLAGS) *.o -o rooibos -lsqlite3 -lX11 -lcairo `pkg-config --cflags --libs librsvg-2.0`
+	gcc $(CFLAGS) $(WILLDEBUG) *.o -o rooibos -lsqlite3 -lX11 -lcairo `pkg-config --cflags --libs librsvg-2.0`
 	strip rooibos
 
 VERSION.h:
 	xxd -i -len $(VERSION_LENGTH) VERSION > VERSION.h
 
 %.o: %.c
-	gcc $(CFLAGS) -c $< -o $@ `pkg-config --cflags --libs librsvg-2.0`
+	gcc $(CFLAGS) $(WILLDEBUG) -c $< -o $@ `pkg-config --cflags --libs librsvg-2.0`
 
 clean:
 	rm -f *.o
