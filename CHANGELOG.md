@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-02-18
+### [Added]
+* I added the JPEG support
+
 ## 2023-02-16
 ### [Added]
 * I added a WILLDEBUG flag

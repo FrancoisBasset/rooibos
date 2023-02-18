@@ -80,4 +80,8 @@ To launch Rooibos, you have to execute this command : `startx rooibos`
 
 Splash logo and wallpaper can be modified. You just have to copy these files in `$HOME/.rooibos/`.
 Splash logo must be in .svg format in `$HOME/.rooibos/logo.svg`.
-Wallpaper must be in .png format in `$HOME/.rooibos/wallpaper.png`.
+Wallpaper must be in .png or .jpg format in `$HOME/.rooibos/wallpaper.png` or `$HOME/.rooibos/wallpaper.jpg`.
+
+## Credits
+
+Thanks to https://github.com/rahra/cairo_jpg to be able to show jpg images in cairo surface.
