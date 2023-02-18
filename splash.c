@@ -11,9 +11,14 @@
 
 void splash_start(void) {
 	show_wallpaper();
-	splash_show_logo();
-	
+
 	int have_cache = access(utils_get(UTILS_CACHE), F_OK) == 0;
+
+	if (have_cache == 0) {
+		splash_show_rectangle();
+	}
+
+	splash_show_logo();
 
 	if (have_cache == 0) {
 		splash_show_text_at_middle("Welcome on Rooibos !", 1);
@@ -49,6 +54,26 @@ void splash_start(void) {
 	} else {
 		sleep(1);
 	}
+}
+
+void splash_show_rectangle(void) {
+	int x = (screen_width - 600) / 2;
+    int y = (screen_height - 600) / 2;
+
+	cairo_surface_t *x11_surface = cairo_xlib_surface_create(display, window, XDefaultVisualOfScreen(screen), screen_width, screen_height);
+    cairo_t *context = cairo_create(x11_surface);
+
+    cairo_set_source_rgba(context, 0.85, 0.85, 0.85, 0.8);
+
+    cairo_move_to(context, x, y);
+
+    cairo_line_to(context, x + 600, y);
+    cairo_line_to(context, x + 600, y + 600);
+    cairo_line_to(context, x, y + 600);
+    cairo_line_to(context, x, y);
+
+    cairo_stroke_preserve(context);
+    cairo_fill(context);
 }
 
 void splash_show_logo(void) {

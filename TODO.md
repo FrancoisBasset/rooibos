@@ -20,7 +20,6 @@ All my tasks will be written in this file.
 - [ ] Create another logo
 
 ### In Progress
-- [ ] Show jpeg images
 
 ### Done
 - [X] Prepare Kanban
@@ -76,3 +75,4 @@ All my tasks will be written in this file.
 - [X] Add an entry for Display manager
 - [X] Splash confirmation
 - [X] Add debug flag
+- [X] Show jpeg images

@@ -8,6 +8,7 @@
 #include "appshortcut.h"
 #include "cache.h"
 #include "menu.h"
+#include "cairo_jpg.h"
 
 icon_t *icons;
 int app_shortcuts_length = 0;
@@ -26,6 +27,11 @@ void icon_draw(icon_t icon) {
 
 cairo_surface_t* icon_get_surface_png(const char *filename) {
     cairo_surface_t *cairo_surface = cairo_image_surface_create_from_png(filename);
+    return cairo_surface;
+}
+
+cairo_surface_t* icon_get_surface_jpg(const char *filename) {
+    cairo_surface_t *cairo_surface = cairo_image_surface_create_from_jpeg(filename);
     return cairo_surface;
 }
 

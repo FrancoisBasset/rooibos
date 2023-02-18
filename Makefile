@@ -2,14 +2,15 @@ CFLAGS = -Werror -O3
 VERSION = $(shell cat VERSION)
 ARCH = $(shell uname --machine)
 VERSION_LENGTH = $$(( $(shell wc -m < VERSION) - 1 ))
-OBJECTS = utils.o appshortcut.o cache.o VERSION.h objects.o window.o icon.o taskbar.o toolbar.o menu.o event.o prompt.o debug.o splash.o rooibos.o main.o
+OBJECTS = utils.o appshortcut.o cache.o VERSION.h objects.o window.o icon.o taskbar.o toolbar.o menu.o event.o prompt.o debug.o splash.o cairo_jpg.o rooibos.o main.o
+#WILLDEBUG = -DWILLDEBUG
 
 ifndef WILLDEBUG
 	OBJECTS := $(filter-out debug.o,$(OBJECTS))
 endif
 
 rooibos: $(OBJECTS)
-	gcc $(CFLAGS) $(WILLDEBUG) *.o -o rooibos -lsqlite3 -lX11 -lcairo `pkg-config --cflags --libs librsvg-2.0`
+	gcc $(CFLAGS) $(WILLDEBUG) *.o -o rooibos -lsqlite3 -lX11 -lcairo `pkg-config --cflags --libs librsvg-2.0` -ljpeg
 	strip rooibos
 
 VERSION.h:
@@ -42,7 +43,7 @@ pkg:
 	rm -f package/usr/share/man/man1/.gitkeep
 	cp rooibos package/usr/bin
 	cp assets/logo.svg package/usr/share/rooibos
-	cp assets/wallpaper.png package/usr/share/rooibos
+	cp assets/wallpaper.jpg package/usr/share/rooibos
 	gzip < rooibos.1 > package/usr/share/man/man1/rooibos.1.gz
 	dpkg-deb --build package rooibos_$(VERSION)_$(ARCH).deb
 	> package/usr/bin/.gitkeep
@@ -56,7 +57,7 @@ install:
 	cp rooibos /usr/bin/rooibos
 	mkdir /usr/share/rooibos
 	cp assets/logo.svg /usr/share/rooibos
-	cp assets/wallpaper.png /usr/share/rooibos
+	cp assets/wallpaper.jpg /usr/share/rooibos
 	cp package/usr/share/bash-completion/completions/rooibos /usr/share/bash-completion/completions/rooibos
 	cp package/usr/share/xsessions/rooibos.desktop /usr/share/xsessions/rooibos.desktop
 	gzip < rooibos.1 > /usr/share/man/man1/rooibos.1.gz

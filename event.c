@@ -298,25 +298,15 @@ void new_window(void) {
 
 void show_wallpaper(void) {
     if (wallpaper_surface == NULL) {
-        char *wallpaper_file_path = malloc(sizeof(char) * 200);
-        strcpy(wallpaper_file_path, "");
-        if (access("/usr/share/rooibos/wallpaper.png", F_OK) == 0) {
-            strcpy(wallpaper_file_path, "/usr/share/rooibos/wallpaper.png");
-        }
+		char *wallpaper_to_use = utils_get(UTILS_WALLPAPER_TO_USE);
 
-        char *wallpaper_path = utils_get(UTILS_WALLPAPER);
-        if (access(wallpaper_path, F_OK) == 0) {
-            strcpy(wallpaper_file_path, wallpaper_path);
-        }
-        free(wallpaper_path);
-        
-        if (access("./assets/wallpaper.png", F_OK) == 0) {
-            strcpy(wallpaper_file_path, "./assets/wallpaper.png");
-        }
+		if (strstr(wallpaper_to_use, "wallpaper.png") != NULL) {
+			wallpaper_surface = icon_get_surface_png(wallpaper_to_use);
+		} else {
+			wallpaper_surface = icon_get_surface_jpg(wallpaper_to_use);
+		}
 
-        wallpaper_surface = icon_get_surface_png(wallpaper_file_path);
-
-        free(wallpaper_file_path);
+        free(wallpaper_to_use);
     }
     icon_draw_png(wallpaper_surface, "", 0, 0, screen_width, screen_height);
 }
