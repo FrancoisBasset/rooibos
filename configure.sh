@@ -23,6 +23,7 @@ check_installed libx11-dev /usr/include/X11/Xlib.h libx11-dev
 check_installed libsqlite3-dev /usr/include/sqlite3.h libsqlite3-dev
 check_installed libcairo2-dev /usr/include/cairo/cairo.h libcairo2-dev
 check_installed librsvg2-dev /usr/include/librsvg-2.0/librsvg/rsvg.h librsvg2-dev
+check_installed libjpeg62-turbo-dev /usr/include/jpeglib.h libjpeg62-turbo-dev
 check_installed xterm /usr/bin/xterm xterm
 
 if [ "$packages" != "" ]

@@ -12,14 +12,16 @@ All my tasks will be written in this file.
 - [ ] Proof of concept : Window decoration
 - [ ] Category Mint bugs
 - [ ] Prompt Alt key
-- [ ] Grab Super and Left Control in window
 - [ ] Dot active window
 - [ ] Study the XrmDatabase
 - [ ] Add scroll in the menu
 - [ ] Make own wallpaper
 - [ ] Create another logo
+- [ ] Move logout button
+- [ ] Add jpeg and png format for logo
 
 ### In Progress
+- [ ] Grab Super and Left Control in window
 
 ### Done
 - [X] Prepare Kanban
