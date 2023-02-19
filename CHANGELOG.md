@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-02-19
+### [Added]
+* I only succeeded to grab the Super Left key
+
 ## 2023-02-18
 ### [Added]
 * I added the JPEG support

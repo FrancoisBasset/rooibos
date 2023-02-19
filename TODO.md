@@ -17,11 +17,10 @@ All my tasks will be written in this file.
 - [ ] Add scroll in the menu
 - [ ] Make own wallpaper
 - [ ] Create another logo
-- [ ] Move logout button
 - [ ] Add jpeg and png format for logo
 
 ### In Progress
-- [ ] Grab Super and Left Control in window
+- [ ] Move logout button
 
 ### Done
 - [X] Prepare Kanban
@@ -78,3 +77,4 @@ All my tasks will be written in this file.
 - [X] Splash confirmation
 - [X] Add debug flag
 - [X] Show jpeg images
+- [X] Grab Super and Left Control in window

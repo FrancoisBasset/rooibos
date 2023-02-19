@@ -251,7 +251,9 @@ void event_on_configure(Window child, int x, int y, int width, int height) {
 
     if (title != NULL) {
         if (window_get(child) == NULL) {
-            XSelectInput(display, child, PropertyChangeMask);
+            XSelectInput(display, child, PropertyChangeMask | KeyPressMask);
+			XGrabKey(display, XKeysymToKeycode(display, XK_Super_L), AnyModifier, child, True, GrabModeSync, GrabModeSync);
+
             window_t *new_window_ = window_init(child, title, x, y, width, height);
             window_add(new_window_);
             taskbar_update_windows();
