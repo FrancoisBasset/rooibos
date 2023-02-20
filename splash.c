@@ -77,21 +77,7 @@ void splash_show_rectangle(void) {
 }
 
 void splash_show_logo(void) {
-	char *logo_file_path = malloc(sizeof(char) * 200);
-	strcpy(logo_file_path, "");
-	if (access("/usr/share/rooibos/logo.svg", F_OK) == 0) {
-		strcpy(logo_file_path, "/usr/share/rooibos/logo.svg");
-	}
-
-	char *logo_path = utils_get(UTILS_LOGO);
-    if (access(logo_path, F_OK) == 0) {
-        strcpy(logo_file_path, logo_path);
-	}
-    free(logo_path);
-	
-	if (access("./assets/logo.svg", F_OK) == 0) {
-		strcpy(logo_file_path, "./assets/logo.svg");
-	}
+	char *logo_file_path = utils_get(UTILS_LOGO);
 
 	if (strcmp(logo_file_path, "") != 0) {
 		RsvgHandle *rooibos_icon = icon_get_surface_svg(logo_file_path);

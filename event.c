@@ -150,6 +150,11 @@ int event_on_left_button_press(int x, int y) {
 
             int category_button = menu_category_buttons_on_hover(x, y);
             menu_category_buttons_on_press(category_button);
+
+			int menu_button = menu_buttons_on_hover(x, y);
+			if (menu_button == 1) {
+				quit = 1;
+			}
         } else {
             menu_clear();
             window_show_all_visible();
@@ -224,7 +229,9 @@ void event_on_motion(int x, int y) {
     
     if (menu.is_showed == 1) {
         if (icons_on_hover(x, y) == 0) {
-            menu_category_buttons_on_hover(x, y);
+            if (menu_category_buttons_on_hover(x, y) == 0 && menu_buttons_on_hover(x, y) == 0) {
+			    XDefineCursor(display, window, cursor);
+			}
         }
     } else {
         if (prompt_active == 0 && toolbar_is_hover(y) == 1) {

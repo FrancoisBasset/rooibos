@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-02-20
+### [Changed]
+* I moved the logout button
+
 ## 2023-02-19
 ### [Added]
 * I only succeeded to grab the Super Left key

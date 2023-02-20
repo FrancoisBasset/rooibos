@@ -6,11 +6,13 @@
 #include "objects.h"
 #include "menu.h"
 #include "icon.h"
+#include "utils.h"
 
 menu_t menu;
 char *categories[9] = { "Games", "System", "Graphics", "Development", "Network", "Multimedia", "Office", "Settings", "Other" };
-category_button_t left_category_button;
-category_button_t right_category_button;
+menu_button_t left_category_button;
+menu_button_t right_category_button;
+menu_button_t logout_menu_button;
 
 void menu_init(void) {
     int width = (int) (screen_width * 0.70);
@@ -47,8 +49,19 @@ void menu_show(void) {
     menu.is_showed = 1;
 
     icons_show();
+	menu_show_categories();
+	menu_show_logout_button();
+}
 
-    char *category_name = malloc(sizeof(char) * 20);
+void menu_clear(void) {
+    XClearArea(display, window, menu.x - 1, menu.y - 1, menu.width + 2, menu.height + 2, 1);
+    menu.is_showed = 0;
+}
+
+void menu_show_categories(void) {
+	XDrawLine(display, window, gc_text_black, menu.x, menu.y + 80, menu.x + menu.width, menu.y + 80);
+
+	char *category_name = malloc(sizeof(char) * 20);
     if (menu.category_index == -1) {
         strcpy(category_name, "All categories");
     } else {
@@ -66,7 +79,7 @@ void menu_show(void) {
 
     if (menu.category_index == 0) {
         width = XTextWidth(font_struct, "< All categories", 16);
-        left_category_button = (category_button_t) { .visible = 1, .x = menu.x + 40, menu.y + 25, .width = width + 20, .height = height + 20 };
+        left_category_button = (menu_button_t) { .visible = 1, .x = menu.x + 40, menu.y + 25, .width = width + 20, .height = height + 20 };
 
         XFillRectangle(display, window, gc_category_button, left_category_button.x, left_category_button.y, left_category_button.width, left_category_button.height);
         XDrawString(display, window, gc_text_white, menu.x + 50, menu.y + 50, "< All categories", 16);
@@ -77,7 +90,7 @@ void menu_show(void) {
         strcat(category_name, categories[menu.category_index - 1]);
 
         width = XTextWidth(font_struct, category_name, (int) strlen(category_name));
-        left_category_button = (category_button_t) { .visible = 1, .x = menu.x + 40, menu.y + 25, .width = width + 20, .height = height + 20};
+        left_category_button = (menu_button_t) { .visible = 1, .x = menu.x + 40, menu.y + 25, .width = width + 20, .height = height + 20};
 
         XFillRectangle(display, window, gc_category_button, left_category_button.x, left_category_button.y, left_category_button.width, left_category_button.height);
         XDrawString(display, window, gc_text_white, menu.x + 50, menu.y + 50, category_name, (int) strlen(category_name));
@@ -88,7 +101,7 @@ void menu_show(void) {
         strcat(category_name, " >");
 
         width = XTextWidth(font_struct, category_name, (int) strlen(category_name));
-        right_category_button = (category_button_t) { .visible = 1, .x = menu.x + menu.width - width - 60, menu.y + 25, .width = width + 20, .height = height + 20 };
+        right_category_button = (menu_button_t) { .visible = 1, .x = menu.x + menu.width - width - 60, menu.y + 25, .width = width + 20, .height = height + 20 };
 
         XFillRectangle(display, window, gc_category_button, right_category_button.x, right_category_button.y, right_category_button.width, right_category_button.height);
         XDrawString(display, window, gc_text_white, menu.x + menu.width - width - 50, menu.y + 50, category_name, (int) strlen(category_name));
@@ -97,9 +110,30 @@ void menu_show(void) {
     free(category_name);
 }
 
-void menu_clear(void) {
-    XClearArea(display, window, menu.x - 1, menu.y - 1, menu.width + 2, menu.height + 2, 1);
-    menu.is_showed = 0;
+void menu_show_logout_button(void) {
+	XDrawLine(display, window, gc_text_black, menu.x, menu.y + menu.height - 60, menu.x + menu.width, menu.y + menu.height - 60);
+	char *logout_path = utils_get(UTILS_LOGOUT);
+	cairo_surface_t *logout_surface = icon_get_surface_png(logout_path);
+	free(logout_path);
+
+	const int x = menu.x + menu.width - 70;
+	const int y = menu.y + menu.height - 50;
+	icon_draw_png(logout_surface, "", x, y, 40, 40);
+
+	logout_menu_button = (menu_button_t) { .visible = 1, .x = x, .y = y, .width = 40, .height = 40 };
+}
+
+int menu_buttons_on_hover(int x, int y) {
+    int logout_is_hover = logout_menu_button.visible == 1 &&
+        x >= logout_menu_button.x && x <= logout_menu_button.x + logout_menu_button.width &&
+        y >= logout_menu_button.y && y <= logout_menu_button.y + logout_menu_button.height;
+
+    if (logout_is_hover == 1) {
+        XDefineCursor(display, window, hand_cursor);
+        return 1;
+    }
+    
+    return 0;
 }
 
 int menu_category_buttons_on_hover(int x, int y) {
@@ -119,7 +153,6 @@ int menu_category_buttons_on_hover(int x, int y) {
         return 2;
     }
     
-    XDefineCursor(display, window, cursor);
     return 0;
 }
 

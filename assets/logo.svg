@@ -1,565 +1,77 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="512px"
-   height="512px"
-   viewBox="0 0 512 512"
-   version="1.1"
-   id="SVGRoot"
-   sodipodi:docname="logo.svg"
-   inkscape:version="1.0.2 (e86c870879, 2021-01-15)">
-  <defs
-     id="defs10" />
-  <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="246.68538"
-     inkscape:cy="284.78815"
-     inkscape:document-units="px"
-     inkscape:current-layer="layer1"
-     inkscape:document-rotation="0"
-     showgrid="false"
-     inkscape:window-width="1875"
-     inkscape:window-height="1071"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0"
-     inkscape:snap-global="true"
-     inkscape:snap-bbox="true"
-     inkscape:lockguides="false" />
-  <metadata
-     id="metadata13">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
-  <g
-     inkscape:label="Calque 1"
-     inkscape:groupmode="layer"
-     id="layer1">
-    <rect
-       style="fill:#0000ff;fill-rule:evenodd"
-       id="rect573-0"
-       width="64"
-       height="64"
-       x="0"
-       y="320" />
-    <rect
-       style="fill:#ffcc00;fill-rule:evenodd"
-       id="rect573-8"
-       width="64"
-       height="64"
-       x="0"
-       y="384" />
-    <rect
-       style="fill:#0000ff;fill-rule:evenodd"
-       id="rect573-09"
-       width="64"
-       height="64"
-       x="0"
-       y="64" />
-    <rect
-       style="fill:#00d455;fill-rule:evenodd"
-       id="rect573-6"
-       width="64"
-       height="64"
-       x="0"
-       y="192" />
-    <rect
-       style="fill:#ff0000;fill-rule:evenodd"
-       id="rect573-3"
-       width="64"
-       height="64"
-       x="0"
-       y="256" />
-    <rect
-       style="fill:#ffcc00;fill-rule:evenodd"
-       id="rect573-856"
-       width="64"
-       height="64"
-       x="0"
-       y="128" />
-    <rect
-       style="fill:#00d455;fill-rule:evenodd"
-       id="rect573-81"
-       width="64"
-       height="64"
-       x="64"
-       y="0" />
-    <rect
-       style="fill:#ff0000;fill-rule:evenodd"
-       id="rect573-0-0"
-       width="64"
-       height="64"
-       x="64"
-       y="320" />
-    <rect
-       style="fill:#0000ff;fill-rule:evenodd"
-       id="rect573-8-3"
-       width="64"
-       height="64"
-       x="64"
-       y="384" />
-    <rect
-       style="fill:#ffcc00;fill-rule:evenodd"
-       id="rect573-85-0"
-       width="64"
-       height="64"
-       x="64"
-       y="448" />
-    <rect
-       style="fill:#ff0000;fill-rule:evenodd"
-       id="rect573-09-4"
-       width="64"
-       height="64"
-       x="64"
-       y="64" />
-    <rect
-       style="fill:#ffcc00;fill-rule:evenodd"
-       id="rect573-6-4"
-       width="64"
-       height="64"
-       x="64"
-       y="192" />
-    <rect
-       style="fill:#00d455;fill-rule:evenodd"
-       id="rect573-3-4"
-       width="64"
-       height="64"
-       x="64"
-       y="256" />
-    <rect
-       style="fill:#0000ff;fill-rule:evenodd"
-       id="rect573-856-4"
-       width="64"
-       height="64"
-       x="64"
-       y="128" />
-    <rect
-       style="fill:#ffcc00;fill-rule:evenodd"
-       id="rect573-7"
-       width="64"
-       height="64"
-       x="128"
-       y="0" />
-    <rect
-       style="fill:#00d455;fill-rule:evenodd"
-       id="rect573-0-6"
-       width="64"
-       height="64"
-       x="128"
-       y="320.00003" />
-    <rect
-       style="fill:#ff0000;fill-rule:evenodd"
-       id="rect573-8-31"
-       width="64"
-       height="64"
-       x="128"
-       y="384.00003" />
-    <rect
-       style="fill:#0000ff;fill-rule:evenodd"
-       id="rect573-85-7"
-       width="64"
-       height="64"
-       x="128"
-       y="448.00003" />
-    <rect
-       style="fill:#00d455;fill-rule:evenodd"
-       id="rect573-09-5"
-       width="64"
-       height="64"
-       x="128"
-       y="64" />
-    <rect
-       style="fill:#0000ff;fill-rule:evenodd"
-       id="rect573-6-9"
-       width="64"
-       height="64"
-       x="128"
-       y="192" />
-    <rect
-       style="fill:#ffcc00;fill-rule:evenodd"
-       id="rect573-3-6"
-       width="64"
-       height="64"
-       x="128"
-       y="256.00003" />
-    <rect
-       style="fill:#ff0000;fill-rule:evenodd"
-       id="rect573-856-2"
-       width="64"
-       height="64"
-       x="128"
-       y="128" />
-    <rect
-       style="fill:#0000ff;fill-rule:evenodd"
-       id="rect573-1"
-       width="64"
-       height="64"
-       x="192"
-       y="0" />
-    <rect
-       style="fill:#ffcc00;fill-rule:evenodd"
-       id="rect573-0-7"
-       width="64"
-       height="64"
-       x="192"
-       y="320" />
-    <rect
-       style="fill:#00d455;fill-rule:evenodd"
-       id="rect573-8-8"
-       width="64"
-       height="64"
-       x="192"
-       y="384" />
-    <rect
-       style="fill:#ff0000;fill-rule:evenodd"
-       id="rect573-85-5"
-       width="64"
-       height="64"
-       x="192"
-       y="448" />
-    <rect
-       style="fill:#ffcc00;fill-rule:evenodd"
-       id="rect573-09-7"
-       width="64"
-       height="64"
-       x="192"
-       y="64" />
-    <rect
-       style="fill:#ff0000;fill-rule:evenodd"
-       id="rect573-6-41"
-       width="64"
-       height="64"
-       x="192"
-       y="192" />
-    <rect
-       style="fill:#0000ff;fill-rule:evenodd"
-       id="rect573-3-8"
-       width="64"
-       height="64"
-       x="192"
-       y="256" />
-    <rect
-       style="fill:#00d455;fill-rule:evenodd"
-       id="rect573-856-5"
-       width="64"
-       height="64"
-       x="192"
-       y="128" />
-    <rect
-       style="fill:#ff0000;fill-rule:evenodd"
-       id="rect573-9"
-       width="64"
-       height="64"
-       x="256"
-       y="0" />
-    <rect
-       style="fill:#0000ff;fill-rule:evenodd"
-       id="rect573-0-75"
-       width="64"
-       height="64"
-       x="256"
-       y="320" />
-    <rect
-       style="fill:#ffcc00;fill-rule:evenodd"
-       id="rect573-8-38"
-       width="64"
-       height="64"
-       x="256"
-       y="384" />
-    <rect
-       style="fill:#00d455;fill-rule:evenodd"
-       id="rect573-85-8"
-       width="64"
-       height="64"
-       x="256"
-       y="448" />
-    <rect
-       style="fill:#0000ff;fill-rule:evenodd"
-       id="rect573-09-3"
-       width="64"
-       height="64"
-       x="256"
-       y="64" />
-    <rect
-       style="fill:#00d455;fill-rule:evenodd"
-       id="rect573-6-1"
-       width="64"
-       height="64"
-       x="256"
-       y="192" />
-    <rect
-       style="fill:#ff0000;fill-rule:evenodd"
-       id="rect573-3-89"
-       width="64"
-       height="64"
-       x="256"
-       y="256" />
-    <rect
-       style="fill:#ffcc00;fill-rule:evenodd"
-       id="rect573-856-6"
-       width="64"
-       height="64"
-       x="256"
-       y="128" />
-    <rect
-       style="fill:#00d455;fill-rule:evenodd"
-       id="rect573-4"
-       width="64"
-       height="64"
-       x="320"
-       y="0" />
-    <rect
-       style="fill:#ff0000;fill-rule:evenodd"
-       id="rect573-0-3"
-       width="64"
-       height="64"
-       x="320"
-       y="320" />
-    <rect
-       style="fill:#0000ff;fill-rule:evenodd"
-       id="rect573-8-33"
-       width="64"
-       height="64"
-       x="320"
-       y="384" />
-    <rect
-       style="fill:#ffcc00;fill-rule:evenodd"
-       id="rect573-85-86"
-       width="64"
-       height="64"
-       x="320"
-       y="448" />
-    <rect
-       style="fill:#ff0000;fill-rule:evenodd"
-       id="rect573-09-0"
-       width="64"
-       height="64"
-       x="320"
-       y="64" />
-    <rect
-       style="fill:#ffcc00;fill-rule:evenodd"
-       id="rect573-6-48"
-       width="64"
-       height="64"
-       x="320"
-       y="192" />
-    <rect
-       style="fill:#00d455;fill-rule:evenodd"
-       id="rect573-3-88"
-       width="64"
-       height="64"
-       x="320"
-       y="256" />
-    <rect
-       style="fill:#0000ff;fill-rule:evenodd"
-       id="rect573-856-9"
-       width="64"
-       height="64"
-       x="320"
-       y="128" />
-    <rect
-       style="fill:#ffcc00;fill-rule:evenodd"
-       id="rect573-77"
-       width="64"
-       height="64"
-       x="384"
-       y="0" />
-    <rect
-       style="fill:#00d455;fill-rule:evenodd"
-       id="rect573-0-64"
-       width="64"
-       height="64"
-       x="384"
-       y="320" />
-    <rect
-       style="fill:#ff0000;fill-rule:evenodd"
-       id="rect573-8-30"
-       width="64"
-       height="64"
-       x="384"
-       y="384" />
-    <rect
-       style="fill:#0000ff;fill-rule:evenodd"
-       id="rect573-85-3"
-       width="64"
-       height="64"
-       x="384"
-       y="448" />
-    <rect
-       style="fill:#00d455;fill-rule:evenodd"
-       id="rect573-09-09"
-       width="64"
-       height="64"
-       x="384"
-       y="64" />
-    <rect
-       style="fill:#0000ff;fill-rule:evenodd"
-       id="rect573-6-2"
-       width="64"
-       height="64"
-       x="384"
-       y="192.00002" />
-    <rect
-       style="fill:#ffcc00;fill-rule:evenodd"
-       id="rect573-3-5"
-       width="64"
-       height="64"
-       x="384"
-       y="256" />
-    <rect
-       style="fill:#ff0000;fill-rule:evenodd"
-       id="rect573-856-40"
-       width="64"
-       height="64"
-       x="384"
-       y="128" />
-    <rect
-       style="fill:#ffcc00;fill-rule:evenodd"
-       id="rect573-0-9"
-       width="64"
-       height="64"
-       x="448"
-       y="320" />
-    <rect
-       style="fill:#00d455;fill-rule:evenodd"
-       id="rect573-8-4"
-       width="64"
-       height="64"
-       x="448"
-       y="384" />
-    <rect
-       style="fill:#ffcc00;fill-rule:evenodd"
-       id="rect573-09-9"
-       width="64"
-       height="64"
-       x="448"
-       y="64" />
-    <rect
-       style="fill:#ff0000;fill-rule:evenodd"
-       id="rect573-6-22"
-       width="64"
-       height="64"
-       x="448"
-       y="192" />
-    <rect
-       style="fill:#0000ff;fill-rule:evenodd"
-       id="rect573-3-47"
-       width="64"
-       height="64"
-       x="448"
-       y="256" />
-    <rect
-       style="fill:#00d455;fill-rule:evenodd"
-       id="rect573-856-7"
-       width="64"
-       height="64"
-       x="448"
-       y="128" />
-    <rect
-       style="fill:#0000ff;fill-rule:evenodd;stroke-width:61.474;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers"
-       id="rect4133"
-       width="64"
-       height="64"
-       x="448"
-       y="0"
-       rx="32"
-       ry="32" />
-    <rect
-       style="fill:#0000ff;fill-rule:evenodd;stroke-width:61.474;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers"
-       id="rect4147"
-       width="31.116508"
-       height="64.004631"
-       x="448"
-       y="-0.0046279649" />
-    <rect
-       style="fill:#0000ff;fill-rule:evenodd;stroke-width:61.474;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers"
-       id="rect4149"
-       width="31.561998"
-       height="32.677174"
-       x="480.43799"
-       y="31.322824" />
-    <circle
-       style="fill:#ff0000;fill-rule:evenodd;stroke-width:139.03;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers"
-       id="path4174"
-       cx="32"
-       cy="32"
-       r="32" />
-    <rect
-       style="fill:#ff0000;fill-rule:evenodd;stroke-width:63.8736;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers"
-       id="rect4176"
-       width="31.663"
-       height="64"
-       x="32.336712"
-       y="0" />
-    <rect
-       style="fill:#ff0000;fill-rule:evenodd;stroke-width:61.474;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers"
-       id="rect4178"
-       width="35.182529"
-       height="30.461775"
-       x="0"
-       y="33.538223" />
-    <circle
-       style="fill:#00d455;fill-rule:evenodd;stroke-width:147.324;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers"
-       id="path4180"
-       cx="32"
-       cy="480"
-       r="32" />
-    <rect
-       style="fill:#00d455;fill-rule:evenodd;stroke-width:63.5883;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers"
-       id="rect4182"
-       width="30.048403"
-       height="64"
-       x="33.951599"
-       y="448" />
-    <rect
-       style="fill:#00d455;fill-rule:evenodd;stroke-width:61.474;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers"
-       id="rect4184"
-       width="42.189785"
-       height="32.80431"
-       x="0"
-       y="448" />
-    <circle
-       style="fill:#ff0000;fill-rule:evenodd;stroke-width:59.0526;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers"
-       id="path4186"
-       cx="480"
-       cy="480"
-       r="32" />
-    <rect
-       style="fill:#ff0000;fill-rule:evenodd;stroke-width:63.403;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers"
-       id="rect4188"
-       width="63.966824"
-       height="31.709"
-       x="448"
-       y="448" />
-    <rect
-       style="fill:#ff0000;fill-rule:evenodd;stroke-width:61.474;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers"
-       id="rect4190"
-       width="33.715237"
-       height="36.398956"
-       x="448"
-       y="475.60104" />
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer2"
-     inkscape:label="Calque 2" />
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="512pt" height="512pt" viewBox="0 0 512 512" version="1.1">
+<g id="surface1">
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,0%,100%);fill-opacity:1;" d="M 0 320 L 64 320 L 64 384 L 0 384 Z M 0 320 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,80.000001%,0%);fill-opacity:1;" d="M 0 384 L 64 384 L 64 448 L 0 448 Z M 0 384 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,0%,100%);fill-opacity:1;" d="M 0 64 L 64 64 L 64 128 L 0 128 Z M 0 64 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,83.137256%,33.333334%);fill-opacity:1;" d="M 0 192 L 64 192 L 64 256 L 0 256 Z M 0 192 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 0 256 L 64 256 L 64 320 L 0 320 Z M 0 256 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,80.000001%,0%);fill-opacity:1;" d="M 0 128 L 64 128 L 64 192 L 0 192 Z M 0 128 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,83.137256%,33.333334%);fill-opacity:1;" d="M 64 0 L 128 0 L 128 64 L 64 64 Z M 64 0 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 64 320 L 128 320 L 128 384 L 64 384 Z M 64 320 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,0%,100%);fill-opacity:1;" d="M 64 384 L 128 384 L 128 448 L 64 448 Z M 64 384 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,80.000001%,0%);fill-opacity:1;" d="M 64 448 L 128 448 L 128 512 L 64 512 Z M 64 448 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 64 64 L 128 64 L 128 128 L 64 128 Z M 64 64 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,80.000001%,0%);fill-opacity:1;" d="M 64 192 L 128 192 L 128 256 L 64 256 Z M 64 192 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,83.137256%,33.333334%);fill-opacity:1;" d="M 64 256 L 128 256 L 128 320 L 64 320 Z M 64 256 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,0%,100%);fill-opacity:1;" d="M 64 128 L 128 128 L 128 192 L 64 192 Z M 64 128 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,80.000001%,0%);fill-opacity:1;" d="M 128 0 L 192 0 L 192 64 L 128 64 Z M 128 0 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,83.137256%,33.333334%);fill-opacity:1;" d="M 128 320 L 192 320 L 192 384 L 128 384 Z M 128 320 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 128 384 L 192 384 L 192 448 L 128 448 Z M 128 384 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,0%,100%);fill-opacity:1;" d="M 128 448 L 192 448 L 192 512 L 128 512 Z M 128 448 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,83.137256%,33.333334%);fill-opacity:1;" d="M 128 64 L 192 64 L 192 128 L 128 128 Z M 128 64 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,0%,100%);fill-opacity:1;" d="M 128 192 L 192 192 L 192 256 L 128 256 Z M 128 192 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,80.000001%,0%);fill-opacity:1;" d="M 128 256 L 192 256 L 192 320 L 128 320 Z M 128 256 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 128 128 L 192 128 L 192 192 L 128 192 Z M 128 128 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,0%,100%);fill-opacity:1;" d="M 192 0 L 256 0 L 256 64 L 192 64 Z M 192 0 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,80.000001%,0%);fill-opacity:1;" d="M 192 320 L 256 320 L 256 384 L 192 384 Z M 192 320 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,83.137256%,33.333334%);fill-opacity:1;" d="M 192 384 L 256 384 L 256 448 L 192 448 Z M 192 384 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 192 448 L 256 448 L 256 512 L 192 512 Z M 192 448 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,80.000001%,0%);fill-opacity:1;" d="M 192 64 L 256 64 L 256 128 L 192 128 Z M 192 64 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 192 192 L 256 192 L 256 256 L 192 256 Z M 192 192 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,0%,100%);fill-opacity:1;" d="M 192 256 L 256 256 L 256 320 L 192 320 Z M 192 256 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,83.137256%,33.333334%);fill-opacity:1;" d="M 192 128 L 256 128 L 256 192 L 192 192 Z M 192 128 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 256 0 L 320 0 L 320 64 L 256 64 Z M 256 0 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,0%,100%);fill-opacity:1;" d="M 256 320 L 320 320 L 320 384 L 256 384 Z M 256 320 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,80.000001%,0%);fill-opacity:1;" d="M 256 384 L 320 384 L 320 448 L 256 448 Z M 256 384 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,83.137256%,33.333334%);fill-opacity:1;" d="M 256 448 L 320 448 L 320 512 L 256 512 Z M 256 448 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,0%,100%);fill-opacity:1;" d="M 256 64 L 320 64 L 320 128 L 256 128 Z M 256 64 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,83.137256%,33.333334%);fill-opacity:1;" d="M 256 192 L 320 192 L 320 256 L 256 256 Z M 256 192 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 256 256 L 320 256 L 320 320 L 256 320 Z M 256 256 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,80.000001%,0%);fill-opacity:1;" d="M 256 128 L 320 128 L 320 192 L 256 192 Z M 256 128 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,83.137256%,33.333334%);fill-opacity:1;" d="M 320 0 L 384 0 L 384 64 L 320 64 Z M 320 0 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 320 320 L 384 320 L 384 384 L 320 384 Z M 320 320 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,0%,100%);fill-opacity:1;" d="M 320 384 L 384 384 L 384 448 L 320 448 Z M 320 384 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,80.000001%,0%);fill-opacity:1;" d="M 320 448 L 384 448 L 384 512 L 320 512 Z M 320 448 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 320 64 L 384 64 L 384 128 L 320 128 Z M 320 64 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,80.000001%,0%);fill-opacity:1;" d="M 320 192 L 384 192 L 384 256 L 320 256 Z M 320 192 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,83.137256%,33.333334%);fill-opacity:1;" d="M 320 256 L 384 256 L 384 320 L 320 320 Z M 320 256 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,0%,100%);fill-opacity:1;" d="M 320 128 L 384 128 L 384 192 L 320 192 Z M 320 128 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,80.000001%,0%);fill-opacity:1;" d="M 384 0 L 448 0 L 448 64 L 384 64 Z M 384 0 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,83.137256%,33.333334%);fill-opacity:1;" d="M 384 320 L 448 320 L 448 384 L 384 384 Z M 384 320 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 384 384 L 448 384 L 448 448 L 384 448 Z M 384 384 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,0%,100%);fill-opacity:1;" d="M 384 448 L 448 448 L 448 512 L 384 512 Z M 384 448 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,83.137256%,33.333334%);fill-opacity:1;" d="M 384 64 L 448 64 L 448 128 L 384 128 Z M 384 64 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,0%,100%);fill-opacity:1;" d="M 384 192 L 448 192 L 448 256 L 384 256 Z M 384 192 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,80.000001%,0%);fill-opacity:1;" d="M 384 256 L 448 256 L 448 320 L 384 320 Z M 384 256 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 384 128 L 448 128 L 448 192 L 384 192 Z M 384 128 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,80.000001%,0%);fill-opacity:1;" d="M 448 320 L 512 320 L 512 384 L 448 384 Z M 448 320 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,83.137256%,33.333334%);fill-opacity:1;" d="M 448 384 L 512 384 L 512 448 L 448 448 Z M 448 384 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,80.000001%,0%);fill-opacity:1;" d="M 448 64 L 512 64 L 512 128 L 448 128 Z M 448 64 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 448 192 L 512 192 L 512 256 L 448 256 Z M 448 192 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,0%,100%);fill-opacity:1;" d="M 448 256 L 512 256 L 512 320 L 448 320 Z M 448 256 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,83.137256%,33.333334%);fill-opacity:1;" d="M 448 128 L 512 128 L 512 192 L 448 192 Z M 448 128 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,0%,100%);fill-opacity:1;" d="M 480 0 C 497.671875 0 512 14.328125 512 32 C 512 49.671875 497.671875 64 480 64 C 462.328125 64 448 49.671875 448 32 C 448 14.328125 462.328125 0 480 0 Z M 480 0 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,0%,100%);fill-opacity:1;" d="M 448 -0.00390625 L 479.117188 -0.00390625 L 479.117188 64 L 448 64 Z M 448 -0.00390625 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,0%,100%);fill-opacity:1;" d="M 480.4375 31.324219 L 512 31.324219 L 512 64 L 480.4375 64 Z M 480.4375 31.324219 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 64 32 C 64 49.671875 49.671875 64 32 64 C 14.328125 64 0 49.671875 0 32 C 0 14.328125 14.328125 0 32 0 C 49.671875 0 64 14.328125 64 32 Z M 64 32 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 32.335938 0 L 64 0 L 64 64 L 32.335938 64 Z M 32.335938 0 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 0 33.539062 L 35.183594 33.539062 L 35.183594 64 L 0 64 Z M 0 33.539062 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,83.137256%,33.333334%);fill-opacity:1;" d="M 64 480 C 64 497.671875 49.671875 512 32 512 C 14.328125 512 0 497.671875 0 480 C 0 462.328125 14.328125 448 32 448 C 49.671875 448 64 462.328125 64 480 Z M 64 480 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,83.137256%,33.333334%);fill-opacity:1;" d="M 33.953125 448 L 64 448 L 64 512 L 33.953125 512 Z M 33.953125 448 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,83.137256%,33.333334%);fill-opacity:1;" d="M 0 448 L 42.191406 448 L 42.191406 480.804688 L 0 480.804688 Z M 0 448 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 512 480 C 512 497.671875 497.671875 512 480 512 C 462.328125 512 448 497.671875 448 480 C 448 462.328125 462.328125 448 480 448 C 497.671875 448 512 462.328125 512 480 Z M 512 480 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 448 448 L 511.96875 448 L 511.96875 479.710938 L 448 479.710938 Z M 448 448 "/>
+<path style=" stroke:none;fill-rule:evenodd;fill:rgb(100%,0%,0%);fill-opacity:1;" d="M 448 475.601562 L 481.714844 475.601562 L 481.714844 512 L 448 512 Z M 448 475.601562 "/>
+</g>
 </svg>

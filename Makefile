@@ -37,6 +37,12 @@ bear:
 vg:
 	valgrind --leak-check=full --show-leak-kinds=all ./rooibos
 
+mat:
+	mat2 --inplace ./
+
+exif:
+	exiftool -all= -r ./
+
 pkg:
 	rm -f package/usr/bin/.gitkeep
 	rm -f package/usr/share/rooibos/.gitkeep

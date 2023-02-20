@@ -20,7 +20,7 @@ All my tasks will be written in this file.
 - [ ] Add jpeg and png format for logo
 
 ### In Progress
-- [ ] Move logout button
+- [ ] Move new terminal button
 
 ### Done
 - [X] Prepare Kanban
@@ -78,3 +78,4 @@ All my tasks will be written in this file.
 - [X] Add debug flag
 - [X] Show jpeg images
 - [X] Grab Super and Left Control in window
+- [X] Move logout button

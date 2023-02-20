@@ -92,7 +92,7 @@ void icons_init(void) {
     }
     
     int x = menu.x;
-    int y = menu.y + 80;
+    int y = menu.y + 100;
 
     icons = malloc(sizeof(icon_t) * app_shortcuts_length);
 
@@ -119,7 +119,7 @@ void icons_init(void) {
     }
 
     const int menu_width = (int) (menu.width * 0.60);
-    const int menu_height = (int) (menu.height * 0.80);
+    const int menu_height = (int) (menu.height * 0.90);
 
     const int space_x = (menu.width - menu_width) / nb_x;
     const int space_y = (menu.height - menu_height) / nb_y;

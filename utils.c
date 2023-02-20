@@ -7,6 +7,7 @@
 struct passwd *pw = NULL;
 
 static char* utils_get_wallpaper_to_use();
+static char* utils_get_assets(const char *filename);
 
 char* utils_get(utils_t util) {
 	if (pw == NULL) {
@@ -34,7 +35,7 @@ char* utils_get(utils_t util) {
 			strcat(result, "/.rooibos/cache.db");
 			break;
 		case UTILS_LOGO:
-			strcat(result, "/.rooibos/logo.svg");
+			result = utils_get_assets("logo.svg");
 			break;
 		case UTILS_WALLPAPER_PNG:
 			strcat(result, "/.rooibos/wallpaper.png");
@@ -44,6 +45,9 @@ char* utils_get(utils_t util) {
 			break;
 		case UTILS_WALLPAPER_TO_USE:
 			result = utils_get_wallpaper_to_use();
+			break;
+		case UTILS_LOGOUT:
+			result = utils_get_assets("logout.png");
 			break;
 	}
 
@@ -78,4 +82,32 @@ static char* utils_get_wallpaper_to_use() {
 	}
 
 	return wallpaper_file_path;
+}
+
+static char* utils_get_assets(const char *filename) {
+	char *path = malloc(sizeof(char) * 200);
+
+	strcpy(path, "/usr/share/rooibos/");
+	strcat(path, filename);
+
+	char *home = malloc(sizeof(char) * 200);
+	char *home_tmp = utils_get(UTILS_FOLDER);
+	strcpy(home, home_tmp);
+	strcat(home, "/");
+	strcat(home, filename);
+	if (access(home, F_OK) == 0) {
+		strcpy(path, home);
+	}
+	free(home);
+	free(home_tmp);
+
+	char *dev = malloc(sizeof(char) * 200);
+	strcpy(dev, "./assets/");
+	strcat(dev, filename);
+	if (access(dev, F_OK) == 0) {
+		strcpy(path, dev);
+	}
+	free(dev);
+
+	return path;
 }

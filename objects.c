@@ -30,7 +30,6 @@ XColor color_resize_window;
 XColor color_minimize_window;
 XColor color_maximize_window;
 XColor color_close_window;
-XColor color_exit;
 XColor color_category_button;
 
 GC gc_text_white;
@@ -70,7 +69,6 @@ void objects_init(void) {
 	color_minimize_window = (XColor) { .red = 0, .green = 0, .blue = 30000 };
 	color_maximize_window = (XColor) { .red = 30000, .green = 0, .blue = 30000 };
 	color_close_window = (XColor) { .red = 65535, .green = 0, .blue = 0 };
-	color_exit = (XColor) { .red = 0, .green = 0, .blue = 0 };
     color_category_button = (XColor) { .red = 0, .green = 40000, .blue = 0 };
 
 	XAllocColor(display, colormap, &color_new_window);
@@ -79,7 +77,6 @@ void objects_init(void) {
 	XAllocColor(display, colormap, &color_minimize_window);
 	XAllocColor(display, colormap, &color_maximize_window);
 	XAllocColor(display, colormap, &color_close_window);
-	XAllocColor(display, colormap, &color_exit);
     XAllocColor(display, colormap, &color_category_button);
 
     XGCValues gcv_text_white = {
