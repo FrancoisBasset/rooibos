@@ -87,8 +87,23 @@ void icon_draw_svg(RsvgHandle *rsvg_handle, const char* name, int x, int  y, int
 void icons_init(void) {
     cache_update();
     appshortcut_t *app_shortcuts = cache_get_app_shortcuts(&app_shortcuts_length);
+
+	categories_length = 0;
+	for (int i = 0, j = 0; i < 9; i++) {
+		int length = appshortcut_get_length_by_category(app_shortcuts, app_shortcuts_length, all_categories[i]);
+		if (length > 0) {
+			categories[j] = all_categories[i];
+			categories_length++;
+			j++;
+		}
+	}
+
     if (menu.category_index != -1) {
         app_shortcuts = appshortcut_get_app_shortcuts_by_category(app_shortcuts, categories[menu.category_index], app_shortcuts_length, &app_shortcuts_length);
+
+		if (app_shortcuts_length == 0) {
+			return;
+		}
     }
     
     int x = menu.x;

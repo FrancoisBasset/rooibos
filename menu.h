@@ -18,7 +18,11 @@ typedef struct menu_button_t {
 } menu_button_t;
 
 extern menu_t menu;
+
+extern char *all_categories[9];
 extern char *categories[9];
+extern int categories_length;
+
 extern menu_button_t left_category_button;
 extern menu_button_t right_category_button;
 extern menu_button_t logout_menu_button;

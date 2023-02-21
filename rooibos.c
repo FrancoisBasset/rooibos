@@ -25,14 +25,14 @@ void rooibos(void) {
 	XFlush(display);
 
 	XDefineCursor(display, window, wait_cursor);
-
-	splash_start();
-
+	
 	toolbar_init();
 	taskbar_init();
 	prompt_init();
 	windows_init();
 	menu_init();
+
+	splash_start();
 
 	event_on_expose();
 	

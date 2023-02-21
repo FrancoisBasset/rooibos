@@ -13,6 +13,8 @@ There are 6 types of changes :
 # Changes
 
 ## 2023-02-21
+### [Fixed]
+* I fixed the bug of categories in Mint
 ### [Changed]
 * I moved the new terminal button
 

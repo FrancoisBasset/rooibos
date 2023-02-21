@@ -30,6 +30,18 @@ appshortcut_t* appshortcut_get_app_shortcuts_by_category(const appshortcut_t* ap
 	return new_app_shortcuts;
 }
 
+int appshortcut_get_length_by_category(const appshortcut_t *app_shortcuts, int app_shortcuts_length, const char *category) {
+	int length = 0;
+
+	for (int i = 0; i < app_shortcuts_length; i++) {
+		if (strcmp(app_shortcuts[i].category, category) == 0) {
+			length++;
+		}
+	}
+
+	return length;
+}
+
 char** appshortcut_get_all_desktop_files(int *length) {
 	int length1 = 0;
 	int length2 = 0;

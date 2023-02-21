@@ -9,7 +9,11 @@
 #include "utils.h"
 
 menu_t menu;
-char *categories[9] = { "Games", "System", "Graphics", "Development", "Network", "Multimedia", "Office", "Settings", "Other" };
+
+char *all_categories[9] = { "Games", "System", "Graphics", "Development", "Network", "Multimedia", "Office", "Settings", "Other" };
+char *categories[9];
+int categories_length = 0;
+
 menu_button_t left_category_button;
 menu_button_t right_category_button;
 menu_button_t logout_menu_button;
@@ -98,7 +102,7 @@ void menu_show_categories(void) {
         XDrawString(display, window, gc_text_white, menu.x + 50, menu.y + 50, category_name, (int) strlen(category_name));
     }
     
-    if (menu.category_index < 8) {
+    if (menu.category_index < categories_length - 1) {
         strcpy(category_name, categories[menu.category_index + 1]);
         strcat(category_name, " >");
 

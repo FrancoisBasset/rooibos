@@ -19,7 +19,6 @@ All my tasks will be written in this file.
 - [ ] Add jpeg and png format for logo
 
 ### In Progress
-- [ ] Category Mint bugs
 
 ### Done
 - [X] Prepare Kanban
@@ -79,3 +78,4 @@ All my tasks will be written in this file.
 - [X] Grab Super and Left Control in window
 - [X] Move logout button
 - [X] Move new terminal button
+- [X] Category Mint bugs

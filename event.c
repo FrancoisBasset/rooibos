@@ -201,7 +201,7 @@ void event_on_key_press(XKeyEvent key_event, int key) {
             menu_go_to_previous_category();
         }
     } else if (key_sym == XK_Right) {
-        if (menu.is_showed == 1 && menu.category_index < 8) {
+        if (menu.is_showed == 1 && menu.category_index < categories_length - 1) {
             menu_go_to_next_category();
         }
     } else if (key_sym == XK_Escape) {

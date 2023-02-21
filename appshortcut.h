@@ -14,4 +14,5 @@ char** appshortcut_get_all_desktop_files(int *length);
 char** appshortcut_get_desktop_files(const char *foldername, int *length);
 appshortcut_t appshortcut_get_app_shortcut(const char *filename);
 appshortcut_t* appshortcut_get_app_shortcuts_by_category(const appshortcut_t* app_shortcuts, const char *category, int length, int *new_length);
+int appshortcut_get_length_by_category(const appshortcut_t *app_shortcuts, int app_shortcuts_length, const char *category);
 #endif
