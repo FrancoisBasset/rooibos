@@ -153,6 +153,8 @@ int event_on_left_button_press(int x, int y) {
 
 			int menu_button = menu_buttons_on_hover(x, y);
 			if (menu_button == 1) {
+				new_window();
+			} else if (menu_button == 2) {
 				quit = 1;
 			}
         } else {

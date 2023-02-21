@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-02-21
+### [Changed]
+* I moved the new terminal button
+
 ## 2023-02-20
 ### [Changed]
 * I moved the logout button

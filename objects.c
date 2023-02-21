@@ -24,7 +24,6 @@ Cursor hand_cursor;
 Cursor wait_cursor;
 
 Colormap colormap;
-XColor color_new_window;
 XColor color_move_window;
 XColor color_resize_window;
 XColor color_minimize_window;
@@ -63,7 +62,6 @@ void objects_init(void) {
     wait_cursor = XCreateFontCursor(display, XC_watch);
 
     colormap = XDefaultColormapOfScreen(screen);
-    color_new_window = (XColor) { .red = 0, .green = 40000, .blue = 0 };
 	color_move_window = (XColor) { .red = 0, .green = 0, .blue = 65535 };
 	color_resize_window = (XColor) { .red = 30000, .green = 30000, .blue = 0 };
 	color_minimize_window = (XColor) { .red = 0, .green = 0, .blue = 30000 };
@@ -71,7 +69,6 @@ void objects_init(void) {
 	color_close_window = (XColor) { .red = 65535, .green = 0, .blue = 0 };
     color_category_button = (XColor) { .red = 0, .green = 40000, .blue = 0 };
 
-	XAllocColor(display, colormap, &color_new_window);
 	XAllocColor(display, colormap, &color_move_window);
 	XAllocColor(display, colormap, &color_resize_window);
 	XAllocColor(display, colormap, &color_minimize_window);

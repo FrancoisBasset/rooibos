@@ -46,6 +46,9 @@ char* utils_get(utils_t util) {
 		case UTILS_WALLPAPER_TO_USE:
 			result = utils_get_wallpaper_to_use();
 			break;
+		case UTILS_NEW_TERMINAL:
+			result = utils_get_assets("new_terminal.png");
+			break;
 		case UTILS_LOGOUT:
 			result = utils_get_assets("logout.png");
 			break;

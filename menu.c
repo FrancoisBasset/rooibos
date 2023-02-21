@@ -13,6 +13,7 @@ char *categories[9] = { "Games", "System", "Graphics", "Development", "Network",
 menu_button_t left_category_button;
 menu_button_t right_category_button;
 menu_button_t logout_menu_button;
+menu_button_t new_terminal_menu_button;
 
 void menu_init(void) {
     int width = (int) (screen_width * 0.70);
@@ -49,7 +50,10 @@ void menu_show(void) {
     menu.is_showed = 1;
 
     icons_show();
+	XDrawLine(display, window, gc_text_black, menu.x, menu.y + 80, menu.x + menu.width, menu.y + 80);
 	menu_show_categories();
+	XDrawLine(display, window, gc_text_black, menu.x, menu.y + menu.height - 60, menu.x + menu.width, menu.y + menu.height - 60);
+	menu_show_new_terminal_button();
 	menu_show_logout_button();
 }
 
@@ -59,8 +63,6 @@ void menu_clear(void) {
 }
 
 void menu_show_categories(void) {
-	XDrawLine(display, window, gc_text_black, menu.x, menu.y + 80, menu.x + menu.width, menu.y + 80);
-
 	char *category_name = malloc(sizeof(char) * 20);
     if (menu.category_index == -1) {
         strcpy(category_name, "All categories");
@@ -110,6 +112,18 @@ void menu_show_categories(void) {
     free(category_name);
 }
 
+void menu_show_new_terminal_button(void) {
+	char *new_terminal_path = utils_get(UTILS_NEW_TERMINAL);
+	cairo_surface_t *new_terminal_surface = icon_get_surface_png(new_terminal_path);
+	free(new_terminal_path);
+
+	const int x = menu.x + 40;
+	const int y = menu.y + menu.height - 50;
+	icon_draw_png(new_terminal_surface, "", x, y, 40, 40);
+
+	new_terminal_menu_button = (menu_button_t) { .visible = 1, .x = x, .y = y, .width = 40, .height = 40 };
+}
+
 void menu_show_logout_button(void) {
 	XDrawLine(display, window, gc_text_black, menu.x, menu.y + menu.height - 60, menu.x + menu.width, menu.y + menu.height - 60);
 	char *logout_path = utils_get(UTILS_LOGOUT);
@@ -124,13 +138,20 @@ void menu_show_logout_button(void) {
 }
 
 int menu_buttons_on_hover(int x, int y) {
+	int new_terminal_is_hover = new_terminal_menu_button.visible == 1 &&
+        x >= new_terminal_menu_button.x && x <= new_terminal_menu_button.x + new_terminal_menu_button.width &&
+        y >= new_terminal_menu_button.y && y <= new_terminal_menu_button.y + new_terminal_menu_button.height;
+
     int logout_is_hover = logout_menu_button.visible == 1 &&
         x >= logout_menu_button.x && x <= logout_menu_button.x + logout_menu_button.width &&
         y >= logout_menu_button.y && y <= logout_menu_button.y + logout_menu_button.height;
 
-    if (logout_is_hover == 1) {
+	if (new_terminal_is_hover == 1) {
         XDefineCursor(display, window, hand_cursor);
-        return 1;
+		return 1;
+	} else if (logout_is_hover == 1) {
+        XDefineCursor(display, window, hand_cursor);
+        return 2;
     }
     
     return 0;

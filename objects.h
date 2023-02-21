@@ -23,7 +23,6 @@ extern Cursor hand_cursor;
 extern Cursor wait_cursor;
 
 extern Colormap colormap;
-extern XColor color_new_window;
 extern XColor color_move_window;
 extern XColor color_resize_window;
 extern XColor color_minimize_window;

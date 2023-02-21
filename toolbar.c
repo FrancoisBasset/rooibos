@@ -8,7 +8,7 @@
 XGCValues gcv_toolbar_button;
 GC gc_toolbar_button;
 
-toolbar_button_t toolbar_buttons[6];
+toolbar_button_t toolbar_buttons[5];
 
 void toolbar_init(void) {
     gcv_toolbar_button = (XGCValues) { .foreground = white_pixel };
@@ -16,12 +16,12 @@ void toolbar_init(void) {
 }
 
 void toolbar_show(void) {
-	int button_width = screen_width / 6;
+	int button_width = screen_width / 5;
 
-	XColor colors[6] = { color_new_window, color_move_window, color_resize_window, color_minimize_window, color_maximize_window, color_close_window };
-	char *labels[6] = { "New window", "Move window", "Resize window", "Minimize window", "Maximize window", "Close window" };
+	XColor colors[5] = { color_move_window, color_resize_window, color_minimize_window, color_maximize_window, color_close_window };
+	char *labels[5] = { "Move window", "Resize window", "Minimize window", "Maximize window", "Close window" };
 
-	for (int i = 0; i < 6; i++) {
+	for (int i = 0; i < 5; i++) {
 		int width = XTextWidth(font_struct, labels[i], (int) strlen(labels[i]));
 		int x = (button_width - width) / 2;
 
@@ -45,30 +45,27 @@ int toolbar_is_hover(int y) {
 }
 
 int toolbar_on_press(int x) {
-	int position = (int) (((double) x / (double) screen_width) * 6);
+	int position = (int) (((double) x / (double) screen_width) * 5);
 
 	switch (position) {
 		case 0:
-			new_window();
-			break;
-		case 1:
 			mode = 'm';
 			break;
-		case 2:
+		case 1:
 			mode = 'r';
 			break;
-		case 3:
+		case 2:
 			if (window_focus != NULL) {
 				XUnmapWindow(display, window_focus->id);
 				window_focus->visible = 0;
 			}
 			break;
-		case 4:
+		case 3:
 			if (window_focus != NULL) {
 				XMoveResizeWindow(display, window_focus->id, 0, 0, screen_width, screen_height - 100);
 			}
 			break;
-		case 5:
+		case 4:
 			if (window_focus != NULL) {
 				XDestroyWindow(display, window_focus->id);
 				window_focus = NULL;
