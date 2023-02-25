@@ -1,6 +1,7 @@
 #include <cairo/cairo.h>
 #include <cairo/cairo-xlib.h>
 #include <librsvg-2.0/librsvg/rsvg.h>
+#include <X11/xpm.h>
 #include <math.h>
 #include "objects.h"
 #include "icon.h"
@@ -22,7 +23,9 @@ void icon_draw(icon_t icon) {
         icon_draw_svg(icon.rsvg_handle, icon.name, icon.x, icon.y, icon.width, icon.height);
     } else if (strstr(icon.filename, ".png") != NULL) {
         icon_draw_png(icon.cairo_surface, icon.name, icon.x, icon.y, icon.width, icon.width);
-    }
+    } else if (strstr(icon.filename, ".xpm") != NULL) {
+		icon_draw_xpm(icon.image, icon.name, icon.x, icon.y, icon.width, icon.height);
+	}
 }
 
 cairo_surface_t* icon_get_surface_png(const char *filename) {
@@ -33,6 +36,15 @@ cairo_surface_t* icon_get_surface_png(const char *filename) {
 cairo_surface_t* icon_get_surface_jpg(const char *filename) {
     cairo_surface_t *cairo_surface = cairo_image_surface_create_from_jpeg(filename);
     return cairo_surface;
+}
+
+XImage* icon_get_image_xpm(const char *filename) {
+	XImage *image;
+	XImage *image2;
+
+	XpmReadFileToImage(display, filename, &image, &image2, NULL);
+
+	return image;
 }
 
 RsvgHandle* icon_get_surface_svg(const char *filename) {
@@ -82,6 +94,20 @@ void icon_draw_svg(RsvgHandle *rsvg_handle, const char* name, int x, int  y, int
     XDrawString(display, window, gc_text_white, x, y + width + 10, name, name_length);
 
     rsvg_handle_render_document(rsvg_handle, context, &rectangle, NULL);
+}
+
+void icon_draw_xpm(XImage *image, const char *name, int x, int y, int width, int height) {
+	XPutImage(display, window, gc_text_black, image, 0, 0, x, y, width, height);
+    
+	int name_width = XTextWidth(font_struct, name, (int) strlen(name));
+    int name_length = (int) strlen(name);
+    
+    while (name_width > width) {
+        name_length--;
+        name_width = XTextWidth(font_struct, name, name_length);
+    }
+
+    XDrawString(display, window, gc_text_white, x, y + width + 10, name, name_length);
 }
 
 void icons_init(void) {
@@ -159,7 +185,9 @@ void icons_init(void) {
             new_icon.rsvg_handle = icon_get_surface_svg(new_icon.filename);
         } else if (strstr(app_shortcuts[i].icon, ".png") != NULL) {
             new_icon.cairo_surface = icon_get_surface_png(new_icon.filename);
-        }
+        } else if (strstr(app_shortcuts[i].icon, ".xpm") != NULL) {
+			new_icon.image = icon_get_image_xpm(new_icon.filename);
+		}
 
         icons[i] = new_icon;
 

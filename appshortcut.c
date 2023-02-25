@@ -194,7 +194,7 @@ static int filter_icon(const char *path, const struct stat *sb, int typeflag) {
 		return 0;
 	}
 
-	if (strstr(path, ".xpm") != NULL) {
+	if (strstr(path, ".xpm") != NULL && do_size_filter == 1) {
 		return 0;
 	} 
 	
@@ -272,6 +272,10 @@ static char* appshortcut_get_icon(char *icon) {
 		strcpy(icon, result);
 		free(result);
 		result = NULL;
+	}
+
+	if (strstr(icon, ".") == NULL) {
+		return NULL;
 	}
 
 	return icon;

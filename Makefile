@@ -10,7 +10,7 @@ ifndef WILLDEBUG
 endif
 
 rooibos: $(OBJECTS)
-	gcc $(CFLAGS) $(WILLDEBUG) *.o -o rooibos -lsqlite3 -lX11 -lcairo `pkg-config --cflags --libs librsvg-2.0` -ljpeg
+	gcc $(CFLAGS) $(WILLDEBUG) *.o -o rooibos -lsqlite3 -lX11 -lcairo `pkg-config --cflags --libs librsvg-2.0` -ljpeg -lXpm
 	strip rooibos
 
 VERSION.h:

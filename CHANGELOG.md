@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-02-25
+### [Changed]
+* I made some refacto
+
 ## 2023-02-21
 ### [Fixed]
 * I fixed the bug of categories in Mint
