@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-02-26
+### [Changed]
+* I made focus window recognizable
+
 ## 2023-02-25
 ### [Changed]
 * I made some refacto

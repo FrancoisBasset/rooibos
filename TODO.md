@@ -10,8 +10,6 @@ All my tasks will be written in this file.
 
 ### Waiting
 - [ ] Proof of concept : Window decoration
-- [ ] Prompt Alt key
-- [ ] Dot active window
 - [ ] Study the XrmDatabase
 - [ ] Add scroll in the menu
 - [ ] Make own wallpaper
@@ -19,6 +17,7 @@ All my tasks will be written in this file.
 - [ ] Add jpeg and png format for logo
 
 ### In Progress
+- [ ] Prompt Alt key
 
 ### Done
 - [X] Prepare Kanban
@@ -79,3 +78,4 @@ All my tasks will be written in this file.
 - [X] Move logout button
 - [X] Move new terminal button
 - [X] Category Mint bugs
+- [X] Dot active window

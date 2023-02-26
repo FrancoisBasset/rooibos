@@ -9,6 +9,7 @@
 
 static GC gc_taskbar;
 static GC gc_taskbar_button;
+static GC gc_taskbar_button_focus;
 static GC gc_taskbar_button_hidden;
 static GC gc_taskbar_button_border;
 taskbar_t *tb;
@@ -31,6 +32,11 @@ taskbar_t* taskbar_init() {
     XAllocColor(display, colormap, &color_taskbar_button);
     XGCValues gcv_taskbar_button = { .foreground = color_taskbar_button.pixel };
     gc_taskbar_button = XCreateGC(display, window, GCForeground, &gcv_taskbar_button);
+
+	XColor color_taskbar_button_focus = { .red = 20000, .green = 50000, .blue = 20000 };
+    XAllocColor(display, colormap, &color_taskbar_button_focus);
+    XGCValues gcv_taskbar_button_focus = { .foreground = color_taskbar_button_focus.pixel };
+    gc_taskbar_button_focus = XCreateGC(display, window, GCForeground, &gcv_taskbar_button_focus);
 
     XColor color_taskbar_button_hidden = { .red = 20000, .green = 20000, .blue = 20000 };
     XAllocColor(display, colormap, &color_taskbar_button_hidden);
@@ -83,6 +89,10 @@ void taskbar_update_windows() {
 
         i++;
         x += width + 1;
+
+		if (window_focus == NULL) {
+			window_focus = w;
+		}
     } while ((w = w->next) != NULL);
 }
 
@@ -91,7 +101,11 @@ void taskbar_show() {
 
     for (int i = 0; i < tb->buttons_length; i++) {
         if (tb->tb_buttons[i]->window->visible == 1) {
-            XFillRectangle(display, window, gc_taskbar_button, tb->tb_buttons[i]->x, tb->tb_buttons[i]->y, tb->tb_buttons[i]->width, tb->tb_buttons[i]->height);
+			if (window_focus == tb->tb_buttons[i]->window) {
+	            XFillRectangle(display, window, gc_taskbar_button_focus, tb->tb_buttons[i]->x, tb->tb_buttons[i]->y, tb->tb_buttons[i]->width, tb->tb_buttons[i]->height);
+			} else {
+	            XFillRectangle(display, window, gc_taskbar_button, tb->tb_buttons[i]->x, tb->tb_buttons[i]->y, tb->tb_buttons[i]->width, tb->tb_buttons[i]->height);
+			}
         } else {
             XFillRectangle(display, window, gc_taskbar_button_hidden, tb->tb_buttons[i]->x, tb->tb_buttons[i]->y, tb->tb_buttons[i]->width, tb->tb_buttons[i]->height);
         }

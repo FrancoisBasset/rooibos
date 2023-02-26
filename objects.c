@@ -50,7 +50,7 @@ void objects_init(void) {
 
     XSetWindowAttributes window_attributes = {
         .cursor = cursor,
-        .event_mask = ExposureMask | ButtonPressMask | PointerMotionMask | KeyPressMask
+        .event_mask = ExposureMask | ButtonPressMask | PointerMotionMask | KeyPressMask | FocusChangeMask
     };
     window = XCreateWindow(display, root_window, 0, 0, screen_width, screen_height, 0, screen_depth, InputOutput, visual, CWCursor | CWEventMask, &window_attributes);
 

@@ -86,6 +86,20 @@ int handle_event(void) {
             event_on_destroy(event.xconfigure.window);
             break;
         }
+		case FocusIn:
+			window_focus = window_get(event.xfocus.window);
+			taskbar_update_windows();
+			break;
+		case EnterNotify: {
+			window_t *new_window_focus = window_get(event.xcrossing.window);
+			if (strcmp(new_window_focus->title, "xterm") == 0 || strcmp(new_window_focus->title, "uxterm") == 0) {
+				window_focus = new_window_focus;
+				taskbar_update_windows();
+				XEvent e = { .type = Expose };
+            	XSendEvent(display, window, 0, ExposureMask, &e);
+			}
+			break;
+		}
         default:
 #ifdef WILLDEBUG
             fprintf(debug, "Event %d not implemented !\n", event.type);
@@ -260,7 +274,7 @@ void event_on_configure(Window child, int x, int y, int width, int height) {
 
     if (title != NULL) {
         if (window_get(child) == NULL) {
-            XSelectInput(display, child, PropertyChangeMask | KeyPressMask);
+            XSelectInput(display, child, PropertyChangeMask | KeyPressMask | FocusChangeMask | EnterWindowMask);
 			XGrabKey(display, XKeysymToKeycode(display, XK_Super_L), AnyModifier, child, True, GrabModeSync, GrabModeSync);
 
             window_t *new_window_ = window_init(child, title, x, y, width, height);
@@ -290,7 +304,9 @@ void event_on_property(Window child) {
 }
 
 void event_on_destroy(Window child) {
-    window_focus = NULL;
+	if (window_focus != NULL && window_focus->id == child) {
+		window_focus = NULL;
+	}
     moving = 0;
     mode = ' ';
     window_delete(child);

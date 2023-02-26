@@ -47,15 +47,15 @@ void prompt_hide(void) {
 void prompt_exec(void) {
     if (fork() == 0) {
         if (strcmp(command, "") == 0) {
-            execlp("xterm", "xterm", NULL);
+            execlp("xterm", "xterm", "-T", "xterm", NULL);
         } else {
             char *xterm_option = malloc(sizeof(char) * (strlen(command) + 16));
             strcpy(xterm_option, command);
             if (strcmp(command, "ls") == 0) {
                 strcat(xterm_option, " --color");
-            }
+			}
             strcat(xterm_option, ";bash");
-            execlp("xterm", "xterm", "-e", xterm_option, NULL);
+            execlp("xterm", "xterm", "-T", "xterm", "-e", xterm_option, NULL);
             free(xterm_option);
         }
     }
