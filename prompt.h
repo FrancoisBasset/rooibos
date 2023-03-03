@@ -9,7 +9,7 @@ void prompt_hide(void);
 void prompt_exec(void);
 void prompt_write(char *typed);
 void prompt_erase(void);
-char* prompt_transform_key(char *key);
+void prompt_delete(void);
 void prompt_move_left(void);
 void prompt_move_right(void);
 void prompt_up(void);

@@ -14,10 +14,9 @@ All my tasks will be written in this file.
 - [ ] Add scroll in the menu
 - [ ] Make own wallpaper
 - [ ] Create another logo
-- [ ] Add jpeg and png format for logo
 
 ### In Progress
-- [ ] Prompt Alt key
+- [ ] Add jpeg and png format for logo
 
 ### Done
 - [X] Prepare Kanban
@@ -79,3 +78,4 @@ All my tasks will be written in this file.
 - [X] Move new terminal button
 - [X] Category Mint bugs
 - [X] Dot active window
+- [X] Prompt Alt key

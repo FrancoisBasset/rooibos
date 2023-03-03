@@ -103,49 +103,20 @@ void prompt_erase(void) {
     }
 }
 
-char* prompt_transform_key(char *key) {
-    char *keys[22][2] = {
-        { "ampersand", "&" },
-        { "space", " " },
-        //{ "eacute", "é" },
-        { "quotedbl", "\"" },
-        { "apostrophe", "'" },
-        { "parenleft", "(" },
-        { "minus", "-" },
-        //{ "egrave", "è" },
-        { "underscore", "_" },
-        //{ "ccedilla", "ç" },
-        //{ "agrave", "à" },
-        { "parenright", ")" },
-        { "equal", "=" },
-        //{ "degree", "°" },
-        { "plus", "+" },
-        //{ "dead_diaeresis", "¨" },
-        { "dead_circumflex", "^" },
-        //{ "sterling", "£" },
-        { "dollar", "$" },
-        //{ "ugrave", "ù" },
-        { "percent", "%" },
-        //{ "mu", "µ" },
-        { "asterisk", "*" },
-        { "comma", "," },
-        { "question", "?" },
-        { "period", "." },
-        { "semicolon", ";" },
-        { "colon", ":" },
-        { "slash", "/" },
-        { "exclam", "!" },
-        //{ "section", "§" },
-        { "Tab", "  " }
-    };
+void prompt_delete(void) {
+    if (strlen(command) > 0 && cursor_index <= strlen(command) - 1) {
+        char *tmp = malloc(sizeof(char) * (strlen(command) + 1));
+        strcpy(tmp, command);
+        tmp[cursor_index] = '\0';
+        
+        strcat(tmp, command + cursor_index + 1);
+        strcpy(command, tmp);
 
-    for (int i = 0; i < 22; i++) {
-        if (strcmp(keys[i][0], key) == 0) {
-            return keys[i][1];
-        }
+        free(tmp);
+
+        XEvent event = { .type = Expose };
+        XSendEvent(display, window, 0, ExposureMask, &event);
     }
-
-    return "";
 }
 
 void prompt_move_left(void) {
@@ -209,49 +180,42 @@ void prompt_on_key_press(XKeyEvent key_event, KeySym key_sym) {
         case XK_Escape:
         case XK_Control_L:
             prompt_hide();
-            break;
+			return;
         case XK_Return:
             prompt_exec();
-            break;
+			return;
         case XK_BackSpace:
             prompt_erase();
-            break;
+			return;
         case XK_Left:
             prompt_move_left();
-            break;
+			return;
         case XK_Right:
             prompt_move_right();
-            break;
+			return;
 		case XK_Up:
 			prompt_up();
-			break;
+			return;
 		case XK_Down:
 			prompt_down();
-			break;
+			return;
+		case XK_Tab:
+			prompt_write(" ");
+			return;
+		case XK_Delete:
+			prompt_delete();
+			return;
         default:
             break;
     }
-    
-    char *typed = XKeysymToString(key_sym);
 
-    char *transformed_char = malloc(sizeof(char) * (strlen(typed) + 1));
-    strcpy(transformed_char, typed);
+	XIM xim = XOpenIM(display, NULL, NULL, NULL);
+	XIC xic = XCreateIC(xim, XNInputStyle, XIMPreeditNothing | XIMStatusNothing, XNClientWindow, window, NULL);
+	char *typed = malloc(sizeof(char) * 10);
+	strcpy(typed, "");
+	
+	XmbLookupString(xic, &key_event, typed, sizeof(typed), NULL, NULL);
 
-    if (strlen(typed) == 1) {
-        if ((key_event.state & ShiftMask) == ShiftMask) {
-            transformed_char[0] -= 32;
-        }
-    } else {
-        if ((key_event.state & ShiftMask) == ShiftMask) {
-            key_sym = XLookupKeysym(&key_event, 1);
-            typed = XKeysymToString(key_sym);
-            strcpy(transformed_char, typed);
-        }
-        if (strlen(typed) > 1) {
-            strcpy(transformed_char, prompt_transform_key(typed));
-        }
-    }
-
-    prompt_write(transformed_char);
-    free(transformed_char);
+    prompt_write(typed);
+	free(typed);
 }
