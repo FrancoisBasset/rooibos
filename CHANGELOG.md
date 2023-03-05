@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-03-05
+### [Added]
+* I added jpeg and png format for logo
+
 ## 2023-03-03
 ### [Changed]
 * I activated Alt keys for prompt

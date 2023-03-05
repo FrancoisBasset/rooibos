@@ -7,6 +7,7 @@
 struct passwd *pw = NULL;
 
 static char* utils_get_wallpaper_to_use();
+static char* utils_get_logo_to_use();
 static char* utils_get_assets(const char *filename);
 
 char* utils_get(utils_t util) {
@@ -34,8 +35,17 @@ char* utils_get(utils_t util) {
 		case UTILS_CACHE:
 			strcat(result, "/.rooibos/cache.db");
 			break;
-		case UTILS_LOGO:
-			result = utils_get_assets("logo.svg");
+		case UTILS_LOGO_TO_USE:
+			result = utils_get_logo_to_use();
+			break;
+		case UTILS_LOGO_SVG:
+			strcat(result, "/.rooibos/logo.svg");
+			break;
+		case UTILS_LOGO_JPG:
+			strcat(result, "/.rooibos/logo.jpg");
+			break;
+		case UTILS_LOGO_PNG:
+			strcat(result, "/.rooibos/logo.png");
 			break;
 		case UTILS_WALLPAPER_PNG:
 			strcat(result, "/.rooibos/wallpaper.png");
@@ -85,6 +95,41 @@ static char* utils_get_wallpaper_to_use() {
 	}
 
 	return wallpaper_file_path;
+}
+
+static char* utils_get_logo_to_use() {
+	char *logo_file_path = malloc(sizeof(char) * 200);
+	strcpy(logo_file_path, "/usr/share/rooibos/logo.svg");
+
+	char *svg = utils_get(UTILS_LOGO_SVG);
+	if (access(svg, F_OK) == 0) {
+		strcpy(logo_file_path, svg);
+	}
+	free(svg);
+
+	char *jpg = utils_get(UTILS_LOGO_JPG);
+	if (access(jpg, F_OK) == 0) {
+		strcpy(logo_file_path, jpg);
+	}
+	free(jpg);
+
+	char *png = utils_get(UTILS_LOGO_PNG);
+	if (access(png, F_OK) == 0) {
+		strcpy(logo_file_path, png);
+	}
+	free(png);
+
+	if (access("./assets/logo.svg", F_OK) == 0) {
+		strcpy(logo_file_path, "./assets/logo.svg");
+	}
+	if (access("./assets/logo.jpg", F_OK) == 0) {
+		strcpy(logo_file_path, "./assets/logo.jpg");
+	}
+	if (access("./assets/logo.png", F_OK) == 0) {
+		strcpy(logo_file_path, "./assets/logo.png");
+	}
+
+	return logo_file_path;
 }
 
 static char* utils_get_assets(const char *filename) {

@@ -77,15 +77,23 @@ void splash_show_rectangle(void) {
 }
 
 void splash_show_logo(void) {
-	char *logo_file_path = utils_get(UTILS_LOGO);
+	char *logo_to_use = utils_get(UTILS_LOGO_TO_USE);
 
-	if (strcmp(logo_file_path, "") != 0) {
-		RsvgHandle *rooibos_icon = icon_get_surface_svg(logo_file_path);
-		int x = (screen_width - 300) / 2;
-    	int y = (screen_height - 300) / 2;
+	int x = (screen_width - 300) / 2;
+   	int y = (screen_height - 300) / 2;
+
+	if (strstr(logo_to_use, "logo.svg") != NULL) {
+		RsvgHandle *rooibos_icon = icon_get_surface_svg(logo_to_use);
 		icon_draw_svg(rooibos_icon, "", x, y, 300, 300);
+	} else if (strstr(logo_to_use, "logo.jpg") != NULL) {
+		cairo_surface_t *logo_surface = icon_get_surface_jpg(logo_to_use);
+		icon_draw_png(logo_surface, "", x, y, 300, 300);
+	} else if (strstr(logo_to_use, "logo.png") != NULL) {
+		cairo_surface_t *logo_surface = icon_get_surface_png(logo_to_use);
+		icon_draw_png(logo_surface, "", x, y, 300, 300);
 	}
-	free(logo_file_path);
+
+	free(logo_to_use);
 }
 
 void splash_show_text_at_middle(char *text, int index) {
