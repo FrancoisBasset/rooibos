@@ -137,45 +137,25 @@ void icons_init(void) {
 
     icons = malloc(sizeof(icon_t) * app_shortcuts_length);
 
-    int square_root = (int) sqrt(app_shortcuts_length);
-    int nb_x = square_root + 1;
-    int nb_y = square_root + 1;
-
-    while (1) {
-        if (menu.width > menu.height) {
-            if ((nb_x + 1) * (nb_y - 1) < app_shortcuts_length) {
-                break;
-            }
-
-            nb_x++;
-            nb_y--;
-        } else {
-            if ((nb_x - 1) * (nb_y + 1) < app_shortcuts_length) {
-                break;
-            }
-
-            nb_x--;
-            nb_y++;
-        }
-    }
+    int nb_apps_in_line = 4;
 
     const int menu_width = (int) (menu.width * 0.60);
     const int menu_height = (int) (menu.height * 0.90);
 
-    const int space_x = (menu.width - menu_width) / nb_x;
-    const int space_y = (menu.height - menu_height) / nb_y;
+    const int space_x = (menu.width - menu_width) / nb_apps_in_line;
+    const int space_y = (menu.height - menu_height) / nb_apps_in_line;
 
-    x += (space_x / 2);
+    x += space_x;
     y += (space_y / 2);
 
-    const int width = menu_width / nb_x;
-    const int height = menu_height / nb_y;
+    const int width = menu_width / nb_apps_in_line;
+    const int height = menu_height / nb_apps_in_line;
 
     icon_width = width < height ? width : height;
 
     for (int i = 0; i < app_shortcuts_length; i++) {
         if (x >= menu.x + menu.width - icon_width) {
-            x = menu.x + (space_x / 2);
+            x = menu.x + space_x;
             y += icon_width + space_y + (space_y / 2);
         }
 
@@ -207,7 +187,9 @@ void icons_init(void) {
 
 void icons_show(void) {
     for (int i = 0; i < app_shortcuts_length; i++) {
-        icon_draw(icons[i]);
+		if (icons[i].y > up_line_y && icons[i].y + icons[i].height < bottom_line_y) {
+			icon_draw(icons[i]);
+		}
     }
 }
 
@@ -267,4 +249,32 @@ void icons_on_press(int x, int y) {
             }
         }
     }
+}
+
+void icon_scroll_up(void) {
+	if (app_shortcuts_length <= 4) {
+		return;
+	}
+
+	if (icons[0].y - 20 > up_line_y) {
+		return;
+	}
+
+	for (int i = 0; i < app_shortcuts_length; i++) {
+		icons[i].y += 20;
+	}
+}
+
+void icon_scroll_down(void) {
+	if (app_shortcuts_length <= 4) {
+		return;
+	}
+
+	if (icons[app_shortcuts_length - 1].y + icons[app_shortcuts_length - 1].height + 20 < bottom_line_y) {
+		return;
+	}
+
+	for (int i = 0; i < app_shortcuts_length; i++) {
+		icons[i].y -= 20;
+	}
 }

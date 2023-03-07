@@ -29,4 +29,6 @@ void icons_init(void);
 void icons_show(void);
 int icons_on_hover(int x, int y);
 void icons_on_press(int x, int y);
+void icon_scroll_up(void);
+void icon_scroll_down(void);
 #endif

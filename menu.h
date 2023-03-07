@@ -28,6 +28,9 @@ extern menu_button_t right_category_button;
 extern menu_button_t logout_menu_button;
 extern menu_button_t new_terminal_menu_button;
 
+extern int up_line_y;
+extern int bottom_line_y;
+
 void menu_init(void);
 void menu_show(void);
 void menu_clear(void);

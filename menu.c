@@ -19,6 +19,9 @@ menu_button_t right_category_button;
 menu_button_t logout_menu_button;
 menu_button_t new_terminal_menu_button;
 
+int up_line_y = 0;
+int bottom_line_y = 0;
+
 void menu_init(void) {
     int width = (int) (screen_width * 0.70);
     int height = (int) (screen_height * 0.70);
@@ -26,6 +29,8 @@ void menu_init(void) {
     int y = (screen_height - height) / 2;
 
     menu = (menu_t) { x, y, width, height, -1, 0 };
+	up_line_y = menu.y + 80;
+	bottom_line_y = menu.y + menu.height - 60;
 }
 
 void menu_show(void) {
@@ -54,9 +59,9 @@ void menu_show(void) {
     menu.is_showed = 1;
 
     icons_show();
-	XDrawLine(display, window, gc_text_black, menu.x, menu.y + 80, menu.x + menu.width, menu.y + 80);
+	XDrawLine(display, window, gc_text_black, menu.x, menu.y + 80, menu.x + menu.width, up_line_y);
 	menu_show_categories();
-	XDrawLine(display, window, gc_text_black, menu.x, menu.y + menu.height - 60, menu.x + menu.width, menu.y + menu.height - 60);
+	XDrawLine(display, window, gc_text_black, menu.x, menu.y + menu.height - 60, menu.x + menu.width, bottom_line_y);
 	menu_show_new_terminal_button();
 	menu_show_logout_button();
 }

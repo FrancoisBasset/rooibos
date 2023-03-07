@@ -138,7 +138,19 @@ int event_on_button_press(int button, int x, int y) {
         quit = event_on_left_button_press(x, y);
     } else if (button == 3) {
         quit = event_on_right_button_press(x, y);
-    }
+    } else if (button == 4) {
+		if (menu.is_showed == 1) {
+			icon_scroll_up();
+			XEvent e = { .type = Expose };
+			XSendEvent(display, window, 0, ExposureMask, &e);
+		}
+	} else if (button == 5) {
+		if (menu.is_showed == 1) {
+			icon_scroll_down();
+			XEvent e = { .type = Expose };
+			XSendEvent(display, window, 0, ExposureMask, &e);
+		}
+	}
 
     return quit;
 }

@@ -13,9 +13,11 @@ All my tasks will be written in this file.
 - [ ] Study the XrmDatabase
 - [ ] Make own wallpaper
 - [ ] Create another logo
+- [ ] Clip to show only part of icons
+- [ ] Better performances and refactorizing
 
 ### In Progress
-- [ ] Add scroll in the menu
+- [ ] Better integration of apps during execution
 
 ### Done
 - [X] Prepare Kanban
@@ -79,3 +81,4 @@ All my tasks will be written in this file.
 - [X] Dot active window
 - [X] Prompt Alt key
 - [X] Add jpeg and png format for logo
+- [X] Add scroll in the menu
