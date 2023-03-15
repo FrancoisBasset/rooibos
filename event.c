@@ -22,35 +22,9 @@ char mode = ' ';
 window_t *window_focus = NULL;
 int moving = 0;
 int resizing = 0;
-
-int should_reorganize = 0;
+char *title_launched = NULL;
 
 cairo_surface_t *wallpaper_surface = NULL;
-
-void event_reorganize(void) {
-    switch (windows_get()->length) {
-        case 1:
-            XMoveResizeWindow(display, windows_get()->first->id, 0, 0, screen_width, screen_height - 100);
-            break;
-        case 2:
-            XMoveResizeWindow(display, windows_get()->first->id, 0, 0, screen_width / 2, screen_height - 100);
-            XMoveResizeWindow(display, windows_get()->first->next->id, screen_width / 2, 0, screen_width / 2, screen_height - 100);
-            break;
-        case 3:
-            XMoveResizeWindow(display, windows_get()->first->id, 0, 0, screen_width / 2, (screen_height - 100) / 2);
-            XMoveResizeWindow(display, windows_get()->first->next->id, screen_width / 2, 0, screen_width / 2, (screen_height - 100) / 2);
-            XMoveResizeWindow(display, windows_get()->first->next->next->id, 0, (screen_height - 100) / 2 , screen_width, (screen_height - 100) / 2);
-            break;
-        case 4:
-            XMoveResizeWindow(display, windows_get()->first->id, 0, 0, screen_width / 2, (screen_height - 100) / 2);
-            XMoveResizeWindow(display, windows_get()->first->next->id, screen_width / 2, 0, screen_width / 2, (screen_height - 100) / 2);
-            XMoveResizeWindow(display, windows_get()->first->next->next->id, 0, (screen_height - 100) / 2 , screen_width / 2, (screen_height - 100) / 2);
-            XMoveResizeWindow(display, windows_get()->first->next->next->next->id, screen_width / 2, (screen_height - 100) / 2 , screen_width / 2, (screen_height - 100) / 2);
-            break;
-    }
-
-    should_reorganize = 0;
-}
 
 int handle_event(void) {
     int quit = 0;
@@ -74,16 +48,16 @@ int handle_event(void) {
             event_on_motion(event.xmotion.x, event.xmotion.y);
             break;
         }
-        case ConfigureNotify: {
-            event_on_configure(event.xconfigure.window, event.xconfigure.x, event.xconfigure.y, event.xconfigure.width, event.xconfigure.height);
+		case MapNotify:
+		case ConfigureNotify:
+            event_on_configure(event.xconfigure.window, event.xconfigure.x, event.xconfigure.y, event.xconfigure.width, event.xcreatewindow.height);
             break;
-        }
         case PropertyNotify: {
-            event_on_property(event.xproperty.window);
+			event_on_property(event.xproperty.window);
             break;
         }
         case DestroyNotify: {
-            event_on_destroy(event.xconfigure.window);
+            event_on_destroy(event.xdestroywindow.window);
             break;
         }
 		case FocusIn:
@@ -100,9 +74,11 @@ int handle_event(void) {
 			}
 			break;
 		}
+		case 65:
+			break;
         default:
 #ifdef WILLDEBUG
-            fprintf(debug, "Event %d not implemented !\n", event.type);
+			debug("Event not implemented : %d", event.type);
 #endif
             break;
     }
@@ -121,11 +97,7 @@ void event_on_expose(void) {
         taskbar_show();
         toolbar_show();
     }
-
-    if (should_reorganize == 1) {
-        event_reorganize();
-    }
-
+	
     if (prompt_active == 1) {
         prompt_show();
     }
@@ -271,51 +243,71 @@ void event_on_motion(int x, int y) {
 }
 
 void event_on_configure(Window child, int x, int y, int width, int height) {
-    XMapWindow(display, child);
+	char *title;
+    XFetchName(display, child, &title);
+
+	if (title == NULL || strcmp(title, "rooibos") == 0) {
+		return;
+	}
+
+	if (strlen(title) == 0 && window_get(child) == NULL) {
+		if (title_launched == NULL) {
+			return;
+		}
+		title = malloc(sizeof(char) * (strlen(title_launched) + 1));
+		strcpy(title, title_launched);
+		free(title_launched);
+		title_launched = NULL;
+	}
 
     if (menu.is_showed == 1) {
         menu_clear();
         window_show_all_visible();
         taskbar_show();
         toolbar_show();
-        should_reorganize = 1;
     }
 
-    char *title;
-    XFetchName(display, child, &title);
+    if (window_get(child) == NULL) {
+		XMapWindow(display, child);
+		XSelectInput(display, child, PropertyChangeMask | KeyPressMask | FocusChangeMask | EnterWindowMask);
+		XGrabKey(display, XKeysymToKeycode(display, XK_Super_L), AnyModifier, child, True, GrabModeSync, GrabModeSync);
 
-    if (title != NULL) {
-        if (window_get(child) == NULL) {
-            XSelectInput(display, child, PropertyChangeMask | KeyPressMask | FocusChangeMask | EnterWindowMask);
-			XGrabKey(display, XKeysymToKeycode(display, XK_Super_L), AnyModifier, child, True, GrabModeSync, GrabModeSync);
+		window_t *new_window_ = window_init(child, title, x, y, width, height);
+		
+		window_add(new_window_);
+		taskbar_update_windows();
+		XMoveResizeWindow(display, child, 0, 0, screen_width, screen_height - 100);
+	} else {
+		window_focus = window_get(child);
+		if (strcmp(title, "") != 0) {
+			window_update(child, "title", title);
+		}
 
-            window_t *new_window_ = window_init(child, title, x, y, width, height);
-            window_add(new_window_);
-            taskbar_update_windows();
-            should_reorganize = 1;
-            XEvent event = { .type = Expose };
-            XSendEvent(display, window, 0, ExposureMask, &event);
-        } else {
-            window_focus = window_get(child);
-            window_update(child, "title", title);
-            window_update(child, "x", &x);
-            window_update(child, "y", &y);
-            window_update(child, "width", &width);
-            window_update(child, "height", &height);
-        }
-    }
+		window_update(child, "x", &x);
+		window_update(child, "y", &y);
+		window_update(child, "width", &width);
+		window_update(child, "height", &height);
+	}
 }
 
 void event_on_property(Window child) {
     char *title;
     XFetchName(display, child, &title);
-    window_update(child, "title", title);
-    if (menu.is_showed == 0) {
-        taskbar_show();
-    }
+
+	if (strcmp(title, "") != 0) {
+		window_update(child, "title", title);
+		if (menu.is_showed == 0) {
+			taskbar_show();
+		}
+	}
 }
 
 void event_on_destroy(Window child) {
+	window_t *tmp = window_get(child);
+	if (tmp == NULL) {
+		return;
+	}
+
 	if (window_focus != NULL && window_focus->id == child) {
 		window_focus = NULL;
 	}
@@ -332,7 +324,6 @@ void new_window(void) {
 	if (fork() == 0) {
 		execlp("xterm", "xterm", NULL);
 	}
-    event_reorganize();
 }
 
 void show_wallpaper(void) {

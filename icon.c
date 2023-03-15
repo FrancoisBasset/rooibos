@@ -9,6 +9,7 @@
 #include "appshortcut.h"
 #include "cache.h"
 #include "menu.h"
+#include "event.h"
 #include "cairo_jpg.h"
 
 icon_t *icons;
@@ -247,6 +248,8 @@ void icons_on_press(int x, int y) {
             if (fork() == 0) {
                 execlp(icons[i].exec, icons[i].exec, NULL);
             }
+			title_launched = malloc(sizeof(char) * (strlen(icons[i].name) + 1));
+			strcpy(title_launched, icons[i].name);
         }
     }
 }

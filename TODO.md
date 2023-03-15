@@ -17,7 +17,6 @@ All my tasks will be written in this file.
 - [ ] Better performances and refactorizing
 
 ### In Progress
-- [ ] Better integration of apps during execution
 
 ### Done
 - [X] Prepare Kanban
@@ -82,3 +81,4 @@ All my tasks will be written in this file.
 - [X] Prompt Alt key
 - [X] Add jpeg and png format for logo
 - [X] Add scroll in the menu
+- [X] Better integration of apps during execution
