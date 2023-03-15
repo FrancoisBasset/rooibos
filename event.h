@@ -6,6 +6,7 @@ extern char mode;
 extern window_t *window_focus;
 extern int moving;
 extern int resizing;
+extern char *title_launched;
 
 int handle_event(void);
 void event_on_expose(void);

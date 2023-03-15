@@ -4,6 +4,9 @@
 #include <string.h>
 #include "objects.h"
 #include "window.h"
+#ifdef WILLDEBUG
+#include "debug.h"
+#endif
 
 static windows_t *ws;
 static window_t *current;
@@ -62,20 +65,23 @@ window_t* window_get(Window id) {
     return NULL;
 }
 
-void window_print(FILE *debug, window_t* w) {
+void window_print(window_t* w) {
     char visible = '-';
     if (w->visible == 1) {
         visible = '+';
 	}
-	fprintf(debug, "%c <%ld> <%s> <%d,%d> <%dx%d>\n", visible, w->id, w->title, w->x, w->y, w->width, w->height);
+
+#ifdef WILLDEBUG
+	debug("%c %d %s %d %d %d x %d", visible, w->id, w->title, w->x, w->y, w->width, w->height);
+#endif
 }
 
-void windows_print(FILE *debug) {
+void windows_print() {
     window_t *w = NULL;
     
     window_reset();
     while (w = window_next()) {
-        window_print(debug, w);
+        window_print(w);
     }
 }
 

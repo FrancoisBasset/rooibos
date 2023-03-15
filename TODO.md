@@ -14,10 +14,9 @@ All my tasks will be written in this file.
 - [ ] Make own wallpaper
 - [ ] Create another logo
 - [ ] Clip to show only part of icons
-- [ ] Better performances and refactorizing
 
 ### In Progress
-- [ ] Better integration of apps during execution
+- [ ] Better performances and refactorizing
 
 ### Done
 - [X] Prepare Kanban
@@ -82,3 +81,4 @@ All my tasks will be written in this file.
 - [X] Prompt Alt key
 - [X] Add jpeg and png format for logo
 - [X] Add scroll in the menu
+- [X] Better integration of apps during execution

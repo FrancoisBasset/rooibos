@@ -50,6 +50,7 @@ pkg:
 	cp rooibos package/usr/bin
 	cp assets/logo.svg package/usr/share/rooibos
 	cp assets/wallpaper.jpg package/usr/share/rooibos
+	cp assets/logout.png package/usr/share/rooibos
 	gzip < rooibos.1 > package/usr/share/man/man1/rooibos.1.gz
 	dpkg-deb --build package rooibos_$(VERSION)_$(ARCH).deb
 	> package/usr/bin/.gitkeep
@@ -64,6 +65,7 @@ install:
 	mkdir /usr/share/rooibos
 	cp assets/logo.svg /usr/share/rooibos
 	cp assets/wallpaper.jpg /usr/share/rooibos
+	cp assets/logout.png /usr/share/rooibos
 	cp package/usr/share/bash-completion/completions/rooibos /usr/share/bash-completion/completions/rooibos
 	cp package/usr/share/xsessions/rooibos.desktop /usr/share/xsessions/rooibos.desktop
 	gzip < rooibos.1 > /usr/share/man/man1/rooibos.1.gz
@@ -74,5 +76,5 @@ uninstall:
 	rm -f /usr/bin/rooibos
 	rm -rf /usr/share/rooibos
 	rm -f /usr/share/bash-completion/completions/rooibos
-	rm -r /usr/share/xsessions/rooibos.desktop
+	rm -f /usr/share/xsessions/rooibos.desktop
 	rm -f /usr/share/man/man1/rooibos.1.gz

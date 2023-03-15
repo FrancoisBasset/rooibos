@@ -24,8 +24,8 @@ void windows_init(void);
 void window_reset(void);
 window_t* window_next(void);
 window_t* window_get(Window id);
-void window_print(FILE *debug, window_t* w);
-void windows_print(FILE *debug);
+void window_print(window_t* w);
+void windows_print();
 windows_t* windows_get(void);
 
 void window_add(window_t* w);

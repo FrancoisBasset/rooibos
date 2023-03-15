@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-03-15
+### [Fixed]
+* I improved integration of apps during execution
+
 ## 2023-03-07
 ### [Added]
 * I added scroll for icons in the menu
