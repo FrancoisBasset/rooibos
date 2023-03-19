@@ -14,9 +14,9 @@ All my tasks will be written in this file.
 - [ ] Make own wallpaper
 - [ ] Create another logo
 - [ ] Clip to show only part of icons
-- [ ] Better performances and refactorizing
 
 ### In Progress
+- [ ] Better performances and refactorizing
 
 ### Done
 - [X] Prepare Kanban
