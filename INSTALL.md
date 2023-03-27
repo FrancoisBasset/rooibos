@@ -9,10 +9,7 @@ These packages are essentials to build the program :
 - `build-essential`
 - `libx11-dev`
 - `libsqlite3-dev`
-- `libcairo2-dev`
-- `librsvg2-dev`
-- `libjpeg-dev`
-- `libxpm-dev`
+- `libgdk-pixbuf2.0-dev`
 
 ## Installation
 

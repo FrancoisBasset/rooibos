@@ -23,10 +23,7 @@ for_debian() {
 	check_installed glibc /usr/include/stdlib.h build-essential
 	check_installed libx11-dev /usr/include/X11/Xlib.h libx11-dev
 	check_installed libsqlite3-dev /usr/include/sqlite3.h libsqlite3-dev
-	check_installed libcairo2-dev /usr/include/cairo/cairo.h libcairo2-dev
-	check_installed librsvg2-dev /usr/include/librsvg-2.0/librsvg/rsvg.h librsvg2-dev
-	check_installed libjpeg-dev /usr/include/jpeglib.h libjpeg-dev
-	check_installed libxpm-dev /usr/include/X11/xpm.h libxpm-dev
+	check_installed libgdk-pixbuf2.0-dev /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf.h libgdk-pixbuf2.0-dev
 	check_installed xterm /usr/bin/xterm xterm
 
 	if [ "$packages" != "" ]
@@ -45,10 +42,7 @@ for_arch() {
 	check_installed glibc /usr/include/stdlib.h glibc
 	check_installed libx11-dev /usr/include/X11/Xlib.h libx11-dev
 	check_installed libsqlite3-dev /usr/include/sqlite3.h libsqlite3-dev
-	check_installed cairo /usr/include/cairo/cairo.h cairo
-	check_installed librsvg /usr/include/librsvg-2.0/librsvg/rsvg.h librsvg
-	check_installed libjpeg-dev /usr/include/jpeglib.h libjpeg-dev
-	check_installed libxpm /usr/include/X11/xpm.h libxpm
+	check_installed gdk-pixbuf2 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf.h gdk-pixbuf2
 	check_installed xterm /usr/bin/xterm xterm
 
 	if [ "$packages" != "" ]

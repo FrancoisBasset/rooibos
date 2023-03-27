@@ -2,12 +2,14 @@
 #include <string.h>
 #include <pwd.h>
 #include <unistd.h>
+#include <dirent.h>
 #include "utils.h"
 
 struct passwd *pw = NULL;
 
 static char* utils_get_wallpaper_to_use();
 static char* utils_get_logo_to_use();
+static char* utils_find_first(const char *foldername, const char *filename);
 static char* utils_get_assets(const char *filename);
 
 char* utils_get(utils_t util) {
@@ -38,21 +40,6 @@ char* utils_get(utils_t util) {
 		case UTILS_LOGO_TO_USE:
 			result = utils_get_logo_to_use();
 			break;
-		case UTILS_LOGO_SVG:
-			strcat(result, "/.rooibos/logo.svg");
-			break;
-		case UTILS_LOGO_JPG:
-			strcat(result, "/.rooibos/logo.jpg");
-			break;
-		case UTILS_LOGO_PNG:
-			strcat(result, "/.rooibos/logo.png");
-			break;
-		case UTILS_WALLPAPER_PNG:
-			strcat(result, "/.rooibos/wallpaper.png");
-			break;
-		case UTILS_WALLPAPER_JPG:
-			strcat(result, "/.rooibos/wallpaper.jpg");
-			break;
 		case UTILS_WALLPAPER_TO_USE:
 			result = utils_get_wallpaper_to_use();
 			break;
@@ -75,23 +62,19 @@ static char* utils_get_wallpaper_to_use() {
 	char *wallpaper_file_path = malloc(sizeof(char) * 200);
 	strcpy(wallpaper_file_path, "/usr/share/rooibos/wallpaper.jpg");
 
-	char *jpg = utils_get(UTILS_WALLPAPER_JPG);
-	if (access(jpg, F_OK) == 0) {
-		strcpy(wallpaper_file_path, jpg);
+	char *folder = utils_get(UTILS_FOLDER);
+	char *local = utils_find_first(folder, "wallpaper.");
+	free(folder);
+	if (local != NULL) {
+		strcpy(wallpaper_file_path, local);
+		free(local);
 	}
-	free(jpg);
 
-	char *png = utils_get(UTILS_WALLPAPER_PNG);
-	if (access(png, F_OK) == 0) {
-		strcpy(wallpaper_file_path, png);
-	}
-	free(png);
 
-	if (access("./assets/wallpaper.jpg", F_OK) == 0) {
-		strcpy(wallpaper_file_path, "./assets/wallpaper.jpg");
-	}
-	if (access("./assets/wallpaper.png", F_OK) == 0) {
-		strcpy(wallpaper_file_path, "./assets/wallpaper.png");
+	char *dev = utils_find_first("./assets/", "wallpaper.");
+	if (dev != NULL) {
+		strcpy(wallpaper_file_path, dev);
+		free(dev);
 	}
 
 	return wallpaper_file_path;
@@ -101,32 +84,18 @@ static char* utils_get_logo_to_use() {
 	char *logo_file_path = malloc(sizeof(char) * 200);
 	strcpy(logo_file_path, "/usr/share/rooibos/logo.svg");
 
-	char *svg = utils_get(UTILS_LOGO_SVG);
-	if (access(svg, F_OK) == 0) {
-		strcpy(logo_file_path, svg);
+	char *folder = utils_get(UTILS_FOLDER);
+	char *local = utils_find_first(folder, "logo.");
+	free(folder);
+	if (local != NULL) {
+		strcpy(logo_file_path, local);
+		free(local);
 	}
-	free(svg);
 
-	char *jpg = utils_get(UTILS_LOGO_JPG);
-	if (access(jpg, F_OK) == 0) {
-		strcpy(logo_file_path, jpg);
-	}
-	free(jpg);
-
-	char *png = utils_get(UTILS_LOGO_PNG);
-	if (access(png, F_OK) == 0) {
-		strcpy(logo_file_path, png);
-	}
-	free(png);
-
-	if (access("./assets/logo.svg", F_OK) == 0) {
-		strcpy(logo_file_path, "./assets/logo.svg");
-	}
-	if (access("./assets/logo.jpg", F_OK) == 0) {
-		strcpy(logo_file_path, "./assets/logo.jpg");
-	}
-	if (access("./assets/logo.png", F_OK) == 0) {
-		strcpy(logo_file_path, "./assets/logo.png");
+	char *dev = utils_find_first("./assets/", "logo.");
+	if (dev != NULL) {
+		strcpy(logo_file_path, dev);
+		free(dev);
 	}
 
 	return logo_file_path;
@@ -138,24 +107,35 @@ static char* utils_get_assets(const char *filename) {
 	strcpy(path, "/usr/share/rooibos/");
 	strcat(path, filename);
 
-	char *home = malloc(sizeof(char) * 200);
-	char *home_tmp = utils_get(UTILS_FOLDER);
-	strcpy(home, home_tmp);
-	strcat(home, "/");
-	strcat(home, filename);
-	if (access(home, F_OK) == 0) {
-		strcpy(path, home);
-	}
-	free(home);
-	free(home_tmp);
-
-	char *dev = malloc(sizeof(char) * 200);
-	strcpy(dev, "./assets/");
-	strcat(dev, filename);
-	if (access(dev, F_OK) == 0) {
+	char *dev = utils_find_first("./assets/", filename);
+	if (dev != NULL) {
 		strcpy(path, dev);
+		free(dev);
 	}
-	free(dev);
 
 	return path;
+}
+
+static char* utils_find_first(const char *foldername, const char *filename) {
+	if (access(foldername, F_OK) != 0) {
+		return NULL;
+	}
+
+	DIR *dir = opendir(foldername);
+
+	char *result = NULL;
+
+	const struct dirent *file;
+	while ((file = readdir(dir)) != NULL) {
+		if (strstr(file->d_name, filename) != NULL) {
+			result = malloc(sizeof(char) * ((int) strlen(file->d_name) + strlen(foldername) + 1));
+			strcpy(result, foldername);
+			strcat(result, file->d_name);
+			break;
+		}
+	}
+
+	closedir(dir);
+
+	return result;
 }

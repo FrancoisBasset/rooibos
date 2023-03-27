@@ -24,7 +24,8 @@ int moving = 0;
 int resizing = 0;
 char *title_launched = NULL;
 
-cairo_surface_t *wallpaper_surface = NULL;
+Pixmap wallpaper_surface = -1;
+int first_menu_show = 0;
 
 int handle_event(void) {
     int quit = 0;
@@ -36,30 +37,25 @@ int handle_event(void) {
         case Expose:
             event_on_expose();
             break;
-        case ButtonPress: {
+        case ButtonPress:
             quit = event_on_button_press(event.xbutton.button, event.xbutton.x, event.xbutton.y);
             break;
-        }
-        case KeyPress: {
+        case KeyPress:
             event_on_key_press(event.xkey, event.xkey.keycode);
             break;
-        }
-        case MotionNotify: {
+        case MotionNotify:
             event_on_motion(event.xmotion.x, event.xmotion.y);
             break;
-        }
 		case MapNotify:
 		case ConfigureNotify:
             event_on_configure(event.xconfigure.window, event.xconfigure.x, event.xconfigure.y, event.xconfigure.width, event.xcreatewindow.height);
             break;
-        case PropertyNotify: {
+        case PropertyNotify:
 			event_on_property(event.xproperty.window);
             break;
-        }
-        case DestroyNotify: {
+        case DestroyNotify:
             event_on_destroy(event.xdestroywindow.window);
             break;
-        }
 		case FocusIn:
 			window_focus = window_get(event.xfocus.window);
 			taskbar_update_windows();
@@ -89,12 +85,16 @@ int handle_event(void) {
 }
 
 void event_on_expose(void) {
-    show_wallpaper();
+	if (menu.is_showed == 0 || first_menu_show == 0) {
+    	show_wallpaper(0);
+	}
+
+	first_menu_show = menu.is_showed;
 
     if (menu.is_showed == 1) {
         menu_show();
     } else {
-        taskbar_show();
+		taskbar_show();
         toolbar_show();
     }
 	
@@ -326,17 +326,17 @@ void new_window(void) {
 	}
 }
 
-void show_wallpaper(void) {
-    if (wallpaper_surface == NULL) {
+void show_wallpaper(int splash) {
+	int height = screen_height - 100;
+	if (menu.is_showed == 1 || splash == 1) {
+		height = screen_height;
+	}
+
+    if (wallpaper_surface == -1) {
 		char *wallpaper_to_use = utils_get(UTILS_WALLPAPER_TO_USE);
-
-		if (strstr(wallpaper_to_use, "wallpaper.png") != NULL) {
-			wallpaper_surface = icon_get_surface_png(wallpaper_to_use);
-		} else {
-			wallpaper_surface = icon_get_surface_jpg(wallpaper_to_use);
-		}
-
-        free(wallpaper_to_use);
+		wallpaper_surface = icon_get_pixmap(wallpaper_to_use, screen_width, height);
+		free(wallpaper_to_use);
     }
-    icon_draw_png(wallpaper_surface, "", 0, 0, screen_width, screen_height);
+
+	XCopyArea(display, wallpaper_surface, window, XDefaultGCOfScreen(screen), 0, 0, screen_width, height, 0, 0);
 }

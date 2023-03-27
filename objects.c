@@ -30,6 +30,7 @@ XColor color_minimize_window;
 XColor color_maximize_window;
 XColor color_close_window;
 XColor color_category_button;
+XColor color_back_menu;
 
 GC gc_text_white;
 GC gc_text_black;
@@ -54,7 +55,7 @@ void objects_init(void) {
     };
     window = XCreateWindow(display, root_window, 0, 0, screen_width, screen_height, 0, screen_depth, InputOutput, visual, CWCursor | CWEventMask, &window_attributes);
 
-    font = XLoadFont(display, "-*-*-*-r-*-*-12-*-*-*-*-*-*-*");
+    font = XLoadFont(display, "-*-*-*-r-*-*-13-*-*-*-*-*-*-*");
     font_struct = XQueryFont(display, font);
 
     cursor = XCreateFontCursor(display, XC_arrow);
@@ -68,6 +69,7 @@ void objects_init(void) {
 	color_maximize_window = (XColor) { .red = 30000, .green = 0, .blue = 30000 };
 	color_close_window = (XColor) { .red = 65535, .green = 0, .blue = 0 };
     color_category_button = (XColor) { .red = 0, .green = 40000, .blue = 0 };
+	color_back_menu = (XColor) { .red = 0, .green = 0, .blue = 0 };
 
 	XAllocColor(display, colormap, &color_move_window);
 	XAllocColor(display, colormap, &color_resize_window);
@@ -75,6 +77,7 @@ void objects_init(void) {
 	XAllocColor(display, colormap, &color_maximize_window);
 	XAllocColor(display, colormap, &color_close_window);
     XAllocColor(display, colormap, &color_category_button);
+    XAllocColor(display, colormap, &color_back_menu);
 
     XGCValues gcv_text_white = {
         .foreground = white_pixel,

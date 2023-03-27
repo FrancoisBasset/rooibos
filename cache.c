@@ -114,12 +114,17 @@ int cache_update(void) {
 		char *short_file = malloc(sizeof(char) * (strlen(desktop_files[i]) + 3));
 		strcpy(short_file, desktop_files[i]);
 
-		const unsigned char *tmp = strtok(short_file, "/");
+		char *tmp_short_file = malloc(sizeof(char) * (strlen(short_file) + 1));
+		strcpy(tmp_short_file, short_file);
+
+		char *tmp = strtok(tmp_short_file, "/");
 		while ((tmp = strtok(NULL, "/")) != NULL) {
 			strcpy(short_file, "%");
 			strcat(short_file, tmp);
 			strcat(short_file, "%");
     	}
+
+		free(tmp_short_file);
 
 		sqlite3_prepare_v2(db, "SELECT file FROM appshortcuts WHERE file LIKE ?", 50 + (int) strlen(short_file), &select_stmt, unused_sql);
 		sqlite3_bind_text(select_stmt, 1, short_file, (int) strlen(short_file), SQLITE_STATIC);

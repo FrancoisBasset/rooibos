@@ -1,8 +1,8 @@
-#include <X11/Xlib.h>
-#include <X11/keysym.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <X11/Xlib.h>
+#include <X11/keysym.h>
 #include "objects.h"
 #include "prompt.h"
 #include "rooibos.h"

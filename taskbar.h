@@ -21,6 +21,7 @@ typedef struct taskbar_t {
 } taskbar_t;
 
 extern taskbar_t *tb;
+extern int refresh_pixmap;
 
 taskbar_t* taskbar_init(void);
 void taskbar_update_windows(void);

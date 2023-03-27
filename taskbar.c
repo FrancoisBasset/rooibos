@@ -14,6 +14,9 @@ static GC gc_taskbar_button_hidden;
 static GC gc_taskbar_button_border;
 taskbar_t *tb;
 
+static Pixmap pixmap;
+int refresh_pixmap = 1;
+
 taskbar_t* taskbar_init() {
     tb = malloc(sizeof(taskbar_t));
     tb->x = 0;
@@ -49,10 +52,14 @@ taskbar_t* taskbar_init() {
     };
     gc_taskbar_button_border = XCreateGC(display, window, GCForeground | GCBackground, &gcv_taskbar_button_border);
 
+	pixmap = XCreatePixmap(display, window, tb->width, tb->height, XDefaultDepthOfScreen(screen));
+
     return tb;
 }
 
 void taskbar_update_windows() {
+	refresh_pixmap = 1;
+
     windows_t *ws = windows_get();
 
     for (int i = 0; i < tb->buttons_length; i++) {
@@ -97,21 +104,26 @@ void taskbar_update_windows() {
 }
 
 void taskbar_show() {
-    XFillRectangle(display, window, gc_taskbar, tb->x, tb->y, tb->width, tb->height);
+	if (refresh_pixmap == 1) {
+		XFillRectangle(display, pixmap, gc_taskbar, 0, 0, tb->width, tb->height);
 
-    for (int i = 0; i < tb->buttons_length; i++) {
-        if (tb->tb_buttons[i]->window->visible == 1) {
-			if (window_focus == tb->tb_buttons[i]->window) {
-	            XFillRectangle(display, window, gc_taskbar_button_focus, tb->tb_buttons[i]->x, tb->tb_buttons[i]->y, tb->tb_buttons[i]->width, tb->tb_buttons[i]->height);
+		for (int i = 0; i < tb->buttons_length; i++) {
+			if (tb->tb_buttons[i]->window->visible == 1) {
+				if (window_focus == tb->tb_buttons[i]->window) {
+					XFillRectangle(display, pixmap, gc_taskbar_button_focus, tb->tb_buttons[i]->x, 0, tb->tb_buttons[i]->width, tb->tb_buttons[i]->height);
+				} else {
+					XFillRectangle(display, pixmap, gc_taskbar_button, tb->tb_buttons[i]->x, 0, tb->tb_buttons[i]->width, tb->tb_buttons[i]->height);
+				}
 			} else {
-	            XFillRectangle(display, window, gc_taskbar_button, tb->tb_buttons[i]->x, tb->tb_buttons[i]->y, tb->tb_buttons[i]->width, tb->tb_buttons[i]->height);
+				XFillRectangle(display, pixmap, gc_taskbar_button_hidden, tb->tb_buttons[i]->x, 0, tb->tb_buttons[i]->width, tb->tb_buttons[i]->height);
 			}
-        } else {
-            XFillRectangle(display, window, gc_taskbar_button_hidden, tb->tb_buttons[i]->x, tb->tb_buttons[i]->y, tb->tb_buttons[i]->width, tb->tb_buttons[i]->height);
-        }
-        XDrawRectangle(display, window, gc_taskbar_button_border, tb->tb_buttons[i]->x, tb->tb_buttons[i]->y, tb->tb_buttons[i]->width, tb->tb_buttons[i]->height - 1);
-        XDrawString(display, window, gc_text_white, tb->tb_buttons[i]->x, tb->tb_buttons[i]->y + 28, tb->tb_buttons[i]->window->title, (int) strlen(tb->tb_buttons[i]->window->title));
-    }
+			XDrawRectangle(display, pixmap, gc_taskbar_button_border, tb->tb_buttons[i]->x, 0, tb->tb_buttons[i]->width, tb->tb_buttons[i]->height - 1);
+			XDrawString(display, pixmap, gc_text_white, tb->tb_buttons[i]->x, 28, tb->tb_buttons[i]->window->title, (int) strlen(tb->tb_buttons[i]->window->title));
+		}
+		refresh_pixmap = 0;
+	}
+
+	XCopyArea(display, pixmap, window, XDefaultGCOfScreen(screen), 0, 0, tb->width, tb->height, tb->x, tb->y);
 }
 
 void taskbar_hide(void) {
@@ -137,6 +149,7 @@ void taskbar_on_press(int x, int y) {
                     XMapWindow(display, button->window->id);
                     button->window->visible = 1;
                 }
+				refresh_pixmap = 1;
             }
     }
 

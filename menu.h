@@ -13,6 +13,8 @@ typedef struct menu_button_t {
     int visible;
     int x;
     int y;
+	int x_press;
+	int y_press;
     int width;
     int height;
 } menu_button_t;
@@ -30,6 +32,8 @@ extern menu_button_t new_terminal_menu_button;
 
 extern int up_line_y;
 extern int bottom_line_y;
+
+extern Pixmap menu_pixmap;
 
 void menu_init(void);
 void menu_show(void);

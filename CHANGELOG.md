@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-03-27
+### [Fixed]
+* I improved performances and refactorized
+
 ## 2023-03-15
 ### [Fixed]
 * I improved integration of apps during execution

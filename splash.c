@@ -1,8 +1,8 @@
-#include <X11/Xlib.h>
-#include <librsvg-2.0/librsvg/rsvg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <X11/Xlib.h>
 #include "objects.h"
 #include "utils.h"
 #include "icon.h"
@@ -10,7 +10,7 @@
 #include "splash.h"
 
 void splash_start(void) {
-	show_wallpaper();
+	show_wallpaper(1);
 
 	int have_cache = access(utils_get(UTILS_CACHE), F_OK) == 0;
 
@@ -36,18 +36,11 @@ void splash_start(void) {
 	if (have_cache == 0) {
 		splash_show_text_at_middle("Press any key to continue", 9);
 		
-		int quit = 0;
+		XEvent event;
 		while (1) {
-			XEvent event;
     		XNextEvent(display, &event);
 
-			switch (event.type) {
-				case KeyPress:
-					quit = 1;
-					break;
-			}
-
-			if (quit == 1) {
+			if (event.type == KeyPress) {
 				break;
 			}
 		}
@@ -60,40 +53,23 @@ void splash_show_rectangle(void) {
 	int x = (screen_width - 600) / 2;
     int y = (screen_height - 600) / 2;
 
-	cairo_surface_t *x11_surface = cairo_xlib_surface_create(display, window, XDefaultVisualOfScreen(screen), screen_width, screen_height);
-    cairo_t *context = cairo_create(x11_surface);
+	XGCValues values = {
+		.foreground = white_pixel
+	};
+	GC gc = XCreateGC(display, window, GCForeground, &values);
 
-    cairo_set_source_rgba(context, 0.85, 0.85, 0.85, 0.8);
-
-    cairo_move_to(context, x, y);
-
-    cairo_line_to(context, x + 600, y);
-    cairo_line_to(context, x + 600, y + 600);
-    cairo_line_to(context, x, y + 600);
-    cairo_line_to(context, x, y);
-
-    cairo_stroke_preserve(context);
-    cairo_fill(context);
+	XFillRectangle(display, window, gc, x, y, 600, 600);
 }
 
 void splash_show_logo(void) {
+	const int x = (screen_width - 300) / 2;
+   	const int y = (screen_height - 300) / 2;
+	
 	char *logo_to_use = utils_get(UTILS_LOGO_TO_USE);
-
-	int x = (screen_width - 300) / 2;
-   	int y = (screen_height - 300) / 2;
-
-	if (strstr(logo_to_use, "logo.svg") != NULL) {
-		RsvgHandle *rooibos_icon = icon_get_surface_svg(logo_to_use);
-		icon_draw_svg(rooibos_icon, "", x, y, 300, 300);
-	} else if (strstr(logo_to_use, "logo.jpg") != NULL) {
-		cairo_surface_t *logo_surface = icon_get_surface_jpg(logo_to_use);
-		icon_draw_png(logo_surface, "", x, y, 300, 300);
-	} else if (strstr(logo_to_use, "logo.png") != NULL) {
-		cairo_surface_t *logo_surface = icon_get_surface_png(logo_to_use);
-		icon_draw_png(logo_surface, "", x, y, 300, 300);
-	}
-
+	Pixmap pixmap = icon_get_pixmap(logo_to_use, 300, 300);
 	free(logo_to_use);
+
+	XCopyArea(display, pixmap, window, XDefaultGCOfScreen(screen), 0, 0, 300, 300, x, y);
 }
 
 void splash_show_text_at_middle(char *text, int index) {

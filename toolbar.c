@@ -1,5 +1,5 @@
-#include <X11/Xlib.h>
 #include <string.h>
+#include <X11/Xlib.h>
 #include "toolbar.h"
 #include "objects.h"
 #include "window.h"

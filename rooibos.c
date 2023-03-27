@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <X11/keysym.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gdk-pixbuf-xlib/gdk-pixbuf-xlib.h>
 #include "rooibos.h"
 #include "objects.h"
 #include "toolbar.h"
@@ -26,6 +28,8 @@ void rooibos(void) {
 	prompt_init();
 	windows_init();
 	menu_init();
+
+	gdk_pixbuf_xlib_init(display, XDefaultScreen(display));
 
 	splash_start();
 

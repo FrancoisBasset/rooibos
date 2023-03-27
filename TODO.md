@@ -16,7 +16,6 @@ All my tasks will be written in this file.
 - [ ] Clip to show only part of icons
 
 ### In Progress
-- [ ] Better performances and refactorizing
 
 ### Done
 - [X] Prepare Kanban
@@ -82,3 +81,4 @@ All my tasks will be written in this file.
 - [X] Add jpeg and png format for logo
 - [X] Add scroll in the menu
 - [X] Better integration of apps during execution
+- [X] Better performances and refactorizing

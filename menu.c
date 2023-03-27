@@ -1,8 +1,7 @@
 #include <stdlib.h>
-#include <X11/Xlib.h>
-#include <cairo.h>
-#include <cairo-xlib.h>
+#include <string.h>
 #include <math.h>
+#include <X11/Xlib.h>
 #include "objects.h"
 #include "menu.h"
 #include "icon.h"
@@ -22,6 +21,8 @@ menu_button_t new_terminal_menu_button;
 int up_line_y = 0;
 int bottom_line_y = 0;
 
+Pixmap menu_pixmap;
+
 void menu_init(void) {
     int width = (int) (screen_width * 0.70);
     int height = (int) (screen_height * 0.70);
@@ -29,41 +30,31 @@ void menu_init(void) {
     int y = (screen_height - height) / 2;
 
     menu = (menu_t) { x, y, width, height, -1, 0 };
-	up_line_y = menu.y + 80;
-	bottom_line_y = menu.y + menu.height - 60;
+	up_line_y = 80;
+	bottom_line_y = menu.height - 60;
+
+	menu_pixmap = XCreatePixmap(display, window, width, height, screen_depth);
 }
 
 void menu_show(void) {
-    cairo_surface_t *x11_surface = cairo_xlib_surface_create(display, window, XDefaultVisualOfScreen(screen), screen_width, screen_height);
-    cairo_t *context = cairo_create(x11_surface);
+	XClearArea(display, window, menu.x, menu.y, menu.width, menu.height, 0);
 
-    cairo_set_source_rgba(context, 0.85, 0.85, 0.85, 0.7);
-
-    cairo_move_to(context, menu.x + 50, menu.y);
-
-    cairo_line_to(context, menu.x + menu.width - 50, menu.y);
-    cairo_arc(context, menu.x + menu.width - 50, menu.y + 50, 50, 270 * (M_PI / 180), 360 * (M_PI / 180));
-
-    cairo_line_to(context, menu.x + menu.width, menu.y + menu.height - 50);
-    cairo_arc(context, menu.x + menu.width - 50, menu.y + menu.height - 50, 50, 0 * (M_PI / 180), 90 * (M_PI / 180));
-
-    cairo_line_to(context, menu.x + 50, menu.y + menu.height);
-    cairo_arc(context, menu.x + 50, menu.y + menu.height - 50, 50, 90 * (M_PI / 180), 180 * (M_PI / 180));
-
-    cairo_line_to(context, menu.x, menu.y + 50);
-    cairo_arc(context, menu.x + 50, menu.y + 50, 50, 180 * (M_PI / 180), 270 * (M_PI / 180));
-
-    cairo_stroke_preserve(context);
-    cairo_fill(context);
+	XGCValues values = {
+		.foreground = color_back_menu.pixel
+	};
+    GC gc_menu = XCreateGC(display, window, GCForeground, &values);
+	XFillRectangle(display, menu_pixmap, gc_menu, 0, 0, menu.width, menu.height);
 
     menu.is_showed = 1;
 
-    icons_show();
-	XDrawLine(display, window, gc_text_black, menu.x, menu.y + 80, menu.x + menu.width, up_line_y);
+    icons_draw();
+	XDrawLine(display, menu_pixmap, gc_text_white, 0, up_line_y, menu.width, up_line_y);
 	menu_show_categories();
-	XDrawLine(display, window, gc_text_black, menu.x, menu.y + menu.height - 60, menu.x + menu.width, bottom_line_y);
+	XDrawLine(display, menu_pixmap, gc_text_white, 0, bottom_line_y, menu.width, bottom_line_y);
 	menu_show_new_terminal_button();
 	menu_show_logout_button();
+
+	XCopyArea(display, menu_pixmap, window, XDefaultGCOfScreen(screen), 0, 0, menu.width, menu.height, menu.x, menu.y);
 }
 
 void menu_clear(void) {
@@ -85,15 +76,16 @@ void menu_show_categories(void) {
     int height = 20;
 
     width = XTextWidth(font_struct, category_name, (int) strlen(category_name));
-    int x = (screen_width - width) / 2;
-    XDrawString(display, window, gc_text_black, x, menu.y + 50, category_name, (int) strlen(category_name));
+    int x = (menu.width - width) / 2;
+
+    XDrawString(display, menu_pixmap, gc_text_white, x, 50, category_name, (int) strlen(category_name));
 
     if (menu.category_index == 0) {
         width = XTextWidth(font_struct, "< All categories", 16);
-        left_category_button = (menu_button_t) { .visible = 1, .x = menu.x + 40, menu.y + 25, .width = width + 20, .height = height + 20 };
+        left_category_button = (menu_button_t) { .visible = 1, .x = 40, .y = 25, .x_press = menu.x + 40, .y_press = menu.y + 25, .width = width + 20, .height = height + 20 };
 
-        XFillRectangle(display, window, gc_category_button, left_category_button.x, left_category_button.y, left_category_button.width, left_category_button.height);
-        XDrawString(display, window, gc_text_white, menu.x + 50, menu.y + 50, "< All categories", 16);
+        XFillRectangle(display, menu_pixmap, gc_category_button, left_category_button.x, left_category_button.y, left_category_button.width, left_category_button.height);
+        XDrawString(display, menu_pixmap, gc_text_white, 50, 50, "< All categories", 16);
     }
     
     if (menu.category_index > 0) {
@@ -101,10 +93,10 @@ void menu_show_categories(void) {
         strcat(category_name, categories[menu.category_index - 1]);
 
         width = XTextWidth(font_struct, category_name, (int) strlen(category_name));
-        left_category_button = (menu_button_t) { .visible = 1, .x = menu.x + 40, menu.y + 25, .width = width + 20, .height = height + 20};
+        left_category_button = (menu_button_t) { .visible = 1, .x = 40, .y = 25, .x_press = menu.x + 40, .y_press = menu.y + 25, .width = width + 20, .height = height + 20};
 
-        XFillRectangle(display, window, gc_category_button, left_category_button.x, left_category_button.y, left_category_button.width, left_category_button.height);
-        XDrawString(display, window, gc_text_white, menu.x + 50, menu.y + 50, category_name, (int) strlen(category_name));
+        XFillRectangle(display, menu_pixmap, gc_category_button, left_category_button.x, left_category_button.y, left_category_button.width, left_category_button.height);
+        XDrawString(display, menu_pixmap, gc_text_white, 50, 50, category_name, (int) strlen(category_name));
     }
     
     if (menu.category_index < categories_length - 1) {
@@ -112,10 +104,10 @@ void menu_show_categories(void) {
         strcat(category_name, " >");
 
         width = XTextWidth(font_struct, category_name, (int) strlen(category_name));
-        right_category_button = (menu_button_t) { .visible = 1, .x = menu.x + menu.width - width - 60, menu.y + 25, .width = width + 20, .height = height + 20 };
+        right_category_button = (menu_button_t) { .visible = 1, .x = menu.width - width - 60, .y = 25, .x_press = menu.x + menu.width - width - 60, .y_press = menu.y + 25, .width = width + 20, .height = height + 20 };
 
-        XFillRectangle(display, window, gc_category_button, right_category_button.x, right_category_button.y, right_category_button.width, right_category_button.height);
-        XDrawString(display, window, gc_text_white, menu.x + menu.width - width - 50, menu.y + 50, category_name, (int) strlen(category_name));
+        XFillRectangle(display, menu_pixmap, gc_category_button, right_category_button.x, right_category_button.y, right_category_button.width, right_category_button.height);
+        XDrawString(display, menu_pixmap, gc_text_white, menu.width - width - 50, 50, category_name, (int) strlen(category_name));
     }
 
     free(category_name);
@@ -123,37 +115,36 @@ void menu_show_categories(void) {
 
 void menu_show_new_terminal_button(void) {
 	char *new_terminal_path = utils_get(UTILS_NEW_TERMINAL);
-	cairo_surface_t *new_terminal_surface = icon_get_surface_png(new_terminal_path);
+	Pixmap pixmap = icon_get_pixmap(new_terminal_path, 40, 40);
 	free(new_terminal_path);
 
-	const int x = menu.x + 40;
-	const int y = menu.y + menu.height - 50;
-	icon_draw_png(new_terminal_surface, "", x, y, 40, 40);
+	const int x = 40;
+	const int y = menu.height - 50;
+	XCopyArea(display, pixmap, menu_pixmap, XDefaultGCOfScreen(screen), 0, 0, 40, 40, x, y);
 
-	new_terminal_menu_button = (menu_button_t) { .visible = 1, .x = x, .y = y, .width = 40, .height = 40 };
+	new_terminal_menu_button = (menu_button_t) { .visible = 1, .x = x, .y = y, .x_press = menu.x + x, .y_press = menu.y + y, .width = 40, .height = 40 };
 }
 
-void menu_show_logout_button(void) {
-	XDrawLine(display, window, gc_text_black, menu.x, menu.y + menu.height - 60, menu.x + menu.width, menu.y + menu.height - 60);
+void menu_show_logout_button(void) {	
 	char *logout_path = utils_get(UTILS_LOGOUT);
-	cairo_surface_t *logout_surface = icon_get_surface_png(logout_path);
+	Pixmap pixmap = icon_get_pixmap(logout_path, 40, 40);
 	free(logout_path);
 
-	const int x = menu.x + menu.width - 70;
-	const int y = menu.y + menu.height - 50;
-	icon_draw_png(logout_surface, "", x, y, 40, 40);
+	const int x = menu.width - 70;
+	const int y = menu.height - 50;
+	XCopyArea(display, pixmap, menu_pixmap, XDefaultGCOfScreen(screen), 0, 0, 40, 40, x, y);
 
-	logout_menu_button = (menu_button_t) { .visible = 1, .x = x, .y = y, .width = 40, .height = 40 };
+	logout_menu_button = (menu_button_t) { .visible = 1, .x = x, .y = y, .x_press = menu.x + x, .y_press = menu.y + y, .width = 40, .height = 40 };
 }
 
 int menu_buttons_on_hover(int x, int y) {
 	int new_terminal_is_hover = new_terminal_menu_button.visible == 1 &&
-        x >= new_terminal_menu_button.x && x <= new_terminal_menu_button.x + new_terminal_menu_button.width &&
-        y >= new_terminal_menu_button.y && y <= new_terminal_menu_button.y + new_terminal_menu_button.height;
+        x >= new_terminal_menu_button.x_press && x <= new_terminal_menu_button.x_press + new_terminal_menu_button.width &&
+        y >= new_terminal_menu_button.y_press && y <= new_terminal_menu_button.y_press + new_terminal_menu_button.height;
 
     int logout_is_hover = logout_menu_button.visible == 1 &&
-        x >= logout_menu_button.x && x <= logout_menu_button.x + logout_menu_button.width &&
-        y >= logout_menu_button.y && y <= logout_menu_button.y + logout_menu_button.height;
+        x >= logout_menu_button.x_press && x <= logout_menu_button.x_press + logout_menu_button.width &&
+        y >= logout_menu_button.y_press && y <= logout_menu_button.y_press + logout_menu_button.height;
 
 	if (new_terminal_is_hover == 1) {
         XDefineCursor(display, window, hand_cursor);
@@ -168,12 +159,12 @@ int menu_buttons_on_hover(int x, int y) {
 
 int menu_category_buttons_on_hover(int x, int y) {
     int left_is_hover = left_category_button.visible == 1 &&
-        x >= left_category_button.x && x <= left_category_button.x + left_category_button.width &&
-        y >= left_category_button.y && y <= left_category_button.y + left_category_button.height;
+        x >= left_category_button.x_press && x <= left_category_button.x_press + left_category_button.width &&
+        y >= left_category_button.y_press && y <= left_category_button.y_press + left_category_button.height;
 
     int right_is_hover = right_category_button.visible == 1 &&
-        x >= right_category_button.x && x <= right_category_button.x + right_category_button.width &&
-        y >= right_category_button.y && y <= right_category_button.y + right_category_button.height;
+        x >= right_category_button.x_press && x <= right_category_button.x_press + right_category_button.width &&
+        y >= right_category_button.y_press && y <= right_category_button.y_press + right_category_button.height;
 
     if (left_is_hover == 1) {
         XDefineCursor(display, window, hand_cursor);
