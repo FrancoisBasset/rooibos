@@ -34,6 +34,7 @@ extern int up_line_y;
 extern int bottom_line_y;
 
 extern Pixmap menu_pixmap;
+extern Pixmap icons_pixmap;
 
 void menu_init(void);
 void menu_show(void);

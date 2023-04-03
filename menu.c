@@ -22,6 +22,7 @@ int up_line_y = 0;
 int bottom_line_y = 0;
 
 Pixmap menu_pixmap;
+Pixmap icons_pixmap;
 
 void menu_init(void) {
     int width = (int) (screen_width * 0.70);
@@ -34,6 +35,7 @@ void menu_init(void) {
 	bottom_line_y = menu.height - 60;
 
 	menu_pixmap = XCreatePixmap(display, window, width, height, screen_depth);
+	icons_pixmap = XCreatePixmap(display, window, width, height - 141, screen_depth);
 }
 
 void menu_show(void) {
@@ -44,6 +46,7 @@ void menu_show(void) {
 	};
     GC gc_menu = XCreateGC(display, window, GCForeground, &values);
 	XFillRectangle(display, menu_pixmap, gc_menu, 0, 0, menu.width, menu.height);
+	XFillRectangle(display, icons_pixmap, gc_menu, 0, 0, menu.width, menu.height - 141);
 
     menu.is_showed = 1;
 
@@ -54,6 +57,7 @@ void menu_show(void) {
 	menu_show_new_terminal_button();
 	menu_show_logout_button();
 
+	XCopyArea(display, icons_pixmap, menu_pixmap, XDefaultGCOfScreen(screen), 0, 0, menu.width, menu.height - 1, 0, up_line_y + 1);
 	XCopyArea(display, menu_pixmap, window, XDefaultGCOfScreen(screen), 0, 0, menu.width, menu.height, menu.x, menu.y);
 }
 

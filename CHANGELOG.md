@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-04-03
+### [Changed]
+* I improved the menu scroll
+
 ## 2023-03-27
 ### [Fixed]
 * I improved performances and refactorized

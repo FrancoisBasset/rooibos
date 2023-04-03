@@ -21,7 +21,7 @@ void icon_draw(icon_t icon) {
 		icon.pixmap = icon_get_pixmap(icon.filename, icon.width, icon.height);
 	}
 
-    XCopyArea(display, icon.pixmap, menu_pixmap, XDefaultGCOfScreen(screen), 0, 0, icon.width, icon.height, icon.x, icon.y);
+    XCopyArea(display, icon.pixmap, icons_pixmap, XDefaultGCOfScreen(screen), 0, 0, icon.width, icon.height, icon.x, icon.y);
 
 	int name_width = XTextWidth(font_struct, icon.name, (int) strlen(icon.name));
     int name_length = (int) strlen(icon.name);
@@ -31,7 +31,7 @@ void icon_draw(icon_t icon) {
         name_width = XTextWidth(font_struct, icon.name, name_length);
     }
 
-    XDrawString(display, menu_pixmap, gc_text_white, icon.x, icon.y + icon.width + 10, icon.name, name_length);
+    XDrawString(display, icons_pixmap, gc_text_white, icon.x, icon.y + icon.width + 10, icon.name, name_length);
 }
 
 Pixmap icon_get_pixmap(const char *filename, int width, int height) {
@@ -66,7 +66,7 @@ void icons_init(void) {
     }
     
     int x = 0;
-    int y = 100;
+    int y = 0;
 
     icons = malloc(sizeof(icon_t) * app_shortcuts_length);
 
@@ -93,7 +93,7 @@ void icons_init(void) {
         }
 
 		Pixmap pixmap = icon_get_pixmap(app_shortcuts[i].icon, icon_width, icon_width);
-        icon_t new_icon = { app_shortcuts[i].icon, app_shortcuts[i].name, app_shortcuts[i].exec, x, y, menu.x + x, menu.y + y, icon_width, icon_width, pixmap };
+        icon_t new_icon = { app_shortcuts[i].icon, app_shortcuts[i].name, app_shortcuts[i].exec, x, y, menu.x + x, menu.y + y + up_line_y, icon_width, icon_width, pixmap };
 
         icons[i] = new_icon;
 
@@ -113,9 +113,7 @@ void icons_init(void) {
 
 void icons_draw(void) {
     for (int i = 0; i < app_shortcuts_length; i++) {
-		if (icons[i].y > up_line_y && icons[i].y + icons[i].height < bottom_line_y) {
-			icon_draw(icons[i]);
-		}
+		icon_draw(icons[i]);
     }
 }
 
@@ -175,13 +173,13 @@ void icon_scroll_up(void) {
 		return;
 	}
 
-	if (icons[0].y - 20 > up_line_y) {
+	if (icons[0].y > 0) {
 		return;
 	}
 
 	for (int i = 0; i < app_shortcuts_length; i++) {
-		icons[i].y += 20;
-		icons[i].y_press += 20;
+		icons[i].y += 50;
+		icons[i].y_press += 50;
 	}
 
 	icon_hover = -1;
@@ -192,13 +190,13 @@ void icon_scroll_down(void) {
 		return;
 	}
 
-	if (icons[app_shortcuts_length - 1].y + icons[app_shortcuts_length - 1].height + 20 < bottom_line_y) {
+	if (icons[app_shortcuts_length - 1].y + icons[app_shortcuts_length - 1].height + 20 < bottom_line_y - up_line_y) {
 		return;
 	}
 
 	for (int i = 0; i < app_shortcuts_length; i++) {
-		icons[i].y -= 20;
-		icons[i].y_press -= 20;
+		icons[i].y -= 50;
+		icons[i].y_press -= 50;
 	}
 
 	icon_hover = -1;
