@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-04-04
+### [Added]
+* I added the up and down scroll via keys
+
 ## 2023-04-03
 ### [Changed]
 * I improved the menu scroll

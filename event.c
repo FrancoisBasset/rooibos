@@ -175,44 +175,67 @@ void event_on_key_press(XKeyEvent key_event, int key) {
 
     if (prompt_active == 1) {    
         prompt_on_key_press(key_event, key_sym);
-    } else if (key_sym == XK_Super_L) {
-        if (menu.is_showed == 0) {
-            XDefineCursor(display, window, wait_cursor);
-            XFlush(display);
-            icons_init();
-            XDefineCursor(display, window, cursor);
-            XFlush(display);
+		return;
+    } 
+	
+	switch (key_sym) {
+		case XK_Super_L:
+			if (menu.is_showed == 0) {
+				XDefineCursor(display, window, wait_cursor);
+				XFlush(display);
+				icons_init();
+				XDefineCursor(display, window, cursor);
+				XFlush(display);
 
-            window_hide_all_visible();
-            taskbar_hide();
-            toolbar_hide();
-            menu_show();
-        } else {
-            menu_clear();
-            window_show_all_visible();
-            taskbar_show();
-            toolbar_show();
-            XDefineCursor(display, window, cursor);
-        }
-    } else if (key_sym == XK_Left) {
-        if (menu.is_showed == 1 && menu.category_index > -1) {
-            menu_go_to_previous_category();
-        }
-    } else if (key_sym == XK_Right) {
-        if (menu.is_showed == 1 && menu.category_index < categories_length - 1) {
-            menu_go_to_next_category();
-        }
-    } else if (key_sym == XK_Escape) {
-        if (menu.is_showed == 1) {
-            menu_clear();
-            window_show_all_visible();
-            taskbar_show();
-            toolbar_show();
-        }
-    } else if (key_sym == XK_Control_L) {
-        if (prompt_active == 0 && menu.is_showed == 0) {
-            prompt_show();
-        }
+				window_hide_all_visible();
+				taskbar_hide();
+				toolbar_hide();
+				menu_show();
+			} else {
+				menu_clear();
+				window_show_all_visible();
+				taskbar_show();
+				toolbar_show();
+				XDefineCursor(display, window, cursor);
+			}
+			break;
+		case XK_Left:
+			if (menu.is_showed == 1 && menu.category_index > -1) {
+				menu_go_to_previous_category();
+			}
+			break;
+		case XK_Right:
+			if (menu.is_showed == 1 && menu.category_index < categories_length - 1) {
+				menu_go_to_next_category();
+			}
+			break;
+     	case XK_Up:
+			if (menu.is_showed = 1) {
+				icon_scroll_up();
+				XEvent e = { .type = Expose };
+				XSendEvent(display, window, 0, ExposureMask, &e);
+			}
+			break;
+		case XK_Down:
+			if (menu.is_showed == 1) {
+				icon_scroll_down();
+				XEvent e = { .type = Expose };
+				XSendEvent(display, window, 0, ExposureMask, &e);
+			}
+			break;
+		case XK_Escape:
+			if (menu.is_showed == 1) {
+				menu_clear();
+				window_show_all_visible();
+				taskbar_show();
+				toolbar_show();
+			}
+			break;
+    	case XK_Control_L:
+			if (prompt_active == 0 && menu.is_showed == 0) {
+				prompt_show();
+			}
+			break;
     }
 }
 
