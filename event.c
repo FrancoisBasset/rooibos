@@ -3,6 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <X11/keysym.h>
+#include <X11/XF86keysym.h>
 #include "event.h"
 #include "objects.h"
 #ifdef WILLDEBUG
@@ -17,6 +18,8 @@
 #include "menu.h"
 #include "prompt.h"
 #include "utils.h"
+#include "sound.h"
+#include "brightness.h"
 
 char mode = ' ';
 window_t *window_focus = NULL;
@@ -88,6 +91,9 @@ void event_on_expose(void) {
 	if (menu.is_showed == 0 || first_menu_show == 0) {
     	show_wallpaper(0);
 	}
+
+	sound_show();
+	brightness_show();
 
 	first_menu_show = menu.is_showed;
 
@@ -210,7 +216,7 @@ void event_on_key_press(XKeyEvent key_event, int key) {
 			}
 			break;
      	case XK_Up:
-			if (menu.is_showed = 1) {
+			if (menu.is_showed == 1) {
 				icon_scroll_up();
 				XEvent e = { .type = Expose };
 				XSendEvent(display, window, 0, ExposureMask, &e);
@@ -236,6 +242,30 @@ void event_on_key_press(XKeyEvent key_event, int key) {
 				prompt_show();
 			}
 			break;
+		case XF86XK_MonBrightnessUp: {
+			brightness_up();
+			XEvent e = { .type = Expose };
+			XSendEvent(display, window, 0, ExposureMask, &e);
+			break;
+		}
+		case XF86XK_MonBrightnessDown: {
+			brightness_down();
+			XEvent e = { .type = Expose };
+			XSendEvent(display, window, 0, ExposureMask, &e);
+			break;
+		}
+		case XF86XK_AudioLowerVolume: {
+			sound_volume_down();
+			XEvent e = { .type = Expose };
+			XSendEvent(display, window, 0, ExposureMask, &e);
+			break;
+		}
+		case XF86XK_AudioRaiseVolume: {
+			sound_volume_up();
+			XEvent e = { .type = Expose };
+			XSendEvent(display, window, 0, ExposureMask, &e);
+			break;
+		}
     }
 }
 

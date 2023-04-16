@@ -12,6 +12,7 @@
 #include "prompt.h"
 #include "utils.h"
 #include "splash.h"
+#include "sound.h"
 
 void rooibos(void) {
 	objects_init();
@@ -28,6 +29,7 @@ void rooibos(void) {
 	prompt_init();
 	windows_init();
 	menu_init();
+	sound_init();
 
 	gdk_pixbuf_xlib_init(display, XDefaultScreen(display));
 

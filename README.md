@@ -21,6 +21,7 @@ These packages are essentials to build the program :
 - `libx11-dev`
 - `libsqlite3-dev`
 - `libgdk-pixbuf2.0-dev`
+- `libasound2-dev`
 
 ## Installation
 

@@ -1,0 +1,1 @@
+KERNEL=="intel_backlight", SUBSYSTEM=="backlight", RUN+="/bin/chmod 666 /sys/class/backlight/intel_backlight/brightness"

@@ -13,3 +13,4 @@ then
 fi
 
 chown -R $ROOIBOS_USER:$ROOIBOS_USER "/home/"$ROOIBOS_USER"/.rooibos"
+chmod 666 /sys/class/backlight/intel_backlight/brightness

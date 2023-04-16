@@ -7,6 +7,8 @@
 void debug(char *format, ...) {
 	FILE *debug_file = fopen("./debug", "a");
 	int intVal;
+	double doubleVal;
+	long longVal;
 	char charVal;
 	char *stringVal;
 
@@ -21,6 +23,12 @@ void debug(char *format, ...) {
 		if (strcmp(symbol, "%d") == 0) {
 			intVal = va_arg(adpar, int);
 			fprintf(debug_file, "%d", intVal);
+		} else if (strcmp(symbol, "%ld") == 0) {
+			longVal = va_arg(adpar, long);
+			fprintf(debug_file, "%ld", longVal);
+		} else if (strcmp(symbol, "%f") == 0) {
+			doubleVal = va_arg(adpar, double);
+			fprintf(debug_file, "%f", doubleVal);
 		} else if (strcmp(symbol, "%c") == 0) {
 			charVal = (char) va_arg(adpar, int);
 			fprintf(debug_file, "%c", charVal);

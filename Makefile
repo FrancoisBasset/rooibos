@@ -2,16 +2,24 @@ CFLAGS = -Werror -O3
 VERSION = $(shell cat VERSION)
 ARCH = $(shell uname --machine)
 VERSION_LENGTH = $$(( $(shell wc -m < VERSION) - 1 ))
-OBJECTS = VERSION.h utils.o appshortcut.o cache.o objects.o window.o icon.o taskbar.o toolbar.o menu.o event.o prompt.o debug.o splash.o rooibos.o main.o
+OBJECTS = VERSION.h utils.o appshortcut.o cache.o objects.o window.o icon.o taskbar.o toolbar.o menu.o event.o prompt.o debug.o splash.o sound.o brightness.o rooibos.o main.o
 #WILLDEBUG = -DWILLDEBUG
 
 ifndef WILLDEBUG
 	OBJECTS := $(filter-out debug.o,$(OBJECTS))
 endif
 
+ifneq "$(SUDO_USER)" "root"
+	ROOIBOS_USER = $(SUDO_USER)
+endif
+
+ifneq "$(USER)" "root"
+	ROOIBOS_USER = $(USER)
+endif
+
 rooibos: $(OBJECTS)
 	@echo "Compiling executable..."
-	@gcc $(CFLAGS) $(WILLDEBUG) *.o -o rooibos -lsqlite3 -lX11 -lgdk_pixbuf-2.0 -lgdk_pixbuf_xlib-2.0
+	@gcc $(CFLAGS) $(WILLDEBUG) *.o -o rooibos -lsqlite3 -lX11 -lgdk_pixbuf-2.0 -lgdk_pixbuf_xlib-2.0 -lasound
 	@echo "Striping executable..."
 	@strip rooibos
 	@echo "\033[0;32mCompiling success !\033[0m"
@@ -22,7 +30,7 @@ VERSION.h:
 
 %.o: %.c
 	@echo "Compiling" $<"..."
-	@gcc $(CFLAGS) $(WILLDEBUG) -c $< -o $@ -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/glib-2.0 -I/usr/include/gdk-pixbuf-2.0
+	@gcc $(CFLAGS) $(WILLDEBUG) -c $< -o $@ -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/lib/glib-2.0/include -I/usr/include/glib-2.0 -I/usr/include/gdk-pixbuf-2.0
 
 clean:
 	@echo "Deleting object files..."
@@ -83,9 +91,14 @@ install:
 	rooibos cache-init
 	rooibos cache-update
 
+	chown -R $(ROOIBOS_USER):$(ROOIBOS_USER) /home/$(ROOIBOS_USER)/.rooibos
+	cp package/etc/udev/rules.d/rooibos-backlight.rules /etc/udev/rules.d/rooibos-backlight.rules
+	chmod 666 /sys/class/backlight/intel_backlight/brightness
+
 uninstall:
 	rm -f /usr/bin/rooibos
 	rm -rf /usr/share/rooibos
 	rm -f /usr/share/bash-completion/completions/rooibos
 	rm -f /usr/share/xsessions/rooibos.desktop
 	rm -f /usr/share/man/man1/rooibos.1.gz
+	rm -f /etc/udev/rules.d/rooibos-backlight.rules

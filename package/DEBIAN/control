@@ -3,7 +3,8 @@ Version: 0.1.0
 Section: x11
 Priority: optional
 Architecture: amd64
-Build-Depends: build-essential, libsqlite3-dev
+Depends: xorg, xterm
+Build-Depends: build-essential, libx11-dev, libsqlite3-dev, libgdk-pixbuf2.0-dev, libasound2-dev
 Maintainer: François Basset <https://github.com/FrancoisBasset>
 Description: A modern window manager for X11
 Homepage: https://github.com/FrancoisBasset/rooibos

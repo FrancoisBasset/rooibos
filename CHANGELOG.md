@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-04-16
+### [Added]
+* I added the first version of volume and brightness control
+
 ## 2023-04-04
 ### [Added]
 * I added the up and down scroll via keys

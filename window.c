@@ -66,12 +66,12 @@ window_t* window_get(Window id) {
 }
 
 void window_print(window_t* w) {
-    char visible = '-';
+#ifdef WILLDEBUG
+	char visible = '-';
     if (w->visible == 1) {
         visible = '+';
 	}
-
-#ifdef WILLDEBUG
+	
 	debug("%c %d %s %d %d %d x %d", visible, w->id, w->title, w->x, w->y, w->width, w->height);
 #endif
 }
