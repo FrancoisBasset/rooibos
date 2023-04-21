@@ -33,6 +33,7 @@ extern XColor color_back_menu;
 extern GC gc_text_white;
 extern GC gc_text_black;
 extern GC gc_category_button;
+extern GC gc_icon;
 
 void objects_init(void);
 #endif

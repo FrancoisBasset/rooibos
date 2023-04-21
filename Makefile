@@ -70,6 +70,8 @@ pkg:
 	cp assets/logo.svg package/usr/share/rooibos
 	cp assets/wallpaper.jpg package/usr/share/rooibos
 	cp assets/logout.png package/usr/share/rooibos
+	cp assets/sound.png package/usr/share/rooibos
+	cp assets/brightness.png package/usr/share/rooibos
 	gzip < rooibos.1 > package/usr/share/man/man1/rooibos.1.gz
 	dpkg-deb --build package rooibos_$(VERSION)_$(ARCH).deb
 	> package/usr/bin/.gitkeep
@@ -85,6 +87,8 @@ install:
 	cp assets/logo.svg /usr/share/rooibos
 	cp assets/wallpaper.jpg /usr/share/rooibos
 	cp assets/logout.png /usr/share/rooibos
+	cp assets/sound.png /usr/share/rooibos
+	cp assets/brightness.png /usr/share/rooibos
 	cp package/usr/share/bash-completion/completions/rooibos /usr/share/bash-completion/completions/rooibos
 	cp package/usr/share/xsessions/rooibos.desktop /usr/share/xsessions/rooibos.desktop
 	gzip < rooibos.1 > /usr/share/man/man1/rooibos.1.gz

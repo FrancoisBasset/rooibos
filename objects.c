@@ -35,6 +35,7 @@ XColor color_back_menu;
 GC gc_text_white;
 GC gc_text_black;
 GC gc_category_button;
+GC gc_icon;
 
 void objects_init(void) {
     display = XOpenDisplay(NULL);
@@ -69,7 +70,7 @@ void objects_init(void) {
 	color_maximize_window = (XColor) { .red = 30000, .green = 0, .blue = 30000 };
 	color_close_window = (XColor) { .red = 65535, .green = 0, .blue = 0 };
     color_category_button = (XColor) { .red = 0, .green = 40000, .blue = 0 };
-	color_back_menu = (XColor) { .red = 0, .green = 0, .blue = 0 };
+	color_back_menu = (XColor) { .red = 40000, .green = 40000, .blue = 40000 };
 
 	XAllocColor(display, colormap, &color_move_window);
 	XAllocColor(display, colormap, &color_resize_window);
@@ -92,4 +93,7 @@ void objects_init(void) {
 
     XGCValues gcv_category_button = { .foreground = color_category_button.pixel };
     gc_category_button = XCreateGC(display, window, GCForeground, &gcv_category_button);
+
+	XGCValues gcv_icon = { .foreground = color_back_menu.pixel };
+    gc_icon = XCreateGC(display, window, GCForeground, &gcv_icon);
 }

@@ -37,14 +37,29 @@ extern Pixmap menu_pixmap;
 extern Pixmap icons_pixmap;
 
 void menu_init(void);
-void menu_show(void);
 void menu_clear(void);
+
+void menu_show(void);
 void menu_show_categories(void);
 void menu_show_new_terminal_button(void);
 void menu_show_logout_button(void);
+void menu_show_sound(void);
+void menu_show_brightness(void);
+
+int menu_left_category_is_hover(int x, int y);
+int menu_right_category_is_hover(int x, int y);
+int menu_apps_is_hover(int x, int y);
+int menu_new_terminal_is_hover(int x, int y);
+int menu_logout_is_hover(int x, int y);
+int menu_sound_is_hover(int x, int y);
+int menu_brightness_is_hover(int x, int y);
+
 int menu_buttons_on_hover(int x, int y);
 int menu_category_buttons_on_hover(int x, int y);
+
 void menu_category_buttons_on_press(int category_button);
+void menu_on_scroll(int button, int x, int y);
+
 void menu_go_to_previous_category(void);
 void menu_go_to_next_category(void);
 #endif

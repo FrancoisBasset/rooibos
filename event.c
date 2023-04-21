@@ -27,6 +27,9 @@ int moving = 0;
 int resizing = 0;
 char *title_launched = NULL;
 
+int sound_is_show = 0;
+int brightness_is_show = 0;
+
 Pixmap wallpaper_surface = -1;
 int first_menu_show = 0;
 
@@ -92,8 +95,14 @@ void event_on_expose(void) {
     	show_wallpaper(0);
 	}
 
-	sound_show();
-	brightness_show();
+	if (sound_is_show == 1) {
+		sound_show();
+		sound_is_show = 0;
+	}
+	if (brightness_is_show == 1) {
+		brightness_show();
+		brightness_is_show = 0;
+	}
 
 	first_menu_show = menu.is_showed;
 
@@ -110,27 +119,19 @@ void event_on_expose(void) {
 }
 
 int event_on_button_press(int button, int x, int y) {
-    int quit = 0;
-
-    if (button == 1) {
-        quit = event_on_left_button_press(x, y);
-    } else if (button == 3) {
-        quit = event_on_right_button_press(x, y);
-    } else if (button == 4) {
-		if (menu.is_showed == 1) {
-			icon_scroll_up();
-			XEvent e = { .type = Expose };
-			XSendEvent(display, window, 0, ExposureMask, &e);
-		}
-	} else if (button == 5) {
-		if (menu.is_showed == 1) {
-			icon_scroll_down();
-			XEvent e = { .type = Expose };
-			XSendEvent(display, window, 0, ExposureMask, &e);
-		}
+	switch (button) {
+		case 1:
+			return event_on_left_button_press(x, y);
+		case 3:
+			return event_on_right_button_press(x, y);
+		case 4:
+		case 5:
+			if (menu.is_showed) {
+				menu_on_scroll(button, x, y);
+			}
 	}
 
-    return quit;
+	return 0;
 }
 
 int event_on_left_button_press(int x, int y) {
@@ -150,7 +151,9 @@ int event_on_left_button_press(int x, int y) {
 
     if (menu.is_showed == 1) {
         if (x >= menu.x && x <= menu.x + menu.width && y >= menu.y && y <= menu.y + menu.height) {
-            icons_on_press(x, y);
+            if (menu_apps_is_hover(x, y)) {
+				icons_on_press(x, y);
+			}
 
             int category_button = menu_category_buttons_on_hover(x, y);
             menu_category_buttons_on_press(category_button);
@@ -244,24 +247,28 @@ void event_on_key_press(XKeyEvent key_event, int key) {
 			break;
 		case XF86XK_MonBrightnessUp: {
 			brightness_up();
+			brightness_is_show = 1;
 			XEvent e = { .type = Expose };
 			XSendEvent(display, window, 0, ExposureMask, &e);
 			break;
 		}
 		case XF86XK_MonBrightnessDown: {
 			brightness_down();
+			brightness_is_show = 1;
 			XEvent e = { .type = Expose };
 			XSendEvent(display, window, 0, ExposureMask, &e);
 			break;
 		}
 		case XF86XK_AudioLowerVolume: {
 			sound_volume_down();
+			sound_is_show = 1;
 			XEvent e = { .type = Expose };
 			XSendEvent(display, window, 0, ExposureMask, &e);
 			break;
 		}
 		case XF86XK_AudioRaiseVolume: {
 			sound_volume_up();
+			sound_is_show = 1;
 			XEvent e = { .type = Expose };
 			XSendEvent(display, window, 0, ExposureMask, &e);
 			break;

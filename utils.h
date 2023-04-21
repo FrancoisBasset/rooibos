@@ -11,7 +11,9 @@ typedef enum utils_t {
 	UTILS_LOGO_TO_USE,
 	UTILS_WALLPAPER_TO_USE,
 	UTILS_NEW_TERMINAL,
-	UTILS_LOGOUT
+	UTILS_LOGOUT,
+	UTILS_SOUND,
+	UTILS_BRIGHTNESS
 } utils_t;
 
 char* utils_get(utils_t util);

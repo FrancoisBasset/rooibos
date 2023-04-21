@@ -15,7 +15,6 @@ All my tasks will be written in this file.
 - [ ] Create another logo
 
 ### In Progress
-- [ ] Volume and brightness control
 
 ### Done
 - [X] Prepare Kanban
@@ -84,3 +83,4 @@ All my tasks will be written in this file.
 - [X] Better performances and refactorizing
 - [X] Clip to show only part of icons
 - [X] Arrow keys for scrolling menu
+- [X] Volume and brightness control

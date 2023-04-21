@@ -38,6 +38,36 @@ Pixmap icon_get_pixmap(const char *filename, int width, int height) {
 	GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file_at_scale(filename, width, height, 1, NULL);
 	Pixmap pixmap = XCreatePixmap(display, window, width, height, screen_depth);
 
+	width = gdk_pixbuf_get_width(pixbuf);
+    height = gdk_pixbuf_get_height(pixbuf);
+    int rowstride = gdk_pixbuf_get_rowstride(pixbuf);
+    int n_channels = gdk_pixbuf_get_n_channels(pixbuf);
+
+    guchar *data = gdk_pixbuf_get_pixels(pixbuf);
+    
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            int src_offset = y * rowstride + x * n_channels;
+
+            guchar r = data[src_offset];
+            guchar g = data[src_offset + 1];
+            guchar b = data[src_offset + 2];
+            guchar a = data[src_offset + 3];
+            
+            if (r == 0 && g == 0 && b == 0 && a == 0) {
+                r = 155;
+                g = 155;
+                b = 155;
+            }
+            
+            int dest_offset = y * rowstride + x * n_channels;
+            data[dest_offset] = r;
+            data[dest_offset + 1] = g;
+            data[dest_offset + 2] = b;
+            data[dest_offset + 3] = a;
+        }
+    }
+
 	gdk_pixbuf_xlib_render_to_drawable(pixbuf, pixmap, XDefaultGCOfScreen(screen), 0, 0, 0, 0, width, height, XLIB_RGB_DITHER_NONE, 0, 0);
 
 	return pixmap;
@@ -119,6 +149,10 @@ void icons_draw(void) {
 
 int icons_on_hover(int x, int y) {
     int is_hover = 0;
+
+	if (menu_apps_is_hover(x, y) == 0) {
+		return 0;
+	}
 
     for (int i = 0; i < app_shortcuts_length; i++) {
         if (x >= icons[i].x_press && x <= icons[i].x_press + icons[i].width &&
