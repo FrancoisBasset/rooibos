@@ -7,7 +7,7 @@ void prompt_init(void);
 void prompt_show(void);
 void prompt_hide(void);
 void prompt_exec(void);
-void prompt_write(char *typed);
+void prompt_write(const char *typed);
 void prompt_erase(void);
 void prompt_delete(void);
 void prompt_move_left(void);

@@ -62,7 +62,11 @@ void sound_volume_up() {
 		volume += 5;
 	}
 
-	volume = (0.01 * volume) * max;
+	if (volume > 100) {
+		volume = 100;
+	}
+
+	volume = (int) ((0.01 * volume) * (double) max);
 
 	sound_set_volume(volume);
 }
@@ -73,7 +77,11 @@ void sound_volume_down() {
 		volume -= 5;
 	}
 
-	volume = (0.01 * volume) * max;
+	if (volume < 0) {
+		volume = 0;
+	}
+
+	volume = (int) ((0.01 * volume) * (double) max);
 
 	sound_set_volume(volume);
 }
@@ -93,7 +101,7 @@ void sound_show(void) {
 	XFillRectangle(display, panel, gc_icon, 0, 0, 200, 60);
 	XCopyArea(display, sound_pixmap, panel, XDefaultGCOfScreen(screen), 0, 0, 40, 40, 5, 10);
 
-	const int width = 12 * (volume * 0.1);
+	const int width = (int) (12 * (volume * 0.1));
 	XColor color_bar = {
 		.red = 0,
 		.green = 65535,
@@ -106,7 +114,9 @@ void sound_show(void) {
 	GC gc_bar = XCreateGC(display, window, GCForeground, &gcv_bar);
 	XFillRectangle(display, panel, gc_bar, 50, 25, width, 10);
 
-	XDrawString(display, panel, gc_text_white, 170, 35, text, strlen(text));
+	XDrawString(display, panel, gc_text_white, 170, 35, text, (int) strlen(text));
+
+	free(text);
 
 	const int x = (screen_width - 200) / 2;
 	const int y = (screen_height / 2);

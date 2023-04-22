@@ -68,7 +68,7 @@ void prompt_exec(void) {
     prompt_hide();
 }
 
-void prompt_write(char *typed) {
+void prompt_write(const char *typed) {
     if (strlen(typed) > 0) {
         char *tmp = malloc(sizeof(char) * (strlen(command) + 2));
         strcpy(tmp, command);

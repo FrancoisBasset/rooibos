@@ -6,6 +6,11 @@
 
 void debug(char *format, ...) {
 	FILE *debug_file = fopen("./debug", "a");
+
+	if (debug_file == NULL) {
+		return;
+	}
+
 	int intVal;
 	double doubleVal;
 	long longVal;
@@ -41,6 +46,8 @@ void debug(char *format, ...) {
 
 		fprintf(debug_file, " ");
     } while ((symbol = strtok(NULL, " ")) != NULL);
+
+	free(new_format);
 
 	va_end(adpar);
 

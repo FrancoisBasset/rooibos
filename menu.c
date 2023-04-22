@@ -158,7 +158,9 @@ void menu_show_sound(void) {
 	Pixmap sound_pixmap = icon_get_pixmap(sound_logo, 40, 40);
 	free(sound_logo);
 
-	XDrawString(display, sound_pixmap, gc_text_black, 20, 10, text, strlen(text));
+	XDrawString(display, sound_pixmap, gc_text_black, 20, 10, text, (int) strlen(text));
+
+	free(text);
 
 	const int x = menu.width - 120;
 	const int y = menu.height - 50;
@@ -181,7 +183,9 @@ void menu_show_brightness(void) {
 	Pixmap brightness_pixmap = icon_get_pixmap(brightness_logo, 40, 40);
 	free(brightness_logo);
 
-	XDrawString(display, brightness_pixmap, gc_text_black, 20, 10, text, strlen(text));
+	XDrawString(display, brightness_pixmap, gc_text_black, 20, 10, text, (int) strlen(text));
+
+	free(text);
 
 	const int x = menu.width - 170;
 	const int y = menu.height - 50;

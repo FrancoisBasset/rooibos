@@ -47,7 +47,7 @@ int handle_event(void) {
             quit = event_on_button_press(event.xbutton.button, event.xbutton.x, event.xbutton.y);
             break;
         case KeyPress:
-            event_on_key_press(event.xkey, event.xkey.keycode);
+            event_on_key_press(event.xkey);
             break;
         case MotionNotify:
             event_on_motion(event.xmotion.x, event.xmotion.y);
@@ -95,13 +95,15 @@ void event_on_expose(void) {
     	show_wallpaper(0);
 	}
 
-	if (sound_is_show == 1) {
-		sound_show();
-		sound_is_show = 0;
-	}
-	if (brightness_is_show == 1) {
-		brightness_show();
-		brightness_is_show = 0;
+	if (menu.is_showed == 0) {
+		if (sound_is_show == 1) {
+			sound_show();
+			sound_is_show = 0;
+		}
+		if (brightness_is_show == 1) {
+			brightness_show();
+			brightness_is_show = 0;
+		}
 	}
 
 	first_menu_show = menu.is_showed;
@@ -179,7 +181,7 @@ int event_on_right_button_press(int x, int y) {
     return 0;
 }
 
-void event_on_key_press(XKeyEvent key_event, int key) {
+void event_on_key_press(XKeyEvent key_event) {
     KeySym key_sym = XLookupKeysym(&key_event, 0);
 
     if (prompt_active == 1) {    
@@ -312,6 +314,7 @@ void event_on_configure(Window child, int x, int y, int width, int height) {
 
 	if (strlen(title) == 0 && window_get(child) == NULL) {
 		if (title_launched == NULL) {
+			free(title);
 			return;
 		}
 		title = malloc(sizeof(char) * (strlen(title_launched) + 1));
@@ -348,6 +351,8 @@ void event_on_configure(Window child, int x, int y, int width, int height) {
 		window_update(child, "width", &width);
 		window_update(child, "height", &height);
 	}
+
+	free(title);
 }
 
 void event_on_property(Window child) {
@@ -363,7 +368,7 @@ void event_on_property(Window child) {
 }
 
 void event_on_destroy(Window child) {
-	window_t *tmp = window_get(child);
+	const window_t *tmp = window_get(child);
 	if (tmp == NULL) {
 		return;
 	}

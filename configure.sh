@@ -1,12 +1,13 @@
+#!/bin/bash
+
 green="\e[32m"
 red="\e[31m"
-yellow="\e[33m"
 normal="\e[0m"
 
 packages=""
 
 check_installed() {
-	if [ -f $2 ]
+	if [ -f "$2" ]
 	then
 		echo -e "${green}$1 is installed $normal"
 	else
@@ -29,8 +30,8 @@ for_debian() {
 
 	if [ "$packages" != "" ]
 	then
-		read -p "apt install $packages [Enter to execute]"
-		eval "apt install $packages"
+		read -p "sudo apt install $packages [Enter to execute]"
+		eval "sudo apt install $packages"
 	fi
 }
 
@@ -59,6 +60,7 @@ then
         echo "For Debian and derivatives :"
         for_debian
 fi
+
 if [ -f /usr/bin/pacman ]
 then
         echo "For Arch and derivatives :"

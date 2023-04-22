@@ -130,14 +130,6 @@ void icons_init(void) {
         x += icon_width + space_x;
     }
 
-    /*for (int i = 0; i < app_shortcuts_length; i++) {
-		free(app_shortcuts[i].name);
-		free(app_shortcuts[i].exec);
-		free(app_shortcuts[i].category);
-		free(app_shortcuts[i].icon);
-		free(app_shortcuts[i].file);
-	}*/
-
 	free(app_shortcuts);
 }
 
