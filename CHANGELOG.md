@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-05-03
+### Added
+*	I added a battery panel in menu
+
 ## 2023-04-21
 ### Added
 *   I added a sound and brightness panel and 2 buttons in menu

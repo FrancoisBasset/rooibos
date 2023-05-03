@@ -29,6 +29,8 @@ extern XColor color_minimize_window;
 extern XColor color_maximize_window;
 extern XColor color_close_window;
 extern XColor color_back_menu;
+extern XColor color_battery_ok;
+extern XColor color_battery_ko;
 
 extern GC gc_text_white;
 extern GC gc_text_black;

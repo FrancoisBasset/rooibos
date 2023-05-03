@@ -9,6 +9,7 @@
 #include "utils.h"
 #include "sound.h"
 #include "brightness.h"
+#include "battery.h"
 
 menu_t menu;
 
@@ -64,6 +65,7 @@ void menu_show(void) {
 	menu_show_logout_button();
 	menu_show_sound();
 	menu_show_brightness();
+	menu_show_battery();
 
 	XCopyArea(display, icons_pixmap, menu_pixmap, XDefaultGCOfScreen(screen), 0, 0, menu.width, menu.height - 1, 0, up_line_y + 1);
 	XCopyArea(display, menu_pixmap, window, XDefaultGCOfScreen(screen), 0, 0, menu.width, menu.height, menu.x, menu.y);
@@ -197,6 +199,59 @@ void menu_show_brightness(void) {
 		.y_press = menu.y + y
 	};
 	XCopyArea(display, brightness_pixmap, menu_pixmap, XDefaultGCOfScreen(screen), 0, 0, 40, 40, x, y);
+}
+
+void menu_show_battery(void) {
+	const int status = battery_get_status();
+	if (status == 2) {
+		return;
+	}
+
+	const int level = battery_get_level();
+	char *text = malloc(sizeof(char) * 4);
+	sprintf(text, "%d", level);
+
+	int margin = 0;
+	if (status == 1) {
+		margin = 20;
+	}
+
+	Pixmap battery_pixmap = XCreatePixmap(display, window, 20 + margin, 40, screen_depth);
+
+	XGCValues values = {
+		.foreground = color_back_menu.pixel
+	};
+    GC gc_menu = XCreateGC(display, window, GCForeground, &values);
+	XFillRectangle(display, battery_pixmap, gc_menu, 0, 0, 20 + margin, 40);
+	XDrawRectangle(display, battery_pixmap, gc_text_black, 0, 0, 19, 39);
+
+	const int height = (int) (38 * ((double) level) / 100);
+
+	unsigned long pixel = color_battery_ok.pixel;
+	if (level < 20) {
+		pixel = color_battery_ko.pixel;
+	}
+	XGCValues gcv_battery = {
+		.foreground = pixel
+	};
+    GC gc_battery = XCreateGC(display, window, GCForeground, &gcv_battery);
+	XFillRectangle(display, battery_pixmap, gc_battery, 1, 39 - height, 18, height);
+
+	XDrawString(display, battery_pixmap, gc_text_black, 4, 12, text, (int) strlen(text));
+	free(text);
+
+	if (status == 1) {
+		char *charging_logo = utils_get(UTILS_CHARGING);
+		Pixmap charging_pixmap = icon_get_pixmap(charging_logo, 20, 20);
+		free(charging_logo);
+
+		XCopyArea(display, charging_pixmap, battery_pixmap, XDefaultGCOfScreen(screen), 0, 0, 20, 20, 20, 20);
+	}
+
+	const int x = menu.width - 200 - margin;
+	const int y = menu.height - 50;
+
+	XCopyArea(display, battery_pixmap, menu_pixmap, XDefaultGCOfScreen(screen), 0, 0, 20 + margin, 40, x, y);
 }
 
 int menu_buttons_on_hover(int x, int y) {

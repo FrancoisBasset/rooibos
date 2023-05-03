@@ -45,6 +45,7 @@ void menu_show_new_terminal_button(void);
 void menu_show_logout_button(void);
 void menu_show_sound(void);
 void menu_show_brightness(void);
+void menu_show_battery(void);
 
 int menu_left_category_is_hover(int x, int y);
 int menu_right_category_is_hover(int x, int y);

@@ -55,6 +55,9 @@ char* utils_get(utils_t util) {
 		case UTILS_BRIGHTNESS:
 			result = utils_get_assets("brightness.png");
 			break;
+		case UTILS_CHARGING:
+			result = utils_get_assets("charging.png");
+			break;
 	}
 
 	return result;

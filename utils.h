@@ -13,7 +13,8 @@ typedef enum utils_t {
 	UTILS_NEW_TERMINAL,
 	UTILS_LOGOUT,
 	UTILS_SOUND,
-	UTILS_BRIGHTNESS
+	UTILS_BRIGHTNESS,
+	UTILS_CHARGING
 } utils_t;
 
 char* utils_get(utils_t util);

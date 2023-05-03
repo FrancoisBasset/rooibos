@@ -9,12 +9,14 @@ All my tasks will be written in this file.
 -   [ ] Publish .deb package in Debian repositories
 
 ### Waiting
--   [ ] Proof of concept : Window decoration
 -   [ ] Study the XrmDatabase
 -   [ ] Make own wallpaper
 -   [ ] Create another logo
+-   [ ] Window decoration
+-   [ ] Color method
 
 ### In Progress
+-   [ ] Checking executable existence
 
 ### Done
 -   [X] Prepare Kanban
@@ -84,3 +86,4 @@ All my tasks will be written in this file.
 -   [X] Clip to show only part of icons
 -   [X] Arrow keys for scrolling menu
 -   [X] Volume and brightness control
+-   [X] Battery panel
