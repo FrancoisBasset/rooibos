@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-05-04
+### Added
+*   I added a verification of exec existence
+
 ## 2023-05-03
 ### Added
 *	I added a battery panel in menu

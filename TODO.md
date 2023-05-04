@@ -13,10 +13,9 @@ All my tasks will be written in this file.
 -   [ ] Make own wallpaper
 -   [ ] Create another logo
 -   [ ] Window decoration
--   [ ] Color method
 
 ### In Progress
--   [ ] Checking executable existence
+-   [ ] Color method
 
 ### Done
 -   [X] Prepare Kanban
@@ -87,3 +86,4 @@ All my tasks will be written in this file.
 -   [X] Arrow keys for scrolling menu
 -   [X] Volume and brightness control
 -   [X] Battery panel
+-   [X] Checking executable existence

@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -83,13 +84,18 @@ int cache_update(void) {
 	sqlite3_stmt *stmt;
 	const char **unused_sql = NULL;
 
-	sqlite3_prepare_v2(db, "SELECT file FROM appshortcuts", 29, &stmt, unused_sql);
+	sqlite3_prepare_v2(db, "SELECT file, exec FROM appshortcuts", 35, &stmt, unused_sql);
+
+	int exists = 0;
 
 	int stmt_status = sqlite3_step(stmt);
 	while (stmt_status == 100) {
 		const unsigned char *file = sqlite3_column_text(stmt, 0);
+		const unsigned char *exec = sqlite3_column_text(stmt, 1);
 
-		if (access(file, F_OK) != 0) {
+		exists = cache_exec_exists(exec, file);
+
+		if (access(file, F_OK) != 0 || exists == 0) {
 			sqlite3_stmt *delete_stmt;
 			sqlite3_prepare_v2(db, "DELETE FROM appshortcuts WHERE file = ?", 50 + (int) strlen(file), &delete_stmt, unused_sql);
 			sqlite3_bind_text(delete_stmt, 1, file, (int) strlen(file), SQLITE_STATIC);
@@ -149,7 +155,9 @@ int cache_update(void) {
 				strcpy(all_names[length2], app_shortcut.name);
 				length2++;
 
-				if (has_duplicate == 0) {
+				exists = cache_exec_exists(app_shortcut.exec, app_shortcut.file);
+
+				if (has_duplicate == 0 && exists == 1) {
 					sqlite3_stmt *insert_stmt;
 					sqlite3_prepare_v2(db, "INSERT INTO appshortcuts VALUES (?, ?, ?, ?, ?)", 1000, &insert_stmt, unused_sql);
 					sqlite3_bind_text(insert_stmt, 1, app_shortcut.name, (int) strlen(app_shortcut.name), SQLITE_STATIC);
@@ -317,4 +325,40 @@ void cache_add_history(const char *command) {
 	sqlite3_step(insert_stmt);
 	sqlite3_finalize(insert_stmt);
 	sqlite3_close(db);
+}
+
+int cache_exec_exists(const char *exec, const char *file) {
+	if (strstr(file, ".local/share") == NULL) {
+		return 1;
+	}
+
+	char *firstWord = strtok((char*) exec, " ");
+
+	if (access(firstWord, F_OK) == 0) {
+		return 1;
+	}
+
+	char *path = malloc(sizeof(char) * (strlen(firstWord) + 10));
+	sprintf(path, "/usr/bin/%s", firstWord);
+
+	if (access(path, F_OK) == 0) {
+		free(path);
+		return 1;
+	}
+
+	free(path);
+
+	path = malloc(sizeof(char) * (strlen(firstWord) + 12));
+	sprintf(path, "/usr/games/%s", firstWord);
+
+	if (access(path, F_OK) == 0) {
+		free(path);
+		return 1;
+	}
+
+	free(path);
+
+	unlink(file);
+
+	return 0;
 }
