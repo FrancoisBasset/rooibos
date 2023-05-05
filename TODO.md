@@ -12,10 +12,9 @@ All my tasks will be written in this file.
 -   [ ] Study the XrmDatabase
 -   [ ] Make own wallpaper
 -   [ ] Create another logo
--   [ ] Window decoration
 
 ### In Progress
--   [ ] Color method
+-   [ ] Window decoration
 
 ### Done
 -   [X] Prepare Kanban
@@ -87,3 +86,4 @@ All my tasks will be written in this file.
 -   [X] Volume and brightness control
 -   [X] Battery panel
 -   [X] Checking executable existence
+-   [X] Color method

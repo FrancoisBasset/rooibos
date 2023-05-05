@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-05-05
+### Changed
+*   I added a color method and moved the XColor and GC creation
+
 ## 2023-05-04
 ### Added
 *   I added a verification of exec existence

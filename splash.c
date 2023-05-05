@@ -50,15 +50,10 @@ void splash_start(void) {
 }
 
 void splash_show_rectangle(void) {
-	int x = (screen_width - 600) / 2;
-    int y = (screen_height - 600) / 2;
+	const int x = (screen_width - 600) / 2;
+    const int y = (screen_height - 600) / 2;
 
-	XGCValues values = {
-		.foreground = white_pixel
-	};
-	GC gc = XCreateGC(display, window, GCForeground, &values);
-
-	XFillRectangle(display, window, gc, x, y, 600, 600);
+	XFillRectangle(display, window, gc_splash_rectangle, x, y, 600, 600);
 }
 
 void splash_show_logo(void) {

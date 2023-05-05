@@ -48,10 +48,6 @@ void menu_init(void) {
 void menu_show(void) {
 	XClearArea(display, window, menu.x, menu.y, menu.width, menu.height, 0);
 
-	XGCValues values = {
-		.foreground = color_back_menu.pixel
-	};
-    GC gc_menu = XCreateGC(display, window, GCForeground, &values);
 	XFillRectangle(display, menu_pixmap, gc_menu, 0, 0, menu.width, menu.height);
 	XFillRectangle(display, icons_pixmap, gc_menu, 0, 0, menu.width, menu.height - 141);
 
@@ -218,23 +214,17 @@ void menu_show_battery(void) {
 
 	Pixmap battery_pixmap = XCreatePixmap(display, window, 20 + margin, 40, screen_depth);
 
-	XGCValues values = {
-		.foreground = color_back_menu.pixel
-	};
-    GC gc_menu = XCreateGC(display, window, GCForeground, &values);
 	XFillRectangle(display, battery_pixmap, gc_menu, 0, 0, 20 + margin, 40);
 	XDrawRectangle(display, battery_pixmap, gc_text_black, 0, 0, 19, 39);
 
 	const int height = (int) (38 * ((double) level) / 100);
 
-	unsigned long pixel = color_battery_ok.pixel;
-	if (level < 20) {
-		pixel = color_battery_ko.pixel;
+	if (level > 20) {
+		XSetForeground(display, gc_battery, color_battery_ok.pixel);
+	} else {
+		XSetForeground(display, gc_battery, color_battery_ko.pixel);
 	}
-	XGCValues gcv_battery = {
-		.foreground = pixel
-	};
-    GC gc_battery = XCreateGC(display, window, GCForeground, &gcv_battery);
+	
 	XFillRectangle(display, battery_pixmap, gc_battery, 1, 39 - height, 18, height);
 
 	XDrawString(display, battery_pixmap, gc_text_black, 4, 12, text, (int) strlen(text));

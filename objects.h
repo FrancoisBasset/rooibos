@@ -31,11 +31,23 @@ extern XColor color_close_window;
 extern XColor color_back_menu;
 extern XColor color_battery_ok;
 extern XColor color_battery_ko;
+extern XColor color_bar;
 
 extern GC gc_text_white;
 extern GC gc_text_black;
 extern GC gc_category_button;
 extern GC gc_icon;
+extern GC gc_bar;
+extern GC gc_splash_rectangle;
+extern GC gc_taskbar;
+extern GC gc_taskbar_button;
+extern GC gc_taskbar_button_focus;
+extern GC gc_taskbar_button_hidden;
+extern GC gc_taskbar_button_border;
+extern GC gc_toolbar_button;
+extern GC gc_menu;
+extern GC gc_battery;
 
 void objects_init(void);
+XColor objects_color(unsigned short r, unsigned short g, unsigned short b);
 #endif

@@ -9,9 +9,6 @@ typedef struct toolbar_button_t {
     int height;
 } toolbar_button_t;
 
-extern GC gc_toolbar_button;
-extern GC gc_text_button_toolbar;
-
 void toolbar_init(void);
 void toolbar_show(void);
 void toolbar_hide(void);

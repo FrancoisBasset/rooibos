@@ -5,14 +5,10 @@
 #include "window.h"
 #include "event.h"
 
-XGCValues gcv_toolbar_button;
-GC gc_toolbar_button;
-
 toolbar_button_t toolbar_buttons[5];
 
 void toolbar_init(void) {
-    gcv_toolbar_button = (XGCValues) { .foreground = white_pixel };
-	gc_toolbar_button = XCreateGC(display, window, GCForeground, &gcv_toolbar_button);
+
 }
 
 void toolbar_show(void) {
@@ -28,8 +24,7 @@ void toolbar_show(void) {
 		toolbar_button_t new_tbb = { labels[i], button_width * i, screen_height - 100, button_width, 50 };
 		toolbar_buttons[i] = new_tbb;
 
-		gcv_toolbar_button.foreground = colors[i].pixel;
-		XChangeGC(display, gc_toolbar_button, GCForeground, &gcv_toolbar_button);
+		XSetForeground(display, gc_toolbar_button, colors[i].pixel);
 
 		XFillRectangle(display, window, gc_toolbar_button, button_width * i, screen_height - 100, button_width, 50);
 		XDrawString(display, window, gc_text_white, (button_width * i) + x, screen_height - 70, labels[i], (int) strlen(labels[i]));

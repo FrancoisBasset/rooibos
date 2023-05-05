@@ -62,16 +62,6 @@ void brightness_show(void) {
 	XCopyArea(display, brightness_pixmap, panel, XDefaultGCOfScreen(screen), 0, 0, 40, 40, 5, 10);
 
 	const int width = (int) (12 * (brightness * 0.1));
-	XColor color_bar = {
-		.red = 0,
-		.green = 65535,
-		.blue = 0
-	};
-	XAllocColor(display, colormap, &color_bar);
-	XGCValues gcv_bar = {
-		.foreground = color_bar.pixel
-	};
-	GC gc_bar = XCreateGC(display, window, GCForeground, &gcv_bar);
 	XFillRectangle(display, panel, gc_bar, 50, 25, width, 10);
 
 	XDrawString(display, panel, gc_text_white, 170, 35, text, (int) strlen(text));
