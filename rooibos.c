@@ -49,5 +49,7 @@ void rooibos(void) {
 	windows_print();
 #endif
 
+	windows_free();
+
 	XCloseDisplay(display);
 }

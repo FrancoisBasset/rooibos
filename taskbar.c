@@ -29,31 +29,28 @@ taskbar_t* taskbar_init() {
 void taskbar_update_windows() {
 	refresh_pixmap = 1;
 
-    windows_t *ws = windows_get();
-
     for (int i = 0; i < tb->buttons_length; i++) {
         free(tb->tb_buttons[i]);
     }
     free(tb->tb_buttons);
 
-    tb->buttons_length = ws->length;
-    tb->tb_buttons = malloc(sizeof(taskbar_button_h) * ws->length);
+    int length = window_length();
 
-    if (ws->first == NULL) {
-        return;
-    }
-
-    window_t *w = ws->first;
+    tb->buttons_length = length;
+    tb->tb_buttons = malloc(sizeof(taskbar_button_h) * length);
 
     int i = 0;
     int x = 0;
 
     int width = 200;
-    if (width * ws->length > screen_width) {
-        width = screen_width / ws->length;
+    if (width * length > screen_width) {
+        width = screen_width / length;
     }
 
-    do {
+	window_reset();
+
+    window_t *w = window_next();
+    while (w != NULL) {
         taskbar_button_h *tb_button = malloc(sizeof(taskbar_button_h));
         tb_button->x = x;
         tb_button->y = tb->y;
@@ -69,7 +66,9 @@ void taskbar_update_windows() {
 		if (window_focus == NULL) {
 			window_focus = w;
 		}
-    } while ((w = w->next) != NULL);
+
+		w = window_next();
+    }
 }
 
 void taskbar_show() {

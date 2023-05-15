@@ -24,9 +24,13 @@ void windows_init(void);
 void window_reset(void);
 window_t* window_next(void);
 window_t* window_get(Window id);
+
+#ifdef WILLDEBUG
 void window_print(window_t* w);
 void windows_print();
-windows_t* windows_get(void);
+#endif
+
+int window_length(void);
 
 void window_add(window_t* w);
 void window_update(Window id, const char *property, const void *value);

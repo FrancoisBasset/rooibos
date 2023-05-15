@@ -53,37 +53,38 @@ window_t* window_next(void) {
 }
 
 window_t* window_get(Window id) {
-    window_t *w = NULL;
-
     window_reset();
-    while (w = window_next()) {
+
+    window_t *w = window_next();
+    while (w != NULL) {
         if (w->id == id) {
             return w;
         }
+
+		w = window_next();
     }
 
     return NULL;
 }
 
-void window_print(window_t* w) {
 #ifdef WILLDEBUG
-	char visible = '-';
-    if (w->visible == 1) {
-        visible = '+';
-	}
+void window_print(window_t* w) {
+	const char visible = w->visible == 1 ? '+' : '-';
 	
 	debug("%c %d %s %d %d %d x %d", visible, w->id, w->title, w->x, w->y, w->width, w->height);
-#endif
 }
 
 void windows_print() {
-    window_t *w = NULL;
-    
     window_reset();
-    while (w = window_next()) {
+
+    window_t *w = window_next();
+    while (w != NULL) {
         window_print(w);
+
+		w = window_next();
     }
 }
+#endif
 
 void window_add(window_t *w) {
     if (window_get(w->id) != NULL) {
@@ -135,11 +136,14 @@ void window_update(Window id, const char *property, const void *value) {
 }
 
 void window_delete(Window id) {
-    if (ws->first == NULL) {
+	window_reset();
+	
+	window_t *w = window_next();
+
+    if (w == NULL) {
         return;
     }
 
-    window_t *w = ws->first;
     if (w->id == id) {
         ws->first = w->next;
         window_free(w);
@@ -147,8 +151,7 @@ void window_delete(Window id) {
         return;
     }
     
-    window_reset();
-    while (w = window_next()) {
+    while (w != NULL) {
         if (w->next->id == id) {
             window_t* next = w->next;
             w->next = w->next->next;
@@ -156,6 +159,8 @@ void window_delete(Window id) {
             ws->length--;
             break;
         }
+
+		w = window_next();
     }
 }
 
@@ -166,45 +171,43 @@ void window_free(window_t* w) {
 
 void windows_free(void) {
     window_reset();
-    if (ws->first == NULL) {
-        free(ws);
-        return;
-    }
-
-    window_reset();
-    window_t *w = ws->first;
-    window_t *next = NULL;
-
-    do {
-        next = w->next;
+    
+    window_t *w = window_next();
+    while (w != NULL) {
         window_free(w);
-    } while ((w = next) != NULL);
+
+		w = window_next();
+    }
 
     free(ws);
 }
 
-windows_t* windows_get(void) {
-    return ws;
+int window_length(void) {
+    return ws->length;
 }
 
 void window_show_all_visible(void) {
-    window_t *w = NULL;
-
     window_reset();
-    while (w = window_next()) {
+
+    window_t *w = window_next();
+    while (w != NULL) {
         if (w->visible == 1) {
             XMapWindow(display, w->id);
         }
+		
+		w = window_next();
     }
 }
 
 void window_hide_all_visible(void) {
-    window_t *w = NULL;
-
     window_reset();
-    while (w = window_next()) {
+
+    window_t *w = window_next();
+    while (w != NULL) {
         if (w->visible == 1) {
             XUnmapWindow(display, w->id);
         }
+
+		w = window_next();
     }
 }
