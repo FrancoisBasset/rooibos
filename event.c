@@ -20,10 +20,10 @@
 #include "utils.h"
 #include "sound.h"
 #include "brightness.h"
+#include "decorator.h"
 
 char mode = ' ';
 window_t *window_focus = NULL;
-int moving = 0;
 int resizing = 0;
 char *title_launched = NULL;
 
@@ -43,6 +43,9 @@ int handle_event(void) {
         case Expose:
             event_on_expose();
             break;
+		case ButtonRelease:
+			decorator_set_selected_null();
+			break;
         case ButtonPress:
             quit = event_on_button_press(event.xbutton.button, event.xbutton.x, event.xbutton.y);
             break;
@@ -113,6 +116,7 @@ void event_on_expose(void) {
     } else {
 		taskbar_show();
         toolbar_show();
+		decorator_show_all();
     }
 	
     if (prompt_active == 1) {
@@ -143,10 +147,14 @@ int event_on_left_button_press(int x, int y) {
         taskbar_on_press(x, y);
     } else if (menu.is_showed == 0 && prompt_active == 0 && toolbar_is_hover(y)) {
         quit = toolbar_on_press(x);
-    }
+    } else if (menu.is_showed == 0 && decorator_on_hover(x, y) != 0) {
+		decorator_on_press(x, y);
 
-    if (mode != ' ' && (moving == 1 || resizing == 1)) {
-        moving = 0;
+		XEvent e = { .type = Expose };
+		XSendEvent(display, window, 0, ExposureMask, &e);
+	}
+
+    if (mode != ' ' && resizing == 1) {
         resizing = 0;
         mode = ' ';
     }
@@ -279,14 +287,11 @@ void event_on_key_press(XKeyEvent key_event) {
 }
 
 void event_on_motion(int x, int y) {
-    if (mode == 'm' && window_focus != 0) {
-        moving = 1;
-        XMoveWindow(display, window_focus->id, x + 10, y + 10);
-    }
-
     if (mode == 'r' && window_focus != 0) {
         resizing = 1;
         XResizeWindow(display, window_focus->id, (x - window_focus->x) - 10, (y - window_focus->y) - 10);
+		XEvent e = { .type = Expose };
+		XSendEvent(display, window, 0, ExposureMask, &e);
     }
     
     if (menu.is_showed == 1) {
@@ -296,9 +301,14 @@ void event_on_motion(int x, int y) {
 			}
         }
     } else {
+		int decorator_hover = decorator_on_hover(x, y);
         if (prompt_active == 0 && toolbar_is_hover(y) == 1) {
             XDefineCursor(display, window, hand_cursor);
-        } else {
+		} else if (decorator_hover == 5) {
+			XDefineCursor(display, window, resize_cursor);
+        } else if (decorator_hover != 0 && decorator_hover != 1) {
+            XDefineCursor(display, window, hand_cursor);
+		} else {
             XDefineCursor(display, window, cursor);
         }        
     }
@@ -339,17 +349,25 @@ void event_on_configure(Window child, int x, int y, int width, int height) {
 		
 		window_add(new_window_);
 		taskbar_update_windows();
-		XMoveResizeWindow(display, child, 0, 0, screen_width, screen_height - 100);
+		XMoveResizeWindow(display, child, 0, 20, screen_width, screen_height - 120);
 	} else {
 		window_focus = window_get(child);
 		if (strcmp(title, "") != 0) {
 			window_update(child, "title", title);
 		}
 
-		window_update(child, "x", &x);
-		window_update(child, "y", &y);
-		window_update(child, "width", &width);
-		window_update(child, "height", &height);
+		if (x > 0 && x < screen_width) {
+			window_update(child, "x", &x);
+		}
+		if (y > 0 && y < screen_height) {
+			window_update(child, "y", &y);
+		}
+		if (width > 0 && width < screen_width) {
+			window_update(child, "width", &width);
+		}
+		if (height > 0 && height < screen_height) {
+			window_update(child, "height", &height);
+		}
 	}
 
 	free(title);
@@ -376,12 +394,13 @@ void event_on_destroy(Window child) {
 	if (window_focus != NULL && window_focus->id == child) {
 		window_focus = NULL;
 	}
-    moving = 0;
     mode = ' ';
     window_delete(child);
     taskbar_update_windows();
     if (menu.is_showed == 0) {
         taskbar_show();
+		XEvent e = { .type = Expose };
+		XSendEvent(display, window, 0, ExposureMask, &e);
     }
 }
 

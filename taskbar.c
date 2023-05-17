@@ -116,6 +116,8 @@ void taskbar_on_press(int x, int y) {
                     window_focus = button->window;
                     XMapWindow(display, button->window->id);
                     button->window->visible = 1;
+					XEvent e = { .type = Expose };
+					XSendEvent(display, window, 0, ExposureMask, &e);
                 }
 				refresh_pixmap = 1;
             }

@@ -22,13 +22,10 @@ XFontStruct *font_struct;
 Cursor cursor;
 Cursor hand_cursor;
 Cursor wait_cursor;
+Cursor resize_cursor;
 
 Colormap colormap;
-XColor color_move_window;
 XColor color_resize_window;
-XColor color_minimize_window;
-XColor color_maximize_window;
-XColor color_close_window;
 XColor color_category_button;
 XColor color_back_menu;
 XColor color_battery_ok;
@@ -65,7 +62,7 @@ void objects_init(void) {
 
     XSetWindowAttributes window_attributes = {
         .cursor = cursor,
-        .event_mask = ExposureMask | ButtonPressMask | PointerMotionMask | KeyPressMask | FocusChangeMask
+        .event_mask = ExposureMask | ButtonPressMask | ButtonReleaseMask | PointerMotionMask | KeyPressMask | FocusChangeMask
     };
     window = XCreateWindow(display, root_window, 0, 0, screen_width, screen_height, 0, screen_depth, InputOutput, visual, CWCursor | CWEventMask, &window_attributes);
 
@@ -75,13 +72,10 @@ void objects_init(void) {
     cursor = XCreateFontCursor(display, XC_arrow);
     hand_cursor = XCreateFontCursor(display, XC_hand1);
     wait_cursor = XCreateFontCursor(display, XC_watch);
+	resize_cursor = XCreateFontCursor(display, XC_sizing);
 
     colormap = XDefaultColormapOfScreen(screen);
-	color_move_window = objects_color(0, 0, 65535);
 	color_resize_window = objects_color(30000, 30000, 0);
-	color_minimize_window = objects_color(0, 0, 30000);
-	color_maximize_window = objects_color(30000, 0, 30000);
-	color_close_window = objects_color(65535, 0, 0);
     color_category_button = objects_color(0, 40000, 0);
 	color_back_menu = objects_color(40000, 40000, 40000);
 	color_battery_ok = objects_color(0, 65535, 0);

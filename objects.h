@@ -21,13 +21,10 @@ extern XFontStruct *font_struct;
 extern Cursor cursor;
 extern Cursor hand_cursor;
 extern Cursor wait_cursor;
+extern Cursor resize_cursor;
 
 extern Colormap colormap;
-extern XColor color_move_window;
 extern XColor color_resize_window;
-extern XColor color_minimize_window;
-extern XColor color_maximize_window;
-extern XColor color_close_window;
 extern XColor color_back_menu;
 extern XColor color_battery_ok;
 extern XColor color_battery_ko;

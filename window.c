@@ -20,6 +20,17 @@ window_t* window_init(Window id, const char *title, int x, int y, int width, int
     new_window->height = height;
     new_window->visible = 1;
     new_window->title = malloc(sizeof(char) * (strlen(title) + 1));
+	new_window->decorator = (decorator_t) {
+		.x = x,
+		.y = y - 20,
+		.width = width,
+		.min_start = width - 60,
+		.min_end = width - 40,
+		.max_start = width - 40,
+		.max_end = width - 20,
+		.close_start = width - 20,
+		.close_end = width
+	};
     strcpy(new_window->title, title);
     new_window->next = NULL;
 
@@ -130,6 +141,18 @@ void window_update(Window id, const char *property, const void *value) {
             } else if (strcmp(property, "height") == 0) {
                 w->height = *((int *) value);
             }
+
+			w->decorator = (decorator_t) {
+				.x = w->x,
+				.y = w->y - 20,
+				.width = w->width,
+				.min_start = w->width - 60,
+				.min_end = w->width - 40,
+				.max_start = w->width - 40,
+				.max_end = w->width - 20,
+				.close_start = w->width - 20,
+				.close_end = w->width
+			};
             break;
         }
     }

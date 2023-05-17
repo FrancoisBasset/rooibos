@@ -1,6 +1,7 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 #include <stdio.h>
+#include "decorator.h"
 typedef struct window_t {
     Window id;
     char *title;
@@ -9,6 +10,7 @@ typedef struct window_t {
     int width;
     int height;
     int visible;
+	decorator_t decorator;
     struct window_t *next;
 } window_t;
 

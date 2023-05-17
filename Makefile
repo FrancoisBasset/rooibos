@@ -2,7 +2,7 @@ CFLAGS = -Werror -O3
 VERSION = $(shell cat VERSION)
 ARCH = $(shell uname --machine)
 VERSION_LENGTH = $$(( $(shell wc -m < VERSION) - 1 ))
-OBJECTS = VERSION.h utils.o appshortcut.o cache.o objects.o window.o icon.o taskbar.o toolbar.o menu.o event.o prompt.o debug.o splash.o sound.o brightness.o battery.o rooibos.o main.o
+OBJECTS = VERSION.h utils.o appshortcut.o cache.o objects.o window.o icon.o taskbar.o toolbar.o menu.o event.o prompt.o debug.o splash.o sound.o brightness.o battery.o decorator.o rooibos.o main.o
 #WILLDEBUG = -DWILLDEBUG
 
 ifndef WILLDEBUG

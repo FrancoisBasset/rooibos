@@ -4,7 +4,6 @@
 #include "window.h"
 extern char mode;
 extern window_t *window_focus;
-extern int moving;
 extern int resizing;
 extern char *title_launched;
 

@@ -5,19 +5,19 @@
 #include "window.h"
 #include "event.h"
 
-toolbar_button_t toolbar_buttons[5];
+toolbar_button_t toolbar_buttons[1];
 
 void toolbar_init(void) {
 
 }
 
 void toolbar_show(void) {
-	int button_width = screen_width / 5;
+	int button_width = screen_width;
 
-	XColor colors[5] = { color_move_window, color_resize_window, color_minimize_window, color_maximize_window, color_close_window };
-	char *labels[5] = { "Move window", "Resize window", "Minimize window", "Maximize window", "Close window" };
+	XColor colors[1] = { color_resize_window };
+	char *labels[1] = { "Resize window" };
 
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 1; i++) {
 		int width = XTextWidth(font_struct, labels[i], (int) strlen(labels[i]));
 		int x = (button_width - width) / 2;
 
@@ -40,31 +40,11 @@ int toolbar_is_hover(int y) {
 }
 
 int toolbar_on_press(int x) {
-	int position = (int) (((double) x / (double) screen_width) * 5);
+	int position = (int) (((double) x / (double) screen_width) * 1);
 
 	switch (position) {
 		case 0:
-			mode = 'm';
-			break;
-		case 1:
 			mode = 'r';
-			break;
-		case 2:
-			if (window_focus != NULL) {
-				XUnmapWindow(display, window_focus->id);
-				window_focus->visible = 0;
-			}
-			break;
-		case 3:
-			if (window_focus != NULL) {
-				XMoveResizeWindow(display, window_focus->id, 0, 0, screen_width, screen_height - 100);
-			}
-			break;
-		case 4:
-			if (window_focus != NULL) {
-				XDestroyWindow(display, window_focus->id);
-				window_focus = NULL;
-			}
 			break;
 		default:
 			return 0;
