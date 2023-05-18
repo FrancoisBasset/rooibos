@@ -30,6 +30,10 @@ XColor color_back_menu;
 XColor color_battery_ok;
 XColor color_battery_ko;
 XColor color_bar;
+XColor color_decorator;
+XColor color_decorator_min;
+XColor color_decorator_max;
+XColor color_decorator_close;
 
 GC gc_text_white;
 GC gc_text_black;
@@ -44,6 +48,10 @@ GC gc_taskbar_button_hidden;
 GC gc_taskbar_button_border;
 GC gc_menu;
 GC gc_battery;
+GC gc_decorator;
+GC gc_decorator_min;
+GC gc_decorator_max;
+GC gc_decorator_close;
 
 void objects_init(void) {
 	display = XOpenDisplay(NULL);
@@ -78,6 +86,10 @@ void objects_init(void) {
 	color_battery_ok = objects_color(0, 65535, 0);
 	color_battery_ko = objects_color(65535, 0, 0);
 	color_bar = objects_color(0, 65535, 0);
+	color_decorator = objects_color(10000, 20000, 30000);
+	color_decorator_min = objects_color(65535, 20000, 20000);
+	color_decorator_max = objects_color(0, 50000, 0);
+	color_decorator_close = objects_color(65535, 0, 0);
 
 	XGCValues gcv_text_white = {
 		.foreground = white_pixel,
@@ -125,6 +137,18 @@ void objects_init(void) {
 	gc_menu = XCreateGC(display, window, GCForeground, &values);
 
 	gc_battery = XCreateGC(display, window, 0, NULL);
+
+	XGCValues gcv_decorator = { .foreground = color_decorator.pixel };
+	gc_decorator = XCreateGC(display, window, GCForeground, &gcv_decorator);
+
+	XGCValues gcv_decorator_min = { .foreground = color_decorator_min.pixel };
+	gc_decorator_min = XCreateGC(display, window, GCForeground, &gcv_decorator_min);
+
+	XGCValues gcv_decorator_max = { .foreground = color_decorator_max.pixel };
+	gc_decorator_max = XCreateGC(display, window, GCForeground, &gcv_decorator_max);
+
+	XGCValues gcv_decorator_close = { .foreground = color_decorator_close.pixel };
+	gc_decorator_close = XCreateGC(display, window, GCForeground, &gcv_decorator_close);
 }
 
 XColor objects_color(unsigned short r, unsigned short g, unsigned short b) {

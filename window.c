@@ -146,11 +146,11 @@ void window_update(Window id, const char *property, const void *value) {
 				.x = w->x,
 				.y = w->y - 20,
 				.width = w->width,
-				.min_start = w->width - 60,
-				.min_end = w->width - 40,
-				.max_start = w->width - 40,
-				.max_end = w->width - 20,
-				.close_start = w->width - 20,
+				.min_start = w->width - 71,
+				.min_end = w->width - 51,
+				.max_start = w->width - 46,
+				.max_end = w->width - 26,
+				.close_start = w->width - 21,
 				.close_end = w->width
 			};
 			break;

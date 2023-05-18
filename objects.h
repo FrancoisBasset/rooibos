@@ -28,6 +28,10 @@ extern XColor color_back_menu;
 extern XColor color_battery_ok;
 extern XColor color_battery_ko;
 extern XColor color_bar;
+extern XColor color_decorator;
+extern XColor color_decorator_min;
+extern XColor color_decorator_max;
+extern XColor color_decorator_close;
 
 extern GC gc_text_white;
 extern GC gc_text_black;
@@ -42,6 +46,10 @@ extern GC gc_taskbar_button_hidden;
 extern GC gc_taskbar_button_border;
 extern GC gc_menu;
 extern GC gc_battery;
+extern GC gc_decorator;
+extern GC gc_decorator_min;
+extern GC gc_decorator_max;
+extern GC gc_decorator_close;
 
 void objects_init(void);
 XColor objects_color(unsigned short r, unsigned short g, unsigned short b);

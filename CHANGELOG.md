@@ -15,6 +15,7 @@ There are 6 types of changes :
 ## 2023-05-18
 ### Changed
 *   I changed multi spaces indentation by tab
+*   I beautified the window decorator
 ### Removed
 *   I removed dead code of toolbar
 

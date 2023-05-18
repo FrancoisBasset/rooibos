@@ -11,8 +11,6 @@ int pressed = 0;
 
 void decorator_show_all() {
 	Pixmap decorator_pixmap;
-	XGCValues v = { .foreground = white_pixel };
-	GC gc = XCreateGC(display, window, GCForeground, &v);
 
 	window_reset();
 
@@ -26,15 +24,15 @@ void decorator_show_all() {
 		decorator_pixmap = XCreatePixmap(display, window, w->width, 20, screen_depth);
 		decorator_t d = w->decorator;
 
-		XFillRectangle(display, decorator_pixmap, gc, 0, 0, w->width, 20);
-		XDrawString(display, decorator_pixmap, gc_text_black, 7, 13, w->title, (int) strlen(w->title));
-
-		XDrawLine(display, decorator_pixmap, gc_text_black, w->width - 58, 18, w->width - 42, 18);
+		XFillRectangle(display, decorator_pixmap, gc_decorator, 0, 0, w->width, 20);
+		XDrawString(display, decorator_pixmap, gc_text_white, 7, 13, w->title, (int) strlen(w->title));
 		
-		XDrawRectangle(display, decorator_pixmap, gc_text_black, w->width - 38, 2, 16, 16);
-
-		XDrawLine(display, decorator_pixmap, gc_text_black, w->width - 20, 20, w->width, 0);
-		XDrawLine(display, decorator_pixmap, gc_text_black, w->width - 20, 0, w->width, 20);
+		XFillArc(display, decorator_pixmap, gc_decorator_min, d.min_start, 0, 20, 20, 360 * 64, 360 * 64);
+		XDrawArc(display, decorator_pixmap, gc_text_white, d.min_start, 0, 20, 19, 360 * 64, 360 * 64);
+		XFillArc(display, decorator_pixmap, gc_decorator_max, d.max_start, 0, 20, 20, 360 * 64, 360 * 64);
+		XDrawArc(display, decorator_pixmap, gc_text_white, d.max_start, 0, 20, 19, 360 * 64, 360 * 64);
+		XFillArc(display, decorator_pixmap, gc_decorator_close, d.close_start, 0, 20, 20, 360 * 64, 360 * 64);
+		XDrawArc(display, decorator_pixmap, gc_text_white, d.close_start, 0, 20, 19, 360 * 64, 360 * 64);
 
 		XCopyArea(display, decorator_pixmap, window, XDefaultGCOfScreen(screen), 0, 0, w->width, 20, w->x + 1, w->y - 20);
 

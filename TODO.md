@@ -12,8 +12,12 @@ All my tasks will be written in this file.
 -   [ ] Study the XrmDatabase
 -   [ ] Make own wallpaper
 -   [ ] Create another logo
+-   [ ] Virtual desktops
+-   [ ] Modify the wallpaper
+-   [ ] Desktops shortcuts
 
 ### In Progress
+-   [ ] Lock screen
 
 ### Done
 -   [X] Prepare Kanban
@@ -87,3 +91,4 @@ All my tasks will be written in this file.
 -   [X] Checking executable existence
 -   [X] Color method
 -   [X] Window decoration
+-   [X] Better window decorator
