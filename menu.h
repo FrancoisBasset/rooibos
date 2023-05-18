@@ -1,22 +1,22 @@
 #ifndef MENU_H
 #define MENU_H
 typedef struct menu_t {
-    int x;
-    int y;
-    int width;
-    int height;
-    int category_index;
-    int is_showed;
+	int x;
+	int y;
+	int width;
+	int height;
+	int category_index;
+	int is_showed;
 } menu_t;
 
 typedef struct menu_button_t {
-    int visible;
-    int x;
-    int y;
+	int visible;
+	int x;
+	int y;
 	int x_press;
 	int y_press;
-    int width;
-    int height;
+	int width;
+	int height;
 } menu_button_t;
 
 extern menu_t menu;

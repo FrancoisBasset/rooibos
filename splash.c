@@ -30,15 +30,15 @@ void splash_start(void) {
 
 	XFlush(display);
 	icons_init();
-    XDefineCursor(display, window, cursor);
-    XFlush(display);
+	XDefineCursor(display, window, cursor);
+	XFlush(display);
 
 	if (have_cache == 0) {
 		splash_show_text_at_middle("Press any key to continue", 9);
 		
 		XEvent event;
 		while (1) {
-    		XNextEvent(display, &event);
+			XNextEvent(display, &event);
 
 			if (event.type == KeyPress) {
 				break;
@@ -51,14 +51,14 @@ void splash_start(void) {
 
 void splash_show_rectangle(void) {
 	const int x = (screen_width - 600) / 2;
-    const int y = (screen_height - 600) / 2;
+	const int y = (screen_height - 600) / 2;
 
 	XFillRectangle(display, window, gc_splash_rectangle, x, y, 600, 600);
 }
 
 void splash_show_logo(void) {
 	const int x = (screen_width - 300) / 2;
-   	const int y = (screen_height - 300) / 2;
+	const int y = (screen_height - 300) / 2;
 	
 	char *logo_to_use = utils_get(UTILS_LOGO_TO_USE);
 	Pixmap pixmap = icon_get_pixmap(logo_to_use, 300, 300);

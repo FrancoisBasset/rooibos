@@ -3,21 +3,21 @@
 #include <stdio.h>
 #include "decorator.h"
 typedef struct window_t {
-    Window id;
-    char *title;
-    int x;
-    int y;
-    int width;
-    int height;
-    int visible;
+	Window id;
+	char *title;
+	int x;
+	int y;
+	int width;
+	int height;
+	int visible;
 	decorator_t decorator;
-    struct window_t *next;
+	struct window_t *next;
 } window_t;
 
 typedef struct windows_t {
-    window_t *first;
-    window_t *last;
-    int length;
+	window_t *first;
+	window_t *last;
+	int length;
 } windows_t;
 
 window_t* window_init(Window id, const char *title, int x, int y, int width, int height);

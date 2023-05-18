@@ -128,7 +128,7 @@ int cache_update(void) {
 			strcpy(short_file, "%");
 			strcat(short_file, tmp);
 			strcat(short_file, "%");
-    	}
+		}
 
 		free(tmp_short_file);
 

@@ -32,12 +32,12 @@ icon_t icon_sound;
 icon_t icon_brightness;
 
 void menu_init(void) {
-    int width = (int) (screen_width * 0.70);
-    int height = (int) (screen_height * 0.70);
-    int x = (screen_width - width) / 2;
-    int y = (screen_height - height) / 2;
+	int width = (int) (screen_width * 0.70);
+	int height = (int) (screen_height * 0.70);
+	int x = (screen_width - width) / 2;
+	int y = (screen_height - height) / 2;
 
-    menu = (menu_t) { x, y, width, height, -1, 0 };
+	menu = (menu_t) { x, y, width, height, -1, 0 };
 	up_line_y = 80;
 	bottom_line_y = menu.height - 60;
 
@@ -51,9 +51,9 @@ void menu_show(void) {
 	XFillRectangle(display, menu_pixmap, gc_menu, 0, 0, menu.width, menu.height);
 	XFillRectangle(display, icons_pixmap, gc_menu, 0, 0, menu.width, menu.height - 141);
 
-    menu.is_showed = 1;
+	menu.is_showed = 1;
 
-    icons_draw();
+	icons_draw();
 	XDrawLine(display, menu_pixmap, gc_text_white, 0, up_line_y, menu.width, up_line_y);
 	menu_show_categories();
 	XDrawLine(display, menu_pixmap, gc_text_white, 0, bottom_line_y, menu.width, bottom_line_y);
@@ -68,59 +68,59 @@ void menu_show(void) {
 }
 
 void menu_clear(void) {
-    XClearArea(display, window, menu.x - 1, menu.y - 1, menu.width + 2, menu.height + 2, 1);
-    menu.is_showed = 0;
+	XClearArea(display, window, menu.x - 1, menu.y - 1, menu.width + 2, menu.height + 2, 1);
+	menu.is_showed = 0;
 }
 
 void menu_show_categories(void) {
 	char *category_name = malloc(sizeof(char) * 20);
-    if (menu.category_index == -1) {
-        strcpy(category_name, "All categories");
-    } else {
-        strcpy(category_name, categories[menu.category_index]);
-    }
+	if (menu.category_index == -1) {
+		strcpy(category_name, "All categories");
+	} else {
+		strcpy(category_name, categories[menu.category_index]);
+	}
 
-    left_category_button.visible = 0;
-    right_category_button.visible = 0;
-    int width;
-    int height = 20;
+	left_category_button.visible = 0;
+	right_category_button.visible = 0;
+	int width;
+	int height = 20;
 
-    width = XTextWidth(font_struct, category_name, (int) strlen(category_name));
-    int x = (menu.width - width) / 2;
+	width = XTextWidth(font_struct, category_name, (int) strlen(category_name));
+	int x = (menu.width - width) / 2;
 
-    XDrawString(display, menu_pixmap, gc_text_white, x, 50, category_name, (int) strlen(category_name));
+	XDrawString(display, menu_pixmap, gc_text_white, x, 50, category_name, (int) strlen(category_name));
 
-    if (menu.category_index == 0) {
-        width = XTextWidth(font_struct, "< All categories", 16);
-        left_category_button = (menu_button_t) { .visible = 1, .x = 40, .y = 25, .x_press = menu.x + 40, .y_press = menu.y + 25, .width = width + 20, .height = height + 20 };
+	if (menu.category_index == 0) {
+		width = XTextWidth(font_struct, "< All categories", 16);
+		left_category_button = (menu_button_t) { .visible = 1, .x = 40, .y = 25, .x_press = menu.x + 40, .y_press = menu.y + 25, .width = width + 20, .height = height + 20 };
 
-        XFillRectangle(display, menu_pixmap, gc_category_button, left_category_button.x, left_category_button.y, left_category_button.width, left_category_button.height);
-        XDrawString(display, menu_pixmap, gc_text_white, 50, 50, "< All categories", 16);
-    }
-    
-    if (menu.category_index > 0) {
-        strcpy(category_name, "< ");
-        strcat(category_name, categories[menu.category_index - 1]);
+		XFillRectangle(display, menu_pixmap, gc_category_button, left_category_button.x, left_category_button.y, left_category_button.width, left_category_button.height);
+		XDrawString(display, menu_pixmap, gc_text_white, 50, 50, "< All categories", 16);
+	}
 
-        width = XTextWidth(font_struct, category_name, (int) strlen(category_name));
-        left_category_button = (menu_button_t) { .visible = 1, .x = 40, .y = 25, .x_press = menu.x + 40, .y_press = menu.y + 25, .width = width + 20, .height = height + 20};
+	if (menu.category_index > 0) {
+		strcpy(category_name, "< ");
+		strcat(category_name, categories[menu.category_index - 1]);
 
-        XFillRectangle(display, menu_pixmap, gc_category_button, left_category_button.x, left_category_button.y, left_category_button.width, left_category_button.height);
-        XDrawString(display, menu_pixmap, gc_text_white, 50, 50, category_name, (int) strlen(category_name));
-    }
-    
-    if (menu.category_index < categories_length - 1) {
-        strcpy(category_name, categories[menu.category_index + 1]);
-        strcat(category_name, " >");
+		width = XTextWidth(font_struct, category_name, (int) strlen(category_name));
+		left_category_button = (menu_button_t) { .visible = 1, .x = 40, .y = 25, .x_press = menu.x + 40, .y_press = menu.y + 25, .width = width + 20, .height = height + 20};
 
-        width = XTextWidth(font_struct, category_name, (int) strlen(category_name));
-        right_category_button = (menu_button_t) { .visible = 1, .x = menu.width - width - 60, .y = 25, .x_press = menu.x + menu.width - width - 60, .y_press = menu.y + 25, .width = width + 20, .height = height + 20 };
+		XFillRectangle(display, menu_pixmap, gc_category_button, left_category_button.x, left_category_button.y, left_category_button.width, left_category_button.height);
+		XDrawString(display, menu_pixmap, gc_text_white, 50, 50, category_name, (int) strlen(category_name));
+	}
 
-        XFillRectangle(display, menu_pixmap, gc_category_button, right_category_button.x, right_category_button.y, right_category_button.width, right_category_button.height);
-        XDrawString(display, menu_pixmap, gc_text_white, menu.width - width - 50, 50, category_name, (int) strlen(category_name));
-    }
+	if (menu.category_index < categories_length - 1) {
+		strcpy(category_name, categories[menu.category_index + 1]);
+		strcat(category_name, " >");
 
-    free(category_name);
+		width = XTextWidth(font_struct, category_name, (int) strlen(category_name));
+		right_category_button = (menu_button_t) { .visible = 1, .x = menu.width - width - 60, .y = 25, .x_press = menu.x + menu.width - width - 60, .y_press = menu.y + 25, .width = width + 20, .height = height + 20 };
+
+		XFillRectangle(display, menu_pixmap, gc_category_button, right_category_button.x, right_category_button.y, right_category_button.width, right_category_button.height);
+		XDrawString(display, menu_pixmap, gc_text_white, menu.width - width - 50, 50, category_name, (int) strlen(category_name));
+	}
+
+	free(category_name);
 }
 
 void menu_show_new_terminal_button(void) {
@@ -246,64 +246,64 @@ void menu_show_battery(void) {
 
 int menu_buttons_on_hover(int x, int y) {
 	const int new_terminal_is_hover = menu_new_terminal_is_hover(x, y);
-    const int logout_is_hover = menu_logout_is_hover(x, y);
+	const int logout_is_hover = menu_logout_is_hover(x, y);
 	const int sound_is_hover = menu_sound_is_hover(x, y);
 	const int brightness_is_hover = menu_brightness_is_hover(x, y);
 
 	if (new_terminal_is_hover == 1) {
-        XDefineCursor(display, window, hand_cursor);
+		XDefineCursor(display, window, hand_cursor);
 		return 1;
 	} else if (logout_is_hover == 1) {
-        XDefineCursor(display, window, hand_cursor);
-        return 2;
-    } else if (sound_is_hover == 1) {
+		XDefineCursor(display, window, hand_cursor);
+		return 2;
+	} else if (sound_is_hover == 1) {
 		XDefineCursor(display, window, hand_cursor);
 		return 3;
 	} else if (brightness_is_hover == 1) {
 		XDefineCursor(display, window, hand_cursor);
 		return 4;
 	}
-    
-    return 0;
+
+	return 0;
 }
 
 int menu_category_buttons_on_hover(int x, int y) {
-    const int left_is_hover = menu_left_category_is_hover(x, y);
-    const int right_is_hover = menu_right_category_is_hover(x, y);
+	const int left_is_hover = menu_left_category_is_hover(x, y);
+	const int right_is_hover = menu_right_category_is_hover(x, y);
 
-    if (left_is_hover == 1) {
-        XDefineCursor(display, window, hand_cursor);
-        return 1;
-    } else if (right_is_hover == 1) {
-        XDefineCursor(display, window, hand_cursor);
-        return 2;
-    }
-    
-    return 0;
+	if (left_is_hover == 1) {
+		XDefineCursor(display, window, hand_cursor);
+		return 1;
+	} else if (right_is_hover == 1) {
+		XDefineCursor(display, window, hand_cursor);
+		return 2;
+	}
+
+	return 0;
 }
 
 void menu_category_buttons_on_press(int category_button) {
-    if (category_button == 0) {
-        return;
-    } else if (category_button == 1) {
-        menu_go_to_previous_category();
-    } else if (category_button == 2) {
-        menu_go_to_next_category();
-    }
+	if (category_button == 0) {
+		return;
+	} else if (category_button == 1) {
+		menu_go_to_previous_category();
+	} else if (category_button == 2) {
+		menu_go_to_next_category();
+	}
 }
 
 void menu_go_to_previous_category(void) {
-    menu.category_index--;
-    icons_init();
-    menu_clear();
-    menu_show();
+	menu.category_index--;
+	icons_init();
+	menu_clear();
+	menu_show();
 }
 
 void menu_go_to_next_category(void) {
-    menu.category_index++;
-    icons_init();
-    menu_clear();
-    menu_show();
+	menu.category_index++;
+	icons_init();
+	menu_clear();
+	menu_show();
 }
 
 void menu_on_scroll(int button, int x, int y) {
@@ -329,15 +329,15 @@ void menu_on_scroll(int button, int x, int y) {
 int menu_left_category_is_hover(int x, int y) {
 	return
 		left_category_button.visible == 1 &&
-        x >= left_category_button.x_press && x <= left_category_button.x_press + left_category_button.width &&
-        y >= left_category_button.y_press && y <= left_category_button.y_press + left_category_button.height;
+		x >= left_category_button.x_press && x <= left_category_button.x_press + left_category_button.width &&
+		y >= left_category_button.y_press && y <= left_category_button.y_press + left_category_button.height;
 }
 
 int menu_right_category_is_hover(int x, int y) {
 	return
 		right_category_button.visible == 1 &&
-        x >= right_category_button.x_press && x <= right_category_button.x_press + right_category_button.width &&
-        y >= right_category_button.y_press && y <= right_category_button.y_press + right_category_button.height;
+		x >= right_category_button.x_press && x <= right_category_button.x_press + right_category_button.width &&
+		y >= right_category_button.y_press && y <= right_category_button.y_press + right_category_button.height;
 }
 
 int menu_apps_is_hover(int x, int y) {
@@ -351,15 +351,15 @@ int menu_apps_is_hover(int x, int y) {
 int menu_new_terminal_is_hover(int x, int y) {
 	return
 		new_terminal_menu_button.visible == 1 &&
-        x >= new_terminal_menu_button.x_press && x <= new_terminal_menu_button.x_press + new_terminal_menu_button.width &&
-        y >= new_terminal_menu_button.y_press && y <= new_terminal_menu_button.y_press + new_terminal_menu_button.height;
+		x >= new_terminal_menu_button.x_press && x <= new_terminal_menu_button.x_press + new_terminal_menu_button.width &&
+		y >= new_terminal_menu_button.y_press && y <= new_terminal_menu_button.y_press + new_terminal_menu_button.height;
 }
 
 int menu_logout_is_hover(int x, int y) {
 	return
 		logout_menu_button.visible == 1 &&
-        x >= logout_menu_button.x_press && x <= logout_menu_button.x_press + logout_menu_button.width &&
-        y >= logout_menu_button.y_press && y <= logout_menu_button.y_press + logout_menu_button.height;
+		x >= logout_menu_button.x_press && x <= logout_menu_button.x_press + logout_menu_button.width &&
+		y >= logout_menu_button.y_press && y <= logout_menu_button.y_press + logout_menu_button.height;
 }
 
 int menu_sound_is_hover(int x, int y) {

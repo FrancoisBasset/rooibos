@@ -1,16 +1,16 @@
 #ifndef ICON_H
 #define ICON_H
 typedef struct icon_t {
-    char *filename;
-    char* name;
-    char* exec;
-    int x;
-    int y;
+	char *filename;
+	char* name;
+	char* exec;
+	int x;
+	int y;
 	int x_press;
 	int y_press;
-    int width;
-    int height;
-    Pixmap pixmap;
+	int width;
+	int height;
+	Pixmap pixmap;
 } icon_t;
 
 void icons_init(void);

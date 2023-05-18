@@ -45,7 +45,7 @@ void debug(char *format, ...) {
 		}
 
 		fprintf(debug_file, " ");
-    } while ((symbol = strtok(NULL, " ")) != NULL);
+	} while ((symbol = strtok(NULL, " ")) != NULL);
 
 	free(new_format);
 

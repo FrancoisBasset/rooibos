@@ -57,12 +57,12 @@ for_arch() {
 
 if [ -f /usr/bin/apt ] 
 then
-        echo "For Debian and derivatives :"
-        for_debian
+	echo "For Debian and derivatives :"
+	for_debian
 fi
 
 if [ -f /usr/bin/pacman ]
 then
-        echo "For Arch and derivatives :"
-        for_arch
+	echo "For Arch and derivatives :"
+	for_arch
 fi

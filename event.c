@@ -31,37 +31,37 @@ Pixmap wallpaper_surface = -1;
 int first_menu_show = 0;
 
 int handle_event(void) {
-    int quit = 0;
+	int quit = 0;
 
-    XEvent event;
-    XNextEvent(display, &event);
+	XEvent event;
+	XNextEvent(display, &event);
 
-    switch (event.type) {
-        case Expose:
-            event_on_expose();
-            break;
+	switch (event.type) {
+		case Expose:
+			event_on_expose();
+			break;
 		case ButtonRelease:
 			decorator_set_selected_null();
 			break;
-        case ButtonPress:
-            quit = event_on_button_press(event.xbutton.button, event.xbutton.x, event.xbutton.y);
-            break;
-        case KeyPress:
-            event_on_key_press(event.xkey);
-            break;
-        case MotionNotify:
-            event_on_motion(event.xmotion.x, event.xmotion.y);
-            break;
+		case ButtonPress:
+			quit = event_on_button_press(event.xbutton.button, event.xbutton.x, event.xbutton.y);
+			break;
+		case KeyPress:
+			event_on_key_press(event.xkey);
+			break;
+		case MotionNotify:
+			event_on_motion(event.xmotion.x, event.xmotion.y);
+			break;
 		case MapNotify:
 		case ConfigureNotify:
-            event_on_configure(event.xconfigure.window, event.xconfigure.x, event.xconfigure.y, event.xconfigure.width, event.xcreatewindow.height);
-            break;
-        case PropertyNotify:
+			event_on_configure(event.xconfigure.window, event.xconfigure.x, event.xconfigure.y, event.xconfigure.width, event.xcreatewindow.height);
+			break;
+		case PropertyNotify:
 			event_on_property(event.xproperty.window);
-            break;
-        case DestroyNotify:
-            event_on_destroy(event.xdestroywindow.window);
-            break;
+			break;
+		case DestroyNotify:
+			event_on_destroy(event.xdestroywindow.window);
+			break;
 		case FocusIn:
 			window_focus = window_get(event.xfocus.window);
 			taskbar_update_windows();
@@ -72,27 +72,27 @@ int handle_event(void) {
 				window_focus = new_window_focus;
 				taskbar_update_windows();
 				XEvent e = { .type = Expose };
-            	XSendEvent(display, window, 0, ExposureMask, &e);
+				XSendEvent(display, window, 0, ExposureMask, &e);
 			}
 			break;
 		}
 		case 65:
 			break;
-        default:
+		default:
 #ifdef WILLDEBUG
 			debug("Event not implemented : %d", event.type);
 #endif
-            break;
-    }
+			break;
+	}
 
-    XFlush(display);
+	XFlush(display);
 
-    return quit;
+	return quit;
 }
 
 void event_on_expose(void) {
 	if (menu.is_showed == 0 || first_menu_show == 0) {
-    	show_wallpaper(0);
+		show_wallpaper(0);
 	}
 
 	if (menu.is_showed == 0) {
@@ -108,16 +108,16 @@ void event_on_expose(void) {
 
 	first_menu_show = menu.is_showed;
 
-    if (menu.is_showed == 1) {
-        menu_show();
-    } else {
+	if (menu.is_showed == 1) {
+		menu_show();
+	} else {
 		taskbar_show();
 		decorator_show_all();
-    }
-	
-    if (prompt_active == 1) {
-        prompt_show();
-    }
+	}
+
+	if (prompt_active == 1) {
+		prompt_show();
+	}
 }
 
 int event_on_button_press(int button, int x, int y) {
@@ -137,25 +137,25 @@ int event_on_button_press(int button, int x, int y) {
 }
 
 int event_on_left_button_press(int x, int y) {
-    int quit = 0;
+	int quit = 0;
 
-    if (menu.is_showed == 0 && taskbar_is_pressed(x, y)) {
-        taskbar_on_press(x, y);
-    } else if (menu.is_showed == 0 && decorator_on_hover(x, y) != 0) {
+	if (menu.is_showed == 0 && taskbar_is_pressed(x, y)) {
+		taskbar_on_press(x, y);
+	} else if (menu.is_showed == 0 && decorator_on_hover(x, y) != 0) {
 		decorator_on_press(x, y);
 
 		XEvent e = { .type = Expose };
 		XSendEvent(display, window, 0, ExposureMask, &e);
 	}
 
-    if (menu.is_showed == 1) {
-        if (x >= menu.x && x <= menu.x + menu.width && y >= menu.y && y <= menu.y + menu.height) {
-            if (menu_apps_is_hover(x, y)) {
+	if (menu.is_showed == 1) {
+		if (x >= menu.x && x <= menu.x + menu.width && y >= menu.y && y <= menu.y + menu.height) {
+			if (menu_apps_is_hover(x, y)) {
 				icons_on_press(x, y);
 			}
 
-            int category_button = menu_category_buttons_on_hover(x, y);
-            menu_category_buttons_on_press(category_button);
+			int category_button = menu_category_buttons_on_hover(x, y);
+			menu_category_buttons_on_press(category_button);
 
 			int menu_button = menu_buttons_on_hover(x, y);
 			if (menu_button == 1) {
@@ -163,27 +163,27 @@ int event_on_left_button_press(int x, int y) {
 			} else if (menu_button == 2) {
 				quit = 1;
 			}
-        } else {
-            menu_clear();
-            window_show_all_visible();
-            taskbar_show();
-        }
-    }
+		} else {
+			menu_clear();
+			window_show_all_visible();
+			taskbar_show();
+		}
+	}
 
-    return quit;
+	return quit;
 }
 
 int event_on_right_button_press(int x, int y) {
-    return 0;
+	return 0;
 }
 
 void event_on_key_press(XKeyEvent key_event) {
-    KeySym key_sym = XLookupKeysym(&key_event, 0);
+	KeySym key_sym = XLookupKeysym(&key_event, 0);
 
-    if (prompt_active == 1) {    
-        prompt_on_key_press(key_event, key_sym);
+	if (prompt_active == 1) {
+		prompt_on_key_press(key_event, key_sym);
 		return;
-    } 
+	} 
 	
 	switch (key_sym) {
 		case XK_Super_L:
@@ -214,7 +214,7 @@ void event_on_key_press(XKeyEvent key_event) {
 				menu_go_to_next_category();
 			}
 			break;
-     	case XK_Up:
+	 	case XK_Up:
 			if (menu.is_showed == 1) {
 				icon_scroll_up();
 				XEvent e = { .type = Expose };
@@ -235,7 +235,7 @@ void event_on_key_press(XKeyEvent key_event) {
 				taskbar_show();
 			}
 			break;
-    	case XK_Control_L:
+		case XK_Control_L:
 			if (prompt_active == 0 && menu.is_showed == 0) {
 				prompt_show();
 			}
@@ -268,31 +268,31 @@ void event_on_key_press(XKeyEvent key_event) {
 			XSendEvent(display, window, 0, ExposureMask, &e);
 			break;
 		}
-    }
+	}
 }
 
 void event_on_motion(int x, int y) {
-    if (menu.is_showed == 1) {
-        if (icons_on_hover(x, y) == 0) {
-            if (menu_category_buttons_on_hover(x, y) == 0 && menu_buttons_on_hover(x, y) == 0) {
-			    XDefineCursor(display, window, cursor);
+	if (menu.is_showed == 1) {
+		if (icons_on_hover(x, y) == 0) {
+			if (menu_category_buttons_on_hover(x, y) == 0 && menu_buttons_on_hover(x, y) == 0) {
+				XDefineCursor(display, window, cursor);
 			}
-        }
-    } else {
+		}
+	} else {
 		const int decorator_hover = decorator_on_hover(x, y);
-        if (decorator_hover == 5) {
+		if (decorator_hover == 5) {
 			XDefineCursor(display, window, resize_cursor);
-        } else if (decorator_hover != 0 && decorator_hover != 1) {
-            XDefineCursor(display, window, hand_cursor);
+		} else if (decorator_hover != 0 && decorator_hover != 1) {
+			XDefineCursor(display, window, hand_cursor);
 		} else {
-            XDefineCursor(display, window, cursor);
-        }        
-    }
+			XDefineCursor(display, window, cursor);
+		}
+	}
 }
 
 void event_on_configure(Window child, int x, int y, int width, int height) {
 	char *title;
-    XFetchName(display, child, &title);
+	XFetchName(display, child, &title);
 
 	if (title == NULL || strcmp(title, "rooibos") == 0) {
 		return;
@@ -309,13 +309,13 @@ void event_on_configure(Window child, int x, int y, int width, int height) {
 		title_launched = NULL;
 	}
 
-    if (menu.is_showed == 1) {
-        menu_clear();
-        window_show_all_visible();
-        taskbar_show();
-    }
+	if (menu.is_showed == 1) {
+		menu_clear();
+		window_show_all_visible();
+		taskbar_show();
+	}
 
-    if (window_get(child) == NULL) {
+	if (window_get(child) == NULL) {
 		XMapWindow(display, child);
 		XSelectInput(display, child, PropertyChangeMask | KeyPressMask | FocusChangeMask | EnterWindowMask);
 		XGrabKey(display, XKeysymToKeycode(display, XK_Super_L), AnyModifier, child, True, GrabModeSync, GrabModeSync);
@@ -349,8 +349,8 @@ void event_on_configure(Window child, int x, int y, int width, int height) {
 }
 
 void event_on_property(Window child) {
-    char *title;
-    XFetchName(display, child, &title);
+	char *title;
+	XFetchName(display, child, &title);
 
 	if (strcmp(title, "") != 0) {
 		window_update(child, "title", title);
@@ -370,13 +370,13 @@ void event_on_destroy(Window child) {
 		window_focus = NULL;
 	}
 	
-    window_delete(child);
-    taskbar_update_windows();
-    if (menu.is_showed == 0) {
-        taskbar_show();
+	window_delete(child);
+	taskbar_update_windows();
+	if (menu.is_showed == 0) {
+		taskbar_show();
 		XEvent e = { .type = Expose };
 		XSendEvent(display, window, 0, ExposureMask, &e);
-    }
+	}
 }
 
 void new_window(void) {
@@ -391,11 +391,11 @@ void show_wallpaper(int splash) {
 		height = screen_height;
 	}
 
-    if (wallpaper_surface == -1) {
+	if (wallpaper_surface == -1) {
 		char *wallpaper_to_use = utils_get(UTILS_WALLPAPER_TO_USE);
 		wallpaper_surface = icon_get_pixmap(wallpaper_to_use, screen_width, height);
 		free(wallpaper_to_use);
-    }
+	}
 
 	XCopyArea(display, wallpaper_surface, window, XDefaultGCOfScreen(screen), 0, 0, screen_width, height, 0, 0);
 }

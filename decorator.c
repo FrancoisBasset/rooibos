@@ -17,7 +17,7 @@ void decorator_show_all() {
 	window_reset();
 
 	window_t *w = window_next();
-    while (w != NULL) {
+	while (w != NULL) {
 		if (w->visible == 0) {
 			w = window_next();
 			continue;
