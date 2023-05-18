@@ -12,7 +12,6 @@
 #include "window.h"
 #include "rooibos.h"
 #include "taskbar.h"
-#include "toolbar.h"
 #include "cache.h"
 #include "icon.h"
 #include "menu.h"
@@ -22,9 +21,7 @@
 #include "brightness.h"
 #include "decorator.h"
 
-char mode = ' ';
 window_t *window_focus = NULL;
-int resizing = 0;
 char *title_launched = NULL;
 
 int sound_is_show = 0;
@@ -115,7 +112,6 @@ void event_on_expose(void) {
         menu_show();
     } else {
 		taskbar_show();
-        toolbar_show();
 		decorator_show_all();
     }
 	
@@ -145,19 +141,12 @@ int event_on_left_button_press(int x, int y) {
 
     if (menu.is_showed == 0 && taskbar_is_pressed(x, y)) {
         taskbar_on_press(x, y);
-    } else if (menu.is_showed == 0 && prompt_active == 0 && toolbar_is_hover(y)) {
-        quit = toolbar_on_press(x);
     } else if (menu.is_showed == 0 && decorator_on_hover(x, y) != 0) {
 		decorator_on_press(x, y);
 
 		XEvent e = { .type = Expose };
 		XSendEvent(display, window, 0, ExposureMask, &e);
 	}
-
-    if (mode != ' ' && resizing == 1) {
-        resizing = 0;
-        mode = ' ';
-    }
 
     if (menu.is_showed == 1) {
         if (x >= menu.x && x <= menu.x + menu.width && y >= menu.y && y <= menu.y + menu.height) {
@@ -178,7 +167,6 @@ int event_on_left_button_press(int x, int y) {
             menu_clear();
             window_show_all_visible();
             taskbar_show();
-            toolbar_show();
         }
     }
 
@@ -208,13 +196,11 @@ void event_on_key_press(XKeyEvent key_event) {
 
 				window_hide_all_visible();
 				taskbar_hide();
-				toolbar_hide();
 				menu_show();
 			} else {
 				menu_clear();
 				window_show_all_visible();
 				taskbar_show();
-				toolbar_show();
 				XDefineCursor(display, window, cursor);
 			}
 			break;
@@ -247,7 +233,6 @@ void event_on_key_press(XKeyEvent key_event) {
 				menu_clear();
 				window_show_all_visible();
 				taskbar_show();
-				toolbar_show();
 			}
 			break;
     	case XK_Control_L:
@@ -287,13 +272,6 @@ void event_on_key_press(XKeyEvent key_event) {
 }
 
 void event_on_motion(int x, int y) {
-    if (mode == 'r' && window_focus != 0) {
-        resizing = 1;
-        XResizeWindow(display, window_focus->id, (x - window_focus->x) - 10, (y - window_focus->y) - 10);
-		XEvent e = { .type = Expose };
-		XSendEvent(display, window, 0, ExposureMask, &e);
-    }
-    
     if (menu.is_showed == 1) {
         if (icons_on_hover(x, y) == 0) {
             if (menu_category_buttons_on_hover(x, y) == 0 && menu_buttons_on_hover(x, y) == 0) {
@@ -301,10 +279,8 @@ void event_on_motion(int x, int y) {
 			}
         }
     } else {
-		int decorator_hover = decorator_on_hover(x, y);
-        if (prompt_active == 0 && toolbar_is_hover(y) == 1) {
-            XDefineCursor(display, window, hand_cursor);
-		} else if (decorator_hover == 5) {
+		const int decorator_hover = decorator_on_hover(x, y);
+        if (decorator_hover == 5) {
 			XDefineCursor(display, window, resize_cursor);
         } else if (decorator_hover != 0 && decorator_hover != 1) {
             XDefineCursor(display, window, hand_cursor);
@@ -337,7 +313,6 @@ void event_on_configure(Window child, int x, int y, int width, int height) {
         menu_clear();
         window_show_all_visible();
         taskbar_show();
-        toolbar_show();
     }
 
     if (window_get(child) == NULL) {
@@ -349,7 +324,7 @@ void event_on_configure(Window child, int x, int y, int width, int height) {
 		
 		window_add(new_window_);
 		taskbar_update_windows();
-		XMoveResizeWindow(display, child, 0, 20, screen_width, screen_height - 120);
+		XMoveResizeWindow(display, child, 0, 20, screen_width, screen_height - 70);
 	} else {
 		window_focus = window_get(child);
 		if (strcmp(title, "") != 0) {
@@ -394,7 +369,7 @@ void event_on_destroy(Window child) {
 	if (window_focus != NULL && window_focus->id == child) {
 		window_focus = NULL;
 	}
-    mode = ' ';
+	
     window_delete(child);
     taskbar_update_windows();
     if (menu.is_showed == 0) {
@@ -411,7 +386,7 @@ void new_window(void) {
 }
 
 void show_wallpaper(int splash) {
-	int height = screen_height - 100;
+	int height = screen_height - 50;
 	if (menu.is_showed == 1 || splash == 1) {
 		height = screen_height;
 	}

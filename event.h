@@ -2,9 +2,7 @@
 #define EVENT_H
 #include <X11/Xlib.h>
 #include "window.h"
-extern char mode;
 extern window_t *window_focus;
-extern int resizing;
 extern char *title_launched;
 
 int handle_event(void);

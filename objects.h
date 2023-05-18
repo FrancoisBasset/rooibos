@@ -24,7 +24,6 @@ extern Cursor wait_cursor;
 extern Cursor resize_cursor;
 
 extern Colormap colormap;
-extern XColor color_resize_window;
 extern XColor color_back_menu;
 extern XColor color_battery_ok;
 extern XColor color_battery_ko;
@@ -41,7 +40,6 @@ extern GC gc_taskbar_button;
 extern GC gc_taskbar_button_focus;
 extern GC gc_taskbar_button_hidden;
 extern GC gc_taskbar_button_border;
-extern GC gc_toolbar_button;
 extern GC gc_menu;
 extern GC gc_battery;
 

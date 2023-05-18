@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-05-18
+### Removed
+*   I removed dead code of toolbar
+
 ## 2023-05-17
 ### Added
 *   I added the first version of window decoration

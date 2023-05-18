@@ -25,7 +25,6 @@ Cursor wait_cursor;
 Cursor resize_cursor;
 
 Colormap colormap;
-XColor color_resize_window;
 XColor color_category_button;
 XColor color_back_menu;
 XColor color_battery_ok;
@@ -43,7 +42,6 @@ GC gc_taskbar_button;
 GC gc_taskbar_button_focus;
 GC gc_taskbar_button_hidden;
 GC gc_taskbar_button_border;
-GC gc_toolbar_button;
 GC gc_menu;
 GC gc_battery;
 
@@ -75,7 +73,6 @@ void objects_init(void) {
 	resize_cursor = XCreateFontCursor(display, XC_sizing);
 
     colormap = XDefaultColormapOfScreen(screen);
-	color_resize_window = objects_color(30000, 30000, 0);
     color_category_button = objects_color(0, 40000, 0);
 	color_back_menu = objects_color(40000, 40000, 40000);
 	color_battery_ok = objects_color(0, 65535, 0);
@@ -123,9 +120,6 @@ void objects_init(void) {
 
     XGCValues gcv_taskbar_button_border = { .foreground = color_taskbar.pixel, .background = black_pixel };
     gc_taskbar_button_border = XCreateGC(display, window, GCForeground | GCBackground, &gcv_taskbar_button_border);
-
-	XGCValues gcv_toolbar_button = (XGCValues) { .foreground = white_pixel };
-	gc_toolbar_button = XCreateGC(display, window, GCForeground, &gcv_toolbar_button);
 
 	XGCValues values = { .foreground = color_back_menu.pixel };
     gc_menu = XCreateGC(display, window, GCForeground, &values);

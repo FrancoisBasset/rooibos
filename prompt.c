@@ -24,12 +24,12 @@ void prompt_init(void) {
 }
 
 void prompt_show(void) {
-    XFillRectangle(display, window, gc_text_black, 0, screen_height - 100, screen_width, 50);
-    XDrawString(display, window, gc_text_white, 0, screen_height - 73, "$ ", 2);
-    XDrawString(display, window, gc_text_white, 10, screen_height - 73, command, (int) strlen(command));
+    XFillRectangle(display, window, gc_text_black, 0, screen_height - 50, screen_width, 50);
+    XDrawString(display, window, gc_text_white, 0, screen_height - 23, "$ ", 2);
+    XDrawString(display, window, gc_text_white, 10, screen_height - 23, command, (int) strlen(command));
 
     int width = XTextWidth(font_struct, command, cursor_index);
-    XDrawLine(display, window, gc_text_white, 10 + width, screen_height - 82, 10 + width, screen_height - 72);
+    XDrawLine(display, window, gc_text_white, 10 + width, screen_height - 32, 10 + width, screen_height - 22);
 
     prompt_active = 1;
 }

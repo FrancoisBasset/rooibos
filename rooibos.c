@@ -4,7 +4,6 @@
 #include <gdk-pixbuf-xlib/gdk-pixbuf-xlib.h>
 #include "rooibos.h"
 #include "objects.h"
-#include "toolbar.h"
 #include "taskbar.h"
 #include "event.h"
 #include "icon.h"
@@ -24,7 +23,6 @@ void rooibos(void) {
 
 	XDefineCursor(display, window, wait_cursor);
 	
-	toolbar_init();
 	taskbar_init();
 	prompt_init();
 	windows_init();

@@ -14,7 +14,6 @@ All my tasks will be written in this file.
 -   [ ] Create another logo
 
 ### In Progress
--   [ ] Window decoration
 
 ### Done
 -   [X] Prepare Kanban
@@ -87,3 +86,4 @@ All my tasks will be written in this file.
 -   [X] Battery panel
 -   [X] Checking executable existence
 -   [X] Color method
+-   [X] Window decoration

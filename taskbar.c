@@ -95,7 +95,7 @@ void taskbar_show() {
 }
 
 void taskbar_hide(void) {
-	XClearArea(display, window, 0, screen_height, screen_width, 100, 1);
+	XClearArea(display, window, 0, screen_height - 50, screen_width, 50, 1);
 }
 
 int taskbar_is_pressed(int x, int y) {

@@ -122,7 +122,7 @@ void decorator_on_press(int x, int y) {
 			}
 			break;
 		case 3:
-			XMoveResizeWindow(display, window_selected, 0, 20, screen_width, screen_height - 120);
+			XMoveResizeWindow(display, window_selected, 0, 20, screen_width, screen_height - 70);
 			window_focus->x = 0;
 			window_focus->y = 20;
 			window_focus->width = screen_width;
