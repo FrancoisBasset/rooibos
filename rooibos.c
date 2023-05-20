@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <X11/keysym.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gdk-pixbuf-xlib/gdk-pixbuf-xlib.h>
 #include "rooibos.h"
@@ -12,6 +11,7 @@
 #include "utils.h"
 #include "splash.h"
 #include "sound.h"
+#include "lock.h"
 
 void rooibos(void) {
 	objects_init();
@@ -40,6 +40,9 @@ void rooibos(void) {
 
 		if (quit == 1) {
 			break;
+		}
+		if (quit == 2) {
+			lock_start();
 		}
 	}
 

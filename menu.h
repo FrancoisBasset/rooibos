@@ -28,6 +28,7 @@ extern int categories_length;
 extern menu_button_t left_category_button;
 extern menu_button_t right_category_button;
 extern menu_button_t logout_menu_button;
+extern menu_button_t lock_menu_button;
 extern menu_button_t new_terminal_menu_button;
 
 extern int up_line_y;
@@ -43,6 +44,7 @@ void menu_show(void);
 void menu_show_categories(void);
 void menu_show_new_terminal_button(void);
 void menu_show_logout_button(void);
+void menu_show_lock_button(void);
 void menu_show_sound(void);
 void menu_show_brightness(void);
 void menu_show_battery(void);
@@ -52,6 +54,7 @@ int menu_right_category_is_hover(int x, int y);
 int menu_apps_is_hover(int x, int y);
 int menu_new_terminal_is_hover(int x, int y);
 int menu_logout_is_hover(int x, int y);
+int menu_lock_is_hover(int x, int y);
 int menu_sound_is_hover(int x, int y);
 int menu_brightness_is_hover(int x, int y);
 

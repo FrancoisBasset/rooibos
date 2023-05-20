@@ -13,11 +13,10 @@ All my tasks will be written in this file.
 -   [ ] Make own wallpaper
 -   [ ] Create another logo
 -   [ ] Virtual desktops
--   [ ] Modify the wallpaper
 -   [ ] Desktops shortcuts
 
 ### In Progress
--   [ ] Lock screen
+-   [ ] Modify the wallpaper
 
 ### Done
 -   [X] Prepare Kanban
@@ -92,3 +91,4 @@ All my tasks will be written in this file.
 -   [X] Color method
 -   [X] Window decoration
 -   [X] Better window decorator
+-   [X] Lock screen

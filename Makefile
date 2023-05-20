@@ -2,7 +2,7 @@ CFLAGS = -Werror -O3
 VERSION = $(shell cat VERSION)
 ARCH = $(shell uname --machine)
 VERSION_LENGTH = $$(( $(shell wc -m < VERSION) - 1 ))
-OBJECTS = VERSION.h utils.o appshortcut.o cache.o objects.o window.o icon.o taskbar.o menu.o event.o prompt.o debug.o splash.o sound.o brightness.o battery.o decorator.o rooibos.o main.o
+OBJECTS = VERSION.h utils.o appshortcut.o cache.o objects.o window.o icon.o taskbar.o menu.o event.o prompt.o debug.o splash.o sound.o brightness.o battery.o decorator.o lock.o rooibos.o main.o
 #WILLDEBUG = -DWILLDEBUG
 
 ifndef WILLDEBUG
@@ -19,7 +19,7 @@ endif
 
 rooibos: $(OBJECTS)
 	@echo "Compiling executable..."
-	@gcc $(CFLAGS) $(WILLDEBUG) *.o -o rooibos -lsqlite3 -lX11 -lgdk_pixbuf-2.0 -lgdk_pixbuf_xlib-2.0 -lasound
+	@gcc $(CFLAGS) $(WILLDEBUG) *.o -o rooibos -lsqlite3 -lX11 -lgdk_pixbuf-2.0 -lgdk_pixbuf_xlib-2.0 -lasound -lpam
 	@echo "Striping executable..."
 	@strip rooibos
 	@echo "\033[0;32mCompiling success !\033[0m"

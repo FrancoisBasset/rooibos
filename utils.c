@@ -49,6 +49,12 @@ char* utils_get(utils_t util) {
 		case UTILS_LOGOUT:
 			result = utils_get_assets("logout.png");
 			break;
+		case UTILS_LOCK:
+			result = utils_get_assets("lock.png");
+			break;
+		case UTILS_COMPUTER:
+			result = utils_get_assets("computer.png");
+			break;
 		case UTILS_SOUND:
 			result = utils_get_assets("sound.png");
 			break;

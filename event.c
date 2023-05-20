@@ -30,8 +30,10 @@ int brightness_is_show = 0;
 Pixmap wallpaper_surface = -1;
 int first_menu_show = 0;
 
+int quit = 0;
+
 int handle_event(void) {
-	int quit = 0;
+	quit = 0;
 
 	XEvent event;
 	XNextEvent(display, &event);
@@ -162,6 +164,10 @@ int event_on_left_button_press(int x, int y) {
 				new_window();
 			} else if (menu_button == 2) {
 				quit = 1;
+			} else if (menu_button == 3) {
+				quit = 2;
+				menu_clear();
+				XDefineCursor(display, window, cursor);
 			}
 		} else {
 			menu_clear();
@@ -233,6 +239,11 @@ void event_on_key_press(XKeyEvent key_event) {
 				menu_clear();
 				window_show_all_visible();
 				taskbar_show();
+			} else {
+				quit = 2;
+				menu_clear();
+				window_hide_all_visible();
+				XDefineCursor(display, window, cursor);
 			}
 			break;
 		case XK_Control_L:

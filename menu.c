@@ -20,6 +20,7 @@ int categories_length = 0;
 menu_button_t left_category_button;
 menu_button_t right_category_button;
 menu_button_t logout_menu_button;
+menu_button_t lock_menu_button;
 menu_button_t new_terminal_menu_button;
 
 int up_line_y = 0;
@@ -59,6 +60,7 @@ void menu_show(void) {
 	XDrawLine(display, menu_pixmap, gc_text_white, 0, bottom_line_y, menu.width, bottom_line_y);
 	menu_show_new_terminal_button();
 	menu_show_logout_button();
+	menu_show_lock_button();
 	menu_show_sound();
 	menu_show_brightness();
 	menu_show_battery();
@@ -147,6 +149,18 @@ void menu_show_logout_button(void) {
 	logout_menu_button = (menu_button_t) { .visible = 1, .x = x, .y = y, .x_press = menu.x + x, .y_press = menu.y + y, .width = 40, .height = 40 };
 }
 
+void menu_show_lock_button(void) {	
+	char *lock_path = utils_get(UTILS_LOCK);
+	Pixmap pixmap = icon_get_pixmap(lock_path, 40, 40);
+	free(lock_path);
+
+	const int x = menu.width - 120;
+	const int y = menu.height - 50;
+	XCopyArea(display, pixmap, menu_pixmap, XDefaultGCOfScreen(screen), 0, 0, 40, 40, x, y);
+
+	lock_menu_button = (menu_button_t) { .visible = 1, .x = x, .y = y, .x_press = menu.x + x, .y_press = menu.y + y, .width = 40, .height = 40 };
+}
+
 void menu_show_sound(void) {
 	int volume = sound_get_volume();
 	char *text = malloc(sizeof(char) * 4);
@@ -160,7 +174,7 @@ void menu_show_sound(void) {
 
 	free(text);
 
-	const int x = menu.width - 120;
+	const int x = menu.width - 170;
 	const int y = menu.height - 50;
 
 	icon_sound = (icon_t) {
@@ -185,7 +199,7 @@ void menu_show_brightness(void) {
 
 	free(text);
 
-	const int x = menu.width - 170;
+	const int x = menu.width - 220;
 	const int y = menu.height - 50;
 
 	icon_brightness = (icon_t) {
@@ -238,7 +252,7 @@ void menu_show_battery(void) {
 		XCopyArea(display, charging_pixmap, battery_pixmap, XDefaultGCOfScreen(screen), 0, 0, 20, 20, 20, 20);
 	}
 
-	const int x = menu.width - 200 - margin;
+	const int x = menu.width - 250 - margin;
 	const int y = menu.height - 50;
 
 	XCopyArea(display, battery_pixmap, menu_pixmap, XDefaultGCOfScreen(screen), 0, 0, 20 + margin, 40, x, y);
@@ -247,6 +261,7 @@ void menu_show_battery(void) {
 int menu_buttons_on_hover(int x, int y) {
 	const int new_terminal_is_hover = menu_new_terminal_is_hover(x, y);
 	const int logout_is_hover = menu_logout_is_hover(x, y);
+	const int lock_is_hover = menu_lock_is_hover(x, y);
 	const int sound_is_hover = menu_sound_is_hover(x, y);
 	const int brightness_is_hover = menu_brightness_is_hover(x, y);
 
@@ -256,12 +271,15 @@ int menu_buttons_on_hover(int x, int y) {
 	} else if (logout_is_hover == 1) {
 		XDefineCursor(display, window, hand_cursor);
 		return 2;
-	} else if (sound_is_hover == 1) {
+	} else if (lock_is_hover == 1) {
 		XDefineCursor(display, window, hand_cursor);
 		return 3;
-	} else if (brightness_is_hover == 1) {
+	} else if (sound_is_hover == 1) {
 		XDefineCursor(display, window, hand_cursor);
 		return 4;
+	} else if (brightness_is_hover == 1) {
+		XDefineCursor(display, window, hand_cursor);
+		return 5;
 	}
 
 	return 0;
@@ -360,6 +378,13 @@ int menu_logout_is_hover(int x, int y) {
 		logout_menu_button.visible == 1 &&
 		x >= logout_menu_button.x_press && x <= logout_menu_button.x_press + logout_menu_button.width &&
 		y >= logout_menu_button.y_press && y <= logout_menu_button.y_press + logout_menu_button.height;
+}
+
+int menu_lock_is_hover(int x, int y) {
+	return
+		lock_menu_button.visible == 1 &&
+		x >= lock_menu_button.x_press && x <= lock_menu_button.x_press + lock_menu_button.width &&
+		y >= lock_menu_button.y_press && y <= lock_menu_button.y_press + lock_menu_button.height;
 }
 
 int menu_sound_is_hover(int x, int y) {
