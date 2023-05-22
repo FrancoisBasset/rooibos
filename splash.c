@@ -8,9 +8,10 @@
 #include "icon.h"
 #include "event.h"
 #include "splash.h"
+#include "wallpaper.h"
 
 void splash_start(void) {
-	show_wallpaper(1);
+	wallpaper_show(1);
 
 	int have_cache = access(utils_get(UTILS_CACHE), F_OK) == 0;
 

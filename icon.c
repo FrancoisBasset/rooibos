@@ -45,26 +45,28 @@ Pixmap icon_get_pixmap(const char *filename, int width, int height) {
 
 	guchar *data = gdk_pixbuf_get_pixels(pixbuf);
 
-	for (int y = 0; y < height; y++) {
-		for (int x = 0; x < width; x++) {
-			int src_offset = y * rowstride + x * n_channels;
+	if (width != screen_width) {
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				int src_offset = y * rowstride + x * n_channels;
 
-			guchar r = data[src_offset];
-			guchar g = data[src_offset + 1];
-			guchar b = data[src_offset + 2];
-			guchar a = data[src_offset + 3];
-			
-			if (r == 0 && g == 0 && b == 0 && a == 0) {
-				r = 155;
-				g = 155;
-				b = 155;
+				guchar r = data[src_offset];
+				guchar g = data[src_offset + 1];
+				guchar b = data[src_offset + 2];
+				guchar a = data[src_offset + 3];
+				
+				if (r == 0 && g == 0 && b == 0 && a == 0) {
+					r = 155;
+					g = 155;
+					b = 155;
+				}
+				
+				int dest_offset = y * rowstride + x * n_channels;
+				data[dest_offset] = r;
+				data[dest_offset + 1] = g;
+				data[dest_offset + 2] = b;
+				data[dest_offset + 3] = a;
 			}
-			
-			int dest_offset = y * rowstride + x * n_channels;
-			data[dest_offset] = r;
-			data[dest_offset + 1] = g;
-			data[dest_offset + 2] = b;
-			data[dest_offset + 3] = a;
 		}
 	}
 

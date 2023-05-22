@@ -16,5 +16,4 @@ void event_on_configure(Window child, int x, int y, int width, int height);
 void event_on_property(Window child);
 void event_on_destroy(Window child);
 void new_window(void);
-void show_wallpaper(int splash);
 #endif

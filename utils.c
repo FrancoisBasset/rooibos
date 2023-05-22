@@ -77,20 +77,13 @@ static char* utils_get_wallpaper_to_use() {
 	char *wallpaper_file_path = malloc(sizeof(char) * 200);
 	strcpy(wallpaper_file_path, "/usr/share/rooibos/wallpaper.jpg");
 
-	char *folder = utils_get(UTILS_FOLDER);
-	char *local = utils_find_first(folder, "wallpaper.");
-	free(folder);
-	if (local != NULL) {
-		strcpy(wallpaper_file_path, local);
-		free(local);
-	}
-
-
+	#ifdef WILLDEBUG
 	char *dev = utils_find_first("./assets/", "wallpaper.");
 	if (dev != NULL) {
 		strcpy(wallpaper_file_path, dev);
 		free(dev);
 	}
+	#endif
 
 	return wallpaper_file_path;
 }
@@ -99,19 +92,13 @@ static char* utils_get_logo_to_use() {
 	char *logo_file_path = malloc(sizeof(char) * 200);
 	strcpy(logo_file_path, "/usr/share/rooibos/logo.svg");
 
-	char *folder = utils_get(UTILS_FOLDER);
-	char *local = utils_find_first(folder, "logo.");
-	free(folder);
-	if (local != NULL) {
-		strcpy(logo_file_path, local);
-		free(local);
-	}
-
+	#ifdef WILLDEBUG
 	char *dev = utils_find_first("./assets/", "logo.");
 	if (dev != NULL) {
 		strcpy(logo_file_path, dev);
 		free(dev);
 	}
+	#endif
 
 	return logo_file_path;
 }

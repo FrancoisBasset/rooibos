@@ -9,4 +9,6 @@ int cache_init_table(sqlite3 *db, const char *sql);
 char** cache_get_history(int *length);
 void cache_add_history(const char *command);
 int cache_exec_exists(const char *exec, const char* file);
+char* cache_get_wallpaper(void);
+void cache_set_wallpaper(const char *wallpaper_file);
 #endif

@@ -20,6 +20,8 @@
 #include "sound.h"
 #include "brightness.h"
 #include "decorator.h"
+#include "right_click_panel.h"
+#include "wallpaper.h"
 
 window_t *window_focus = NULL;
 char *title_launched = NULL;
@@ -27,7 +29,6 @@ char *title_launched = NULL;
 int sound_is_show = 0;
 int brightness_is_show = 0;
 
-Pixmap wallpaper_surface = -1;
 int first_menu_show = 0;
 
 int quit = 0;
@@ -41,12 +42,17 @@ int handle_event(void) {
 	switch (event.type) {
 		case Expose:
 			event_on_expose();
+			wallpaper_expose();
 			break;
 		case ButtonRelease:
 			decorator_set_selected_null();
 			break;
 		case ButtonPress:
-			quit = event_on_button_press(event.xbutton.button, event.xbutton.x, event.xbutton.y);
+			if (event.xbutton.window == wallpaper_window) {
+				wallpaper_on_press(event.xbutton.x, event.xbutton.y);
+			} else {
+				quit = event_on_button_press(event.xbutton.button, event.xbutton.x, event.xbutton.y);
+			}
 			break;
 		case KeyPress:
 			event_on_key_press(event.xkey);
@@ -94,7 +100,7 @@ int handle_event(void) {
 
 void event_on_expose(void) {
 	if (menu.is_showed == 0 || first_menu_show == 0) {
-		show_wallpaper(0);
+		wallpaper_show(0);
 	}
 
 	if (menu.is_showed == 0) {
@@ -141,6 +147,9 @@ int event_on_button_press(int button, int x, int y) {
 int event_on_left_button_press(int x, int y) {
 	int quit = 0;
 
+	quit = right_click_panel_on_press(x, y);
+	right_click_panel_hide();
+
 	if (menu.is_showed == 0 && taskbar_is_pressed(x, y)) {
 		taskbar_on_press(x, y);
 	} else if (menu.is_showed == 0 && decorator_on_hover(x, y) != 0) {
@@ -180,6 +189,7 @@ int event_on_left_button_press(int x, int y) {
 }
 
 int event_on_right_button_press(int x, int y) {
+	right_click_panel_show(x, y);
 	return 0;
 }
 
@@ -189,6 +199,10 @@ void event_on_key_press(XKeyEvent key_event) {
 	if (prompt_active == 1) {
 		prompt_on_key_press(key_event, key_sym);
 		return;
+	}
+
+	if (key_event.window == wallpaper_window) {
+		wallpaper_on_key_press(key_event);
 	} 
 	
 	switch (key_sym) {
@@ -298,6 +312,8 @@ void event_on_motion(int x, int y) {
 		} else {
 			XDefineCursor(display, window, cursor);
 		}
+
+		right_click_panel_on_hover(x, y);
 	}
 }
 
@@ -394,19 +410,4 @@ void new_window(void) {
 	if (fork() == 0) {
 		execlp("xterm", "xterm", NULL);
 	}
-}
-
-void show_wallpaper(int splash) {
-	int height = screen_height - 50;
-	if (menu.is_showed == 1 || splash == 1) {
-		height = screen_height;
-	}
-
-	if (wallpaper_surface == -1) {
-		char *wallpaper_to_use = utils_get(UTILS_WALLPAPER_TO_USE);
-		wallpaper_surface = icon_get_pixmap(wallpaper_to_use, screen_width, height);
-		free(wallpaper_to_use);
-	}
-
-	XCopyArea(display, wallpaper_surface, window, XDefaultGCOfScreen(screen), 0, 0, screen_width, height, 0, 0);
 }

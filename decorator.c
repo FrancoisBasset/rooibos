@@ -5,6 +5,7 @@
 #include "window.h"
 #include "event.h"
 #include "taskbar.h"
+#include "wallpaper.h"
 
 window_t *current;
 int pressed = 0;
@@ -49,6 +50,11 @@ int decorator_on_hover(int x, int y) {
 			if (x >= w->decorator.x && x <= w->decorator.x + w->decorator.min_start) {
 				if (current != NULL && pressed == 1) {
 					XMoveWindow(display, current->id, x - 40, y + 10);
+
+					if (current->id == wallpaper_window) {
+						current->x = x - 40;
+						current->y = y + 10;
+					}
 				}
 				
 				current = w;
@@ -78,6 +84,12 @@ int decorator_on_hover(int x, int y) {
 
 			if (current != NULL && pressed == 1) {
 				XResizeWindow(display, current->id, x - current->x - 5, y - current->y - 5);
+
+				if (current->id == wallpaper_window) {
+					current->width = x - current->x - 5;
+					current->height = y - current->y - 5;
+				}
+
 				XEvent e = { .type = Expose };
 				XSendEvent(display, window, 0, ExposureMask, &e);
 			}
@@ -129,6 +141,13 @@ void decorator_on_press(int x, int y) {
 			break;
 		case 4:
 			XDestroyWindow(display, window_selected);
+
+			if (window_selected == wallpaper_window) {
+				window_delete(wallpaper_window);
+				taskbar_update_windows();
+				wallpaper_window = -1;
+			}
+			
 			if (window_focus->id == window_selected) {
 				window_focus = NULL;
 			}

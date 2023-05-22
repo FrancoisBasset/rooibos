@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-05-22
+### Added
+*   I added a right click menu and a window to modify the wallpaper.
+
 ## 2023-05-20
 ### Added
 *   I added a great lock screen

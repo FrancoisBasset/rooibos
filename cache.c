@@ -31,12 +31,17 @@ int cache_init(void) {
 		"CREATE TABLE IF NOT EXISTS cli_history"
 		"('id' INTEGER NOT NULL, 'command' TEXT NOT NULL, PRIMARY KEY('id' AUTOINCREMENT))";
 
+	const char *create_settings_request =
+		"CREATE TABLE IF NOT EXISTS settings"
+		"('setting' TEXT NOT NULL, 'value' TEXT NOT NULL, PRIMARY KEY('setting'))";
+
 	int result_stmt1 = cache_init_table(db, create_appshortcuts_request);
 	int result_stmt2 = cache_init_table(db, create_cli_history_request);
+	int result_stmt3 = cache_init_table(db, create_settings_request);
 
 	sqlite3_close(db);
 
-	if (result_stmt1 == -1 || result_stmt2 == -1) {
+	if (result_stmt1 == -1 || result_stmt2 == -1 || result_stmt3 == -1) {
 		return -1;
 	}
 
@@ -361,4 +366,75 @@ int cache_exec_exists(const char *exec, const char *file) {
 	unlink(file);
 
 	return 0;
+}
+
+char* cache_get_wallpaper(void) {
+	sqlite3 *db;
+	char* cache_path = utils_get(UTILS_CACHE);
+	int success = sqlite3_open(cache_path, &db);
+
+	if (success != 0) {
+		free(cache_path);
+		return NULL;
+	}
+
+	free(cache_path);
+
+	sqlite3_stmt *select_stmt;
+	const char **unused_sql = NULL;
+
+	sqlite3_prepare_v2(db, "SELECT value FROM settings WHERE setting = 'wallpaper'", 54, &select_stmt, unused_sql);
+	sqlite3_step(select_stmt);
+
+	const unsigned char *tmp = sqlite3_column_text(select_stmt, 0);
+
+	if (tmp == NULL) {
+		return NULL;
+	}
+
+	char *wallpaper = malloc(sizeof(char) * ((int) strlen(tmp) + 1));
+	strcpy(wallpaper, tmp);
+
+	sqlite3_finalize(select_stmt);
+	sqlite3_close(db);
+
+	return wallpaper;
+}
+
+void cache_set_wallpaper(const char *wallpaper_file) {
+	sqlite3 *db;
+	char* cache_path = utils_get(UTILS_CACHE);
+	int success = sqlite3_open(cache_path, &db);
+
+	if (success != 0) {
+		free(cache_path);
+		return;
+	}
+
+	free(cache_path);
+
+	sqlite3_stmt *select_stmt;
+	sqlite3_stmt *insert_stmt;
+	sqlite3_stmt *update_stmt;
+
+	const char **unused_sql = NULL;
+
+	sqlite3_prepare_v2(db, "SELECT setting FROM settings WHERE setting = 'wallpaper'", 57, &select_stmt, unused_sql);
+	sqlite3_step(select_stmt);
+	const unsigned char *tmp = sqlite3_column_text(select_stmt, 0);
+	sqlite3_finalize(select_stmt);
+
+	if (tmp == NULL) {
+		sqlite3_prepare_v2(db, "INSERT INTO settings VALUES ('wallpaper', ?)", 1000, &insert_stmt, unused_sql);
+		sqlite3_bind_text(insert_stmt, 1, wallpaper_file, (int) strlen(wallpaper_file), SQLITE_STATIC);
+		sqlite3_step(insert_stmt);
+		sqlite3_finalize(insert_stmt);
+	} else {
+		sqlite3_prepare_v2(db, "UPDATE settings SET value = ? WHERE setting = 'wallpaper'", 1000, &update_stmt, unused_sql);
+		sqlite3_bind_text(update_stmt, 1, wallpaper_file, (int) strlen(wallpaper_file), SQLITE_STATIC);
+		sqlite3_step(update_stmt);
+		sqlite3_finalize(update_stmt);
+	}
+
+	sqlite3_close(db);
 }
