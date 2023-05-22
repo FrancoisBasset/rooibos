@@ -234,9 +234,9 @@ void menu_show_battery(void) {
 	const int height = (int) (38 * ((double) level) / 100);
 
 	if (level > 20) {
-		XSetForeground(display, gc_battery, color_battery_ok.pixel);
+		XSetForeground(display, gc_battery, color_green.pixel);
 	} else {
-		XSetForeground(display, gc_battery, color_battery_ko.pixel);
+		XSetForeground(display, gc_battery, color_red.pixel);
 	}
 	
 	XFillRectangle(display, battery_pixmap, gc_battery, 1, 39 - height, 18, height);

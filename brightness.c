@@ -62,7 +62,7 @@ void brightness_show(void) {
 	XCopyArea(display, brightness_pixmap, panel, XDefaultGCOfScreen(screen), 0, 0, 40, 40, 5, 10);
 
 	const int width = (int) (12 * (brightness * 0.1));
-	XFillRectangle(display, panel, gc_bar, 50, 25, width, 10);
+	XFillRectangle(display, panel, gc_fore_green, 50, 25, width, 10);
 
 	XDrawString(display, panel, gc_text_white, 170, 35, text, (int) strlen(text));
 

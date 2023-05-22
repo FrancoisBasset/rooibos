@@ -32,7 +32,7 @@ void decorator_show_all() {
 		XDrawArc(display, decorator_pixmap, gc_text_white, d.min_start, 0, 20, 19, 360 * 64, 360 * 64);
 		XFillArc(display, decorator_pixmap, gc_decorator_max, d.max_start, 0, 20, 20, 360 * 64, 360 * 64);
 		XDrawArc(display, decorator_pixmap, gc_text_white, d.max_start, 0, 20, 19, 360 * 64, 360 * 64);
-		XFillArc(display, decorator_pixmap, gc_decorator_close, d.close_start, 0, 20, 20, 360 * 64, 360 * 64);
+		XFillArc(display, decorator_pixmap, gc_fore_red, d.close_start, 0, 20, 20, 360 * 64, 360 * 64);
 		XDrawArc(display, decorator_pixmap, gc_text_white, d.close_start, 0, 20, 19, 360 * 64, 360 * 64);
 
 		XCopyArea(display, decorator_pixmap, window, XDefaultGCOfScreen(screen), 0, 0, w->width, 20, w->x + 1, w->y - 20);

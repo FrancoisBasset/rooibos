@@ -58,14 +58,10 @@ int right_click_panel_on_hover(int x, int y) {
 	if (panel_showed == 1) {
 		int button_hovered = -1;
 
-		XColor gray = objects_color(30000, 50000, 50000);
-		XGCValues gcv_gray = { .foreground = gray.pixel };
-		GC gc_gray = XCreateGC(display, window, GCForeground, &gcv_gray);
-
 		for (int i = 0; i < buttons_length; i++) {
 			if (x >= buttons[i]->x && x <= buttons[i]->x + buttons[i]->width && y > buttons[i]->y && y < buttons[i]->y + buttons[i]->height) {
 				button_hovered = i;
-				XFillRectangle(display, window, gc_gray, buttons[i]->x, buttons[i]->y, buttons[i]->width, buttons[i]->height);
+				XFillRectangle(display, window, gc_right_panel_hover, buttons[i]->x, buttons[i]->y, buttons[i]->width, buttons[i]->height);
 				XDrawString(display, window, gc_text_white, panel.x + 5, panel.y + 24 + (40 * i), button_titles[i], (int) strlen(button_titles[i]));
 			} else {
 				XFillRectangle(display, window, gc_text_white, buttons[i]->x, buttons[i]->y, buttons[i]->width, buttons[i]->height);

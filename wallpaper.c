@@ -74,19 +74,14 @@ void wallpaper_expose(void) {
 	XDrawRectangle(display, wallpaper_window, gc_text_black, 200, 500, 400, 20);
 	XDrawString(display, wallpaper_window, gc_text_black, 205, 515, wallpaper_input, (int) strlen(wallpaper_input));
 
-	XColor color_button = objects_color(20000, 65535, 20000);
-	XGCValues button_values = {
-		.foreground = color_button.pixel
-	};
-	GC gc_button_values = XCreateGC(display, wallpaper_window, GCForeground, &button_values);
-	XFillRectangle(display, wallpaper_window, gc_button_values, 300, 550, 200, 20);
+	XFillRectangle(display, wallpaper_window, gc_wallpaper_modify_button, 300, 550, 200, 20);
 
 	XDrawString(display, wallpaper_window, gc_text_black, 350, 564, "Change wallpaper", (int) strlen("Change wallpaper"));
 
 	wallpaper_update_thumbnail();
 
 	if (editing == 1) {
-		XDrawRectangle(display, wallpaper_window, gc_decorator_close, 200, 500, 400, 20);
+		XDrawRectangle(display, wallpaper_window, gc_fore_red, 200, 500, 400, 20);
 	}
 }
 

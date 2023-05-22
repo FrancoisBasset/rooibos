@@ -25,21 +25,22 @@ Cursor wait_cursor;
 Cursor resize_cursor;
 
 Colormap colormap;
+XColor color_red;
+XColor color_green;
 XColor color_category_button;
 XColor color_back_menu;
-XColor color_battery_ok;
-XColor color_battery_ko;
-XColor color_bar;
 XColor color_decorator;
 XColor color_decorator_min;
 XColor color_decorator_max;
-XColor color_decorator_close;
+XColor color_right_panel_hover;
+XColor color_wallpaper_modify_button;
 
+GC gc_fore_red;
+GC gc_fore_green;
 GC gc_text_white;
 GC gc_text_black;
 GC gc_category_button;
 GC gc_icon;
-GC gc_bar;
 GC gc_splash_rectangle;
 GC gc_taskbar;
 GC gc_taskbar_button;
@@ -51,7 +52,8 @@ GC gc_battery;
 GC gc_decorator;
 GC gc_decorator_min;
 GC gc_decorator_max;
-GC gc_decorator_close;
+GC gc_right_panel_hover;
+GC gc_wallpaper_modify_button;
 
 void objects_init(void) {
 	display = XOpenDisplay(NULL);
@@ -81,15 +83,15 @@ void objects_init(void) {
 	resize_cursor = XCreateFontCursor(display, XC_sizing);
 
 	colormap = XDefaultColormapOfScreen(screen);
+	color_red = objects_color(65535, 0, 0);
+	color_green = objects_color(0, 65535, 0);
 	color_category_button = objects_color(0, 40000, 0);
 	color_back_menu = objects_color(40000, 40000, 40000);
-	color_battery_ok = objects_color(0, 65535, 0);
-	color_battery_ko = objects_color(65535, 0, 0);
-	color_bar = objects_color(0, 65535, 0);
 	color_decorator = objects_color(10000, 20000, 30000);
 	color_decorator_min = objects_color(65535, 20000, 20000);
 	color_decorator_max = objects_color(0, 50000, 0);
-	color_decorator_close = objects_color(65535, 0, 0);
+	color_right_panel_hover = objects_color(30000, 50000, 50000);
+	color_wallpaper_modify_button = objects_color(20000, 65535, 20000);
 
 	XGCValues gcv_text_white = {
 		.foreground = white_pixel,
@@ -108,14 +110,13 @@ void objects_init(void) {
 	XGCValues gcv_icon = { .foreground = color_back_menu.pixel };
 	gc_icon = XCreateGC(display, window, GCForeground, &gcv_icon);
 
-	XGCValues gcv_bar = { .foreground = color_bar.pixel };
-	gc_bar = XCreateGC(display, window, GCForeground, &gcv_bar);
+	XGCValues gcv_fore_green = { .foreground = color_green.pixel };
+	gc_fore_green = XCreateGC(display, window, GCForeground, &gcv_fore_green);
 
 	XGCValues gcv_splash_rectangle = { .foreground = white_pixel };
 	gc_splash_rectangle = XCreateGC(display, window, GCForeground, &gcv_splash_rectangle);
 
-	XColor color_taskbar = objects_color(65535, 65535, 65535);
-	XGCValues gcv_taskbar = { .foreground = color_taskbar.pixel };
+	XGCValues gcv_taskbar = { .foreground = white_pixel };
 	gc_taskbar = XCreateGC(display, window, GCForeground, &gcv_taskbar);
 
 	XColor color_taskbar_button = objects_color(65535, 35000, 10000);
@@ -130,7 +131,7 @@ void objects_init(void) {
 	XGCValues gcv_taskbar_button_hidden = { .foreground = color_taskbar_button_hidden.pixel };
 	gc_taskbar_button_hidden = XCreateGC(display, window, GCForeground, &gcv_taskbar_button_hidden);
 
-	XGCValues gcv_taskbar_button_border = { .foreground = color_taskbar.pixel, .background = black_pixel };
+	XGCValues gcv_taskbar_button_border = { .foreground = white_pixel, .background = black_pixel };
 	gc_taskbar_button_border = XCreateGC(display, window, GCForeground | GCBackground, &gcv_taskbar_button_border);
 
 	XGCValues values = { .foreground = color_back_menu.pixel };
@@ -147,8 +148,14 @@ void objects_init(void) {
 	XGCValues gcv_decorator_max = { .foreground = color_decorator_max.pixel };
 	gc_decorator_max = XCreateGC(display, window, GCForeground, &gcv_decorator_max);
 
-	XGCValues gcv_decorator_close = { .foreground = color_decorator_close.pixel };
-	gc_decorator_close = XCreateGC(display, window, GCForeground, &gcv_decorator_close);
+	XGCValues gcv_fore_red = { .foreground = color_red.pixel };
+	gc_fore_red = XCreateGC(display, window, GCForeground, &gcv_fore_red);
+
+	XGCValues gcv_right_panel_hover = { .foreground = color_right_panel_hover.pixel };
+	gc_right_panel_hover = XCreateGC(display, window, GCForeground, &gcv_right_panel_hover);
+
+	XGCValues gcv_wallpaper_modify_button = { .foreground = color_wallpaper_modify_button.pixel };
+	gc_wallpaper_modify_button = XCreateGC(display, window, GCForeground, &gcv_wallpaper_modify_button);
 }
 
 XColor objects_color(unsigned short r, unsigned short g, unsigned short b) {

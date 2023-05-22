@@ -13,43 +13,43 @@ int button_x;
 int button_y;
 
 int conversation(int num_msg, const struct pam_message **msg, struct pam_response **resp, void *appdata_ptr) {
-    *resp = calloc(num_msg, sizeof(struct pam_response));
-    if (*resp == NULL) {
-        return PAM_BUF_ERR;
-    }
+	*resp = calloc(num_msg, sizeof(struct pam_response));
+	if (*resp == NULL) {
+		return PAM_BUF_ERR;
+	}
 
-    for (int i = 0; i < num_msg; i++) {
-        if (msg[i]->msg_style == PAM_PROMPT_ECHO_OFF) {
-            (*resp)[i].resp = strdup((const char*) appdata_ptr);
-            (*resp)[i].resp_retcode = 0;
-        }
-    }
+	for (int i = 0; i < num_msg; i++) {
+		if (msg[i]->msg_style == PAM_PROMPT_ECHO_OFF) {
+			(*resp)[i].resp = strdup((const char*) appdata_ptr);
+			(*resp)[i].resp_retcode = 0;
+		}
+	}
 
-    return PAM_SUCCESS;
+	return PAM_SUCCESS;
 }
 
 int authenticate(const char *username, const char *password) {
-    pam_handle_t *pamh = NULL;
-    int retval;
+	pam_handle_t *pamh = NULL;
+	int retval;
 
-    struct pam_conv pam_conversation = {
-        .conv = conversation,
-        .appdata_ptr = (void*) password
-    };
+	struct pam_conv pam_conversation = {
+		.conv = conversation,
+		.appdata_ptr = (void*) password
+	};
 
-    retval = pam_start("login", username, &pam_conversation, &pamh);
-    if (retval != PAM_SUCCESS) {
-        return 0;
-    }
+	retval = pam_start("login", username, &pam_conversation, &pamh);
+	if (retval != PAM_SUCCESS) {
+		return 0;
+	}
 
-    retval = pam_authenticate(pamh, 0);
-    if (retval != PAM_SUCCESS) {
-        pam_end(pamh, retval);
-        return 0;
-    }
+	retval = pam_authenticate(pamh, 0);
+	if (retval != PAM_SUCCESS) {
+		pam_end(pamh, retval);
+		return 0;
+	}
 
-    pam_end(pamh, PAM_SUCCESS);
-    return 1;
+	pam_end(pamh, PAM_SUCCESS);
+	return 1;
 }
 
 int button_is_hover(int x, int y) {
@@ -106,7 +106,7 @@ void lock_start(void) {
 				XFillRectangle(display, window, gc_text_white, x + 1, y + 1, 299, 39);
 				XDrawString(display, window, gc_text_black, x + 10, y + 25, masked_password, (int) strlen(masked_password));
 				if (bad_password == 1) {
-					XDrawString(display, window, gc_decorator_close, x + 10, y + 25, "Bad password !!!", 16);
+					XDrawString(display, window, gc_fore_red, x + 10, y + 25, "Bad password !!!", 16);
 				}
 				break;
 			case KeyPress: {
