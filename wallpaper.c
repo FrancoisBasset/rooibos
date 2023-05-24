@@ -10,6 +10,7 @@
 #include "utils.h"
 #include "menu.h"
 #include "icon.h"
+#include "event.h"
 
 Pixmap wallpaper_surface = -1;
 Pixmap thumbnail = -1;
@@ -40,7 +41,11 @@ void wallpaper_show(int splash) {
 		free(wallpaper_file);
 	}
 
-	XCopyArea(display, wallpaper_surface, window, XDefaultGCOfScreen(screen), 0, 0, screen_width, height, 0, 0);
+	if (back == -1) {
+		XCopyArea(display, wallpaper_surface, window, XDefaultGCOfScreen(screen), 0, 0, screen_width, height, 0, 0);
+	} else {
+		XCopyArea(display, wallpaper_surface, back, XDefaultGCOfScreen(screen), 0, 0, screen_width, height, 0, 0);
+	}
 }
 
 void wallpaper_open_window(void) {

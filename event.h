@@ -2,6 +2,7 @@
 #define EVENT_H
 #include <X11/Xlib.h>
 #include "window.h"
+extern Pixmap back;
 extern window_t *window_focus;
 extern char *title_launched;
 

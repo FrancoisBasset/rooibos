@@ -15,7 +15,6 @@ All my tasks will be written in this file.
 -   [ ] Virtual desktops
 
 ### In Progress
--   [ ] Desktops shortcuts
 
 ### Done
 -   [X] Prepare Kanban
@@ -92,3 +91,4 @@ All my tasks will be written in this file.
 -   [X] Better window decorator
 -   [X] Lock screen
 -   [X] Modify the wallpaper
+-   [X] Desktops shortcuts

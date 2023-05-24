@@ -34,6 +34,7 @@ XColor color_decorator_min;
 XColor color_decorator_max;
 XColor color_right_panel_hover;
 XColor color_wallpaper_modify_button;
+XColor color_folder;
 
 GC gc_fore_red;
 GC gc_fore_green;
@@ -54,6 +55,7 @@ GC gc_decorator_min;
 GC gc_decorator_max;
 GC gc_right_panel_hover;
 GC gc_wallpaper_modify_button;
+GC gc_folder;
 
 void objects_init(void) {
 	display = XOpenDisplay(NULL);
@@ -92,6 +94,7 @@ void objects_init(void) {
 	color_decorator_max = objects_color(0, 50000, 0);
 	color_right_panel_hover = objects_color(30000, 50000, 50000);
 	color_wallpaper_modify_button = objects_color(20000, 65535, 20000);
+	color_folder = objects_color(65535, 50000, 0);
 
 	XGCValues gcv_text_white = {
 		.foreground = white_pixel,
@@ -156,6 +159,9 @@ void objects_init(void) {
 
 	XGCValues gcv_wallpaper_modify_button = { .foreground = color_wallpaper_modify_button.pixel };
 	gc_wallpaper_modify_button = XCreateGC(display, window, GCForeground, &gcv_wallpaper_modify_button);
+
+	XGCValues gcv_folder = { .foreground = color_folder.pixel };
+	gc_folder = XCreateGC(display, window, GCForeground, &gcv_folder);
 }
 
 XColor objects_color(unsigned short r, unsigned short g, unsigned short b) {

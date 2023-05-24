@@ -22,7 +22,9 @@
 #include "decorator.h"
 #include "right_click_panel.h"
 #include "wallpaper.h"
+#include "shortcut.h"
 
+Pixmap back = -1;
 window_t *window_focus = NULL;
 char *title_launched = NULL;
 
@@ -100,7 +102,17 @@ int handle_event(void) {
 
 void event_on_expose(void) {
 	if (menu.is_showed == 0 || first_menu_show == 0) {
+		back = XCreatePixmap(display, window, screen_width, screen_height, screen_depth);
 		wallpaper_show(0);
+		shortcut_show_all();
+
+		int height = screen_height - 50;
+		if (menu.is_showed == 1) {
+			height = screen_height;
+		}
+
+		XCopyArea(display, back, window, XDefaultGCOfScreen(screen), 0, 0, screen_width, height, 0, 0);
+		XFreePixmap(display, back);
 	}
 
 	if (menu.is_showed == 0) {
@@ -154,6 +166,11 @@ int event_on_left_button_press(int x, int y) {
 		taskbar_on_press(x, y);
 	} else if (menu.is_showed == 0 && decorator_on_hover(x, y) != 0) {
 		decorator_on_press(x, y);
+
+		XEvent e = { .type = Expose };
+		XSendEvent(display, window, 0, ExposureMask, &e);
+	} else if (menu.is_showed == 0 && shortcut_on_hover(x, y) != -1) {
+		shortcut_on_press(x, y);
 
 		XEvent e = { .type = Expose };
 		XSendEvent(display, window, 0, ExposureMask, &e);
@@ -314,6 +331,7 @@ void event_on_motion(int x, int y) {
 		}
 
 		right_click_panel_on_hover(x, y);
+		shortcut_on_hover(x, y);
 	}
 }
 

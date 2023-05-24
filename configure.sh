@@ -27,6 +27,7 @@ for_debian() {
 	check_installed libgdk-pixbuf2.0-dev /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf.h libgdk-pixbuf2.0-dev
 	check_installed libasound2-dev /usr/include/alsa/asoundlib.h libasound2-dev
 	check_installed xterm /usr/bin/xterm xterm
+	check_installed xfe /usr/bin/xfe xfe
 
 	if [ "$packages" != "" ]
 	then
@@ -47,6 +48,7 @@ for_arch() {
 	check_installed gdk-pixbuf2 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf.h gdk-pixbuf2
 	check_installed alsa-lib /usr/include/alsa/asoundlib.h alsa-lib
 	check_installed xterm /usr/bin/xterm xterm
+	check_installed xfe /usr/bin/xfe xfe
 
 	if [ "$packages" != "" ]
 	then

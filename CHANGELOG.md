@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-05-24
+### Added
+*   I added shortcuts in wallpaper and open action
+
 ## 2023-05-22
 ### Added
 *   I added a right click menu and a window to modify the wallpaper.

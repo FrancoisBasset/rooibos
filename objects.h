@@ -32,6 +32,7 @@ extern XColor color_decorator_min;
 extern XColor color_decorator_max;
 extern XColor color_right_panel_hover;
 extern XColor color_wallpaper_modify_button;
+extern XColor color_folder;
 
 extern GC gc_fore_red;
 extern GC gc_fore_green;
@@ -52,6 +53,7 @@ extern GC gc_decorator_min;
 extern GC gc_decorator_max;
 extern GC gc_right_panel_hover;
 extern GC gc_wallpaper_modify_button;
+extern GC gc_folder;
 
 void objects_init(void);
 XColor objects_color(unsigned short r, unsigned short g, unsigned short b);
