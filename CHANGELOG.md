@@ -14,6 +14,7 @@ There are 6 types of changes :
 
 ## 2023-08-05
 ### Changed
+*   I lightened png icons with exif
 *   I changed the default logo and wallpaper
 
 ## 2023-05-24
