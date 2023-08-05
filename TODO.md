@@ -10,8 +10,6 @@ All my tasks will be written in this file.
 
 ### Waiting
 -   [ ] Study the XrmDatabase
--   [ ] Make own wallpaper
--   [ ] Create another logo
 -   [ ] Virtual desktops
 
 ### In Progress
@@ -92,3 +90,5 @@ All my tasks will be written in this file.
 -   [X] Lock screen
 -   [X] Modify the wallpaper
 -   [X] Desktops shortcuts
+-   [X] Make own wallpaper
+-   [X] Create another logo

@@ -75,7 +75,7 @@ int utils_is_root(void) {
 
 static char* utils_get_wallpaper_to_use() {
 	char *wallpaper_file_path = malloc(sizeof(char) * 200);
-	strcpy(wallpaper_file_path, "/usr/share/rooibos/wallpaper.jpg");
+	strcpy(wallpaper_file_path, "/usr/share/rooibos/wallpaper.svg");
 
 	#ifdef WILLDEBUG
 	char *dev = utils_find_first("./assets/", "wallpaper.");

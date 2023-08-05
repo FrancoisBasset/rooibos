@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-08-05
+### Changed
+*   I changed the default logo and wallpaper
+
 ## 2023-05-24
 ### Added
 *   I added shortcuts in wallpaper and open action
