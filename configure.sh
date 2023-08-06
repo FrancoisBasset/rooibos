@@ -18,7 +18,6 @@ check_installed() {
 
 for_debian() {
 	check_installed make /usr/bin/make make
-	check_installed pkg-config /usr/bin/pkg-config pkg-config
 	check_installed gcc /usr/bin/gcc gcc
 	check_installed xorg /usr/bin/startx xorg
 	check_installed glibc /usr/include/stdlib.h build-essential
@@ -38,7 +37,6 @@ for_debian() {
 
 for_arch() {
 	check_installed make /usr/bin/make make
-	check_installed pkgconf /usr/bin/pkg-config pkgconf
 	check_installed gcc /usr/bin/gcc gcc
 	check_installed xorg /usr/bin/startx xorg
 	check_installed xorg-xinit /usr/bin/startx xorg-xinit

@@ -4,7 +4,6 @@
 
 These packages are essentials to build the program :
 -   `make`
--   `pkg-config`
 -   `gcc`
 -   `build-essential`
 -   `libx11-dev`

@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-08-06
+### Removed
+*   I removed the dependency pkg-config
+
 ## 2023-08-05
 ### Changed
 *   I lightened png icons with exif

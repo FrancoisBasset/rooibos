@@ -15,7 +15,6 @@ Rooibos is written with the Xlib library because it is a low-level and lightweig
 
 These packages are essentials to build the program :
 -   `make`
--   `pkg-config`
 -   `gcc`
 -   `build-essential`
 -   `libx11-dev`
