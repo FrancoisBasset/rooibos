@@ -13,6 +13,8 @@ There are 6 types of changes :
 # Changes
 
 ## 2023-08-06
+### Changed
+*   I moved screenshots in docs folder
 ### Removed
 *   I removed the dependency pkg-config
 

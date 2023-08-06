@@ -3,13 +3,13 @@ Rooibos is a modern window manager written in C with the Xlib library, the low-l
 Rooibos is written with the Xlib library because it is a low-level and lightweight library, and to give the best user experience.
 
 ## The Rooibos menu with all apps
-![Rooibos menu](/assets/rooibos.png)
+![Rooibos menu](/docs/rooibos.png)
 
 ## The Rooibos menu with system apps
-![Rooibos menu](/assets/rooibos_system.png)
+![Rooibos menu](/docs/rooibos_system.png)
 
 ## Rooibos with a terminal
-![Rooibos with a terminal](/assets/rooibos_terminal.png)
+![Rooibos with a terminal](/docs/rooibos_terminal.png)
 
 ## Requirements :
 
