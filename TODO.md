@@ -4,7 +4,6 @@ All my tasks will be written in this file.
 ### Todo
 -   [ ] Find great design
 -   [ ] Expand the DEBIAN folder in package
--   [ ] Create package for Arch
 -   [ ] Create RPM package
 -   [ ] Publish .deb package in Debian repositories
 
@@ -92,3 +91,4 @@ All my tasks will be written in this file.
 -   [X] Desktops shortcuts
 -   [X] Make own wallpaper
 -   [X] Create another logo
+-   [X] Create package for Arch

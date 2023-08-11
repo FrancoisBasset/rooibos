@@ -35,16 +35,21 @@ VERSION.h:
 clean:
 	@echo "Deleting object files..."
 	@rm -f *.o
+
 	@echo "Deleting VERSION.h..."
 	@rm -f VERSION.h
+
 	@echo "Deleting executable..."
 	@rm -f rooibos
+
 	@echo "Deleting package..."
-	@rm -f package/usr/bin/rooibos
-	@rm -f package/usr/share/man/man1/rooibos.1.gz
-	@rm -f *.deb
+	@rm -rf pkg
+	@rm -rf package
+	@rm -f *.deb *.zst
+
 	@echo "Deleting debug file..."
 	@rm -f debug
+
 	@echo "\033[0;32mCleaning success !\033[0m"
 
 check:
@@ -62,41 +67,31 @@ mat:
 exif:
 	exiftool -all= -r ./
 
-pkg:
-	rm -f package/usr/bin/.gitkeep
-	rm -f package/usr/share/rooibos/.gitkeep
-	rm -f package/usr/share/man/man1/.gitkeep
-	cp rooibos package/usr/bin
-	cp assets/brightness.png package/usr/share/rooibos
-	cp assets/charging.png package/usr/share/rooibos
-	cp assets/computer.png package/usr/share/rooibos
-	cp assets/lock.png package/usr/share/rooibos
-	cp assets/logo.svg package/usr/share/rooibos
-	cp assets/logout.png package/usr/share/rooibos
-	cp assets/new_terminal.png package/usr/share/rooibos
-	cp assets/sound.png package/usr/share/rooibos
-	cp assets/wallpaper.svg package/usr/share/rooibos
-	gzip < rooibos.1 > package/usr/share/man/man1/rooibos.1.gz
-	dpkg-deb --build package rooibos_$(VERSION)_$(ARCH).deb
-	> package/usr/bin/.gitkeep
-	> package/usr/share/rooibos/.gitkeep
-	> package/usr/share/man/man1/.gitkeep
+pkgs:
+	mkdir -p \
+	package/etc/udev/rules.d \
+	package/usr/bin \
+	package/usr/share/bash-completion/completions \
+	package/usr/share/man/man1 \
+	package/usr/share/rooibos \
+	package/usr/share/xsessions
 
-start:
-	./rooibos
+	cp rooibos-backlight.rules package/etc/udev/rules.d
+	cp rooibos package/usr/bin
+	cp rooibos.completion package/usr/share/bash-completion/completions/rooibos
+	gzip < rooibos.1 > package/usr/share/man/man1/rooibos.1.gz
+	cp assets/* package/usr/share/rooibos
+	cp rooibos.desktop package/usr/share/xsessions
+	
+	if [ -e "/usr/bin/dpkg-deb" ]; then \
+		cp -r DEBIAN package/DEBIAN \
+	    dpkg-deb --build package rooibos_$(VERSION)_$(ARCH).deb; \
+	fi
 
 install:
 	cp rooibos /usr/bin/rooibos
 	mkdir /usr/share/rooibos
-	cp assets/brightness.png /usr/share/rooibos
-	cp assets/charging.png /usr/share/rooibos
-	cp assets/computer.png /usr/share/rooibos
-	cp assets/lock.png /usr/share/rooibos
-	cp assets/logo.svg /usr/share/rooibos
-	cp assets/logout.png /usr/share/rooibos
-	cp assets/new_terminal.png /usr/share/rooibos
-	cp assets/sound.png /usr/share/rooibos
-	cp assets/wallpaper.svg /usr/share/rooibos
+	cp assets/* /usr/share/rooibos
 	cp package/usr/share/bash-completion/completions/rooibos /usr/share/bash-completion/completions/rooibos
 	cp package/usr/share/xsessions/rooibos.desktop /usr/share/xsessions/rooibos.desktop
 	gzip < rooibos.1 > /usr/share/man/man1/rooibos.1.gz

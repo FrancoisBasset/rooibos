@@ -31,5 +31,5 @@ Then to install this program there are 2 ways :
 -   Debian package install
 
     Run these 2 commands :
-    -   `make pkg` to build the Debian package
+    -   `make pkgs` to build the Debian package
     -   `sudo dpkg -i <package.deb>` to install the generated .deb package

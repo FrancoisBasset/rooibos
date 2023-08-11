@@ -11,9 +11,9 @@ VERSION.h
 debug
 
 #package
-package/usr/bin/rooibos
-package/usr/share/man/man1/rooibos.1.gz
+package
 *.deb
+*.zst
 
 #vscode
 .vscode

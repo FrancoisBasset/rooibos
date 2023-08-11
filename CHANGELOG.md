@@ -12,6 +12,10 @@ There are 6 types of changes :
 
 # Changes
 
+## 2023-08-11
+### Added
+*   I added Arch package builder and reorganized package
+
 ## 2023-08-06
 ### Changed
 *   I moved screenshots in docs folder
